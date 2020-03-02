@@ -15,6 +15,11 @@ namespace graph_sandbox
         public Form1()
         {
             InitializeComponent();
+            toolTip1.SetToolTip(this.addVertex, "Add vertex");
+            toolTip2.SetToolTip(this.addEdge, "Add edge");
+            toolTip3.SetToolTip(this.remove, "Remove");
+            toolTip4.SetToolTip(this.download, "Download graph");
+            toolTip5.SetToolTip(this.functions, "Functions");
         }
 
         private void closeForm_Click(object sender, EventArgs e)
