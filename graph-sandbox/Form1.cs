@@ -14,6 +14,9 @@ namespace graph_sandbox
     {
         int MaxWidth = 200;
         bool Hided = true;
+        private const int WM_NCHITTEST = 0x84;
+        private const int HT_CLIENT = 0x1;
+        private const int HT_CAPTION = 0x2;
 
         public Form1()
         {
@@ -34,6 +37,14 @@ namespace graph_sandbox
         {
 
         }
+
+
+         protected override void WndProc(ref Message m)
+         {
+            base.WndProc(ref m);
+            if (m.Msg == WM_NCHITTEST)
+                m.Result = (IntPtr)(HT_CAPTION);
+         }
 
         private void button1_Click(object sender, EventArgs e)
         {
