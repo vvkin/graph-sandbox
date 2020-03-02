@@ -12,6 +12,9 @@ namespace graph_sandbox
 {
     public partial class Form1 : Form
     {
+        int MaxWidth = 260;
+        bool Hided = true;
+
         public Form1()
         {
             InitializeComponent();
@@ -54,12 +57,37 @@ namespace graph_sandbox
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            timer1.Start();
         }
 
         private void hideForm_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (Hided)
+            {
+                while(buttonsPanel.Width < MaxWidth)
+                {
+                    buttonsPanel.Width += 30;
+                }
+                functionsPanel.Visible = true;
+                Hided = false;
+            }
+            else
+            {
+                functions.Visible = false;
+                while (buttonsPanel.Width > 60)
+                {
+                    buttonsPanel.Width -= 30;
+                }
+                Hided = true;
+            }
+            timer1.Stop();
+            this.Refresh();
+            functions.Visible = true;
         }
     }
 }
