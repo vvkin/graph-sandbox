@@ -12,7 +12,7 @@ namespace graph_sandbox
 {
     public partial class Form1 : Form
     {
-        int MaxWidth = 260;
+        int MaxWidth = 200;
         bool Hided = true;
 
         public Form1()
