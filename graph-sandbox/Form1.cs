@@ -51,5 +51,10 @@ namespace graph_sandbox
         {
 
         }
+
+        private void hideForm_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
     }
 }
