@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.topPanel = new System.Windows.Forms.Panel();
             this.button6 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.hideForm = new System.Windows.Forms.Button();
@@ -57,25 +57,26 @@
             this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.panel1.SuspendLayout();
+            this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.smallButtonsPanel.SuspendLayout();
             this.functionsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // topPanel
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.button6);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.hideForm);
-            this.panel1.Controls.Add(this.closeForm);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(840, 42);
-            this.panel1.TabIndex = 0;
+            this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.topPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.topPanel.Controls.Add(this.button6);
+            this.topPanel.Controls.Add(this.label1);
+            this.topPanel.Controls.Add(this.hideForm);
+            this.topPanel.Controls.Add(this.closeForm);
+            this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.topPanel.Location = new System.Drawing.Point(0, 0);
+            this.topPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.topPanel.Name = "topPanel";
+            this.topPanel.Size = new System.Drawing.Size(840, 42);
+            this.topPanel.TabIndex = 0;
             // 
             // button6
             // 
@@ -135,7 +136,6 @@
             // 
             // buttonsPanel
             // 
-            this.buttonsPanel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.buttonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
             this.buttonsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.buttonsPanel.Controls.Add(this.smallButtonsPanel);
@@ -155,6 +155,7 @@
             this.smallButtonsPanel.Controls.Add(this.download);
             this.smallButtonsPanel.Controls.Add(this.remove);
             this.smallButtonsPanel.Location = new System.Drawing.Point(-2, -1);
+            this.smallButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.smallButtonsPanel.Name = "smallButtonsPanel";
             this.smallButtonsPanel.Size = new System.Drawing.Size(50, 424);
             this.smallButtonsPanel.TabIndex = 2;
@@ -172,7 +173,6 @@
             this.addVertex.Size = new System.Drawing.Size(50, 50);
             this.addVertex.TabIndex = 2;
             this.addVertex.UseVisualStyleBackColor = true;
-            this.addVertex.Click += new System.EventHandler(this.button1_Click);
             // 
             // addEdge
             // 
@@ -186,7 +186,6 @@
             this.addEdge.Size = new System.Drawing.Size(50, 50);
             this.addEdge.TabIndex = 3;
             this.addEdge.UseVisualStyleBackColor = true;
-            this.addEdge.Click += new System.EventHandler(this.button2_Click);
             // 
             // functions
             // 
@@ -214,7 +213,6 @@
             this.download.Size = new System.Drawing.Size(50, 50);
             this.download.TabIndex = 3;
             this.download.UseVisualStyleBackColor = true;
-            this.download.Click += new System.EventHandler(this.button4_Click);
             // 
             // remove
             // 
@@ -228,7 +226,6 @@
             this.remove.Size = new System.Drawing.Size(50, 50);
             this.remove.TabIndex = 3;
             this.remove.UseVisualStyleBackColor = true;
-            this.remove.Click += new System.EventHandler(this.button3_Click);
             // 
             // functionsPanel
             // 
@@ -374,20 +371,25 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(840, 466);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.topPanel);
             this.Controls.Add(this.buttonsPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(840, 466);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(840, 466);
             this.Name = "Form1";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
+            this.topPanel.ResumeLayout(false);
+            this.topPanel.PerformLayout();
             this.buttonsPanel.ResumeLayout(false);
             this.smallButtonsPanel.ResumeLayout(false);
             this.functionsPanel.ResumeLayout(false);
@@ -397,7 +399,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Panel buttonsPanel;
         private System.Windows.Forms.Button closeForm;
         private System.Windows.Forms.Button hideForm;

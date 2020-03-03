@@ -39,32 +39,12 @@ namespace graph_sandbox
         }
 
 
-         protected override void WndProc(ref Message m)
+       /*  protected override void WndProc(ref Message m)
          {
             base.WndProc(ref m);
             if (m.Msg == WM_NCHITTEST)
                 m.Result = (IntPtr)(HT_CAPTION);
-         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-
-        }
+         }*/
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -83,8 +63,10 @@ namespace graph_sandbox
                 while(buttonsPanel.Width < MaxWidth)
                 {
                     buttonsPanel.Width += 30;
+                    functions.Enabled = false;
                 }
                 functionsPanel.Visible = true;
+                functions.Enabled = true;
                 Hided = false;
             }
             else
@@ -99,6 +81,13 @@ namespace graph_sandbox
             timer1.Stop();
             this.Refresh();
             functions.Visible = true;
+        }
+
+        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        {
+            Vertex circle = new Vertex(e.X, e.Y);
+            Graphics gDraw = this.CreateGraphics();
+            circle.Draw(gDraw);
         }
     }
 }
