@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace graph_sandbox
         private bool is_oriented;
         private Point start_point;
         private Point end_point;
-        private float weight;
+        private double weight;
         public Edge()
         {
             weight = 1.0;
@@ -29,8 +30,8 @@ namespace graph_sandbox
         }
         public void SetAdjacentVertexes(Vertex vertex1, Vertex vertex2)
         {
-            this.adjacent_vertexes[0] = vertex1;
-            this.adjacent_vertexes[1] = vertex2;
+            adjacent_vertexes[0] = vertex1;
+            adjacent_vertexes[1] = vertex2;
             
         }
         public void SetOriented(bool value)=> is_oriented = value;

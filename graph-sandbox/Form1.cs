@@ -71,6 +71,10 @@ namespace graph_sandbox
                     buttonsPanel.Width -= 30;
                 }
                 Hided = true;
+
+                Graphics gDraw = drawPanel.CreateGraphics();
+                VerticesList.ReDraw(gDraw);
+
             }
             timer1.Stop();
             functions.Visible = true;
@@ -78,7 +82,7 @@ namespace graph_sandbox
 
         private void DrawWertex(object sender, MouseEventArgs e)
         {
-            Vertex circle = new Vertex(e.X, e.Y);
+            Vertex circle = new Vertex(e.X, e.Y,VerticesList.GetCount());
 
             if (VerticesList.IsValid(circle))
             {

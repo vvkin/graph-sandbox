@@ -13,30 +13,29 @@ namespace graph_sandbox
     {
         public Point coordinates;
         private Color color = Color.White;
+        private int number;
 
-        public Vertex(int x, int y)
+        public Vertex(int x, int y, int number)
         {
             this.coordinates = new Point(x, y);
+            this.number = ++number;
         }
 
         public void Draw(Graphics g)
         {
-            Pen pen = new Pen(color, 1);
-            g.DrawEllipse(pen, coordinates.X, coordinates.Y, 30, 30);
-            g.FillEllipse(new SolidBrush(color), coordinates.X, coordinates.Y, 30, 30);
+            Pen pen = new Pen(Color.White, 1);
+            g.DrawEllipse(pen, coordinates.X, coordinates.Y, 40, 40);
+            g.FillEllipse(new SolidBrush(color), coordinates.X, coordinates.Y, 40, 40);
 
             var fontFamily = new FontFamily("MV Boli");
             var font = new Font(fontFamily, 16, FontStyle.Bold, GraphicsUnit.Pixel);
             var solidBrush = new SolidBrush(Color.Black);
 
             g.TextRenderingHint = TextRenderingHint.AntiAlias;
-            if (VerticesList.GetCount() < 10)
-                g.DrawString($"{VerticesList.GetCount()}", font, solidBrush, new PointF(coordinates.X + 8, coordinates.Y + 2));
+            if (number < 10)
+                g.DrawString($"{number}", font, solidBrush, new PointF(coordinates.X + 13, coordinates.Y + 7));
             else
-                g.DrawString($"{VerticesList.GetCount()}", font, solidBrush, new PointF(coordinates.X + 5, coordinates.Y + 2));
-
-
-
+                g.DrawString($"{number}", font, solidBrush, new PointF(coordinates.X + 8, coordinates.Y + 7));
         }
 
         public double GetDistance(Vertex another)
@@ -47,6 +46,9 @@ namespace graph_sandbox
 
         }
 
-
+        public bool IsOnSlidePanel()
+        {
+            return (coordinates.X < 230);
+        }
     }
 }

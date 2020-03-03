@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,12 +18,12 @@ namespace graph_sandbox
 
         public static bool IsValid(Vertex vertex)
         {
-            foreach(var currentVertex in vertices)
+            foreach (var currentVertex in vertices)
             {
-               if (vertex.GetDistance(currentVertex) < 35)
-               {
+                if (vertex.GetDistance(currentVertex) < 75)
+                {
                    return false;
-               }
+                }
             }
             return true;
         }
@@ -30,6 +31,17 @@ namespace graph_sandbox
         public static int GetCount()
         {
             return vertices.Count;
+        }
+
+        public static void ReDraw(Graphics g)
+        {
+            foreach(var currentVertex in vertices)
+            {
+                if (currentVertex.IsOnSlidePanel())
+                {
+                    currentVertex.Draw(g);
+                }
+            }
         }
     }
 }
