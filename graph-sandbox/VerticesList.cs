@@ -18,9 +18,19 @@ namespace graph_sandbox
 
         public static bool IsValid(Vertex vertex)
         {
+            while (vertex.coordinates.X >= 750)
+            {
+                --vertex.coordinates.X;
+            }
+
+            while(vertex.coordinates.Y >= 384)
+            {
+                --vertex.coordinates.Y;
+            }
+
             foreach (var currentVertex in vertices)
             {
-                if (vertex.GetDistance(currentVertex) < 75)
+                if (vertex.GetDistance(currentVertex) < 60)
                 {
                    return false;
                 }

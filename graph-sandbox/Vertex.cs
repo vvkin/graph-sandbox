@@ -23,6 +23,8 @@ namespace graph_sandbox
 
         public void Draw(Graphics g)
         {
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
             Pen pen = new Pen(Color.White, 1);
             g.DrawEllipse(pen, coordinates.X, coordinates.Y, 40, 40);
             g.FillEllipse(new SolidBrush(color), coordinates.X, coordinates.Y, 40, 40);
