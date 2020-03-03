@@ -100,11 +100,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Redressed", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(63, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 25);
+            this.label1.Size = new System.Drawing.Size(202, 31);
             this.label1.TabIndex = 3;
             this.label1.Text = "Graph Sandbox";
             // 
@@ -177,6 +177,7 @@
             this.addVertex.Size = new System.Drawing.Size(50, 50);
             this.addVertex.TabIndex = 2;
             this.addVertex.UseVisualStyleBackColor = true;
+            this.addVertex.MouseClick += new System.Windows.Forms.MouseEventHandler(this.addVertex_MouseClick);
             // 
             // addEdge
             // 

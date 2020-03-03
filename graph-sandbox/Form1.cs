@@ -82,14 +82,31 @@ namespace graph_sandbox
 
         private void DrawWertex(object sender, MouseEventArgs e)
         {
-            Vertex circle = new Vertex(e.X, e.Y,VerticesList.GetCount());
-
-            if (VerticesList.IsValid(circle))
+            if (addVertex_clicked)
             {
-                VerticesList.AddVertex(circle);
-                Graphics gDraw = drawPanel.CreateGraphics();
-                circle.Draw(gDraw);
-            } 
+                Vertex circle = new Vertex(e.X, e.Y, VerticesList.GetCount());
+
+                if (VerticesList.IsValid(circle))
+                {
+                    VerticesList.AddVertex(circle);
+                    Graphics gDraw = drawPanel.CreateGraphics();
+                    circle.Draw(gDraw);
+                }
+            }
+        }
+        private bool addVertex_clicked = false;
+        private int addVertex_click = 0;
+        private void addVertex_MouseClick(object sender, MouseEventArgs e)
+        {
+            addVertex_click++;
+            if (addVertex_click % 2 == 1)
+            {
+                addVertex_clicked = true;
+            }
+            else
+            {
+                addVertex_clicked = false;
+            }
         }
     }
 }
