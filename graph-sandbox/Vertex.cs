@@ -11,7 +11,7 @@ namespace graph_sandbox
     class Vertex
     {
         private Point coordinates;
-        private Color color = Color.White;
+        private Color color = Color.Black;
 
         public Vertex(int x, int y)
         {

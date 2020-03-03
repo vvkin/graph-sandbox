@@ -74,14 +74,13 @@ namespace graph_sandbox
                 Hided = true;
             }
             timer1.Stop();
-            this.Refresh();
             functions.Visible = true;
         }
 
-        private void Form1_MouseClick(object sender, MouseEventArgs e)
+        private void DrawWertex(object sender, MouseEventArgs e)
         {
             Vertex circle = new Vertex(e.X, e.Y);
-            Graphics gDraw = this.CreateGraphics();
+            Graphics gDraw = drawPanel.CreateGraphics();
             circle.Draw(gDraw);
         }
     }

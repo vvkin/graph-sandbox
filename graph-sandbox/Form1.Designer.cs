@@ -389,10 +389,13 @@
             // 
             this.drawPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.drawPanel.Location = new System.Drawing.Point(53, 42);
+            this.drawPanel.BackColor = System.Drawing.Color.White;
+            this.drawPanel.Location = new System.Drawing.Point(50, 42);
+            this.drawPanel.Margin = new System.Windows.Forms.Padding(0);
             this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(787, 424);
+            this.drawPanel.Size = new System.Drawing.Size(790, 424);
             this.drawPanel.TabIndex = 2;
+            this.drawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawWertex);
             // 
             // Form1
             // 
@@ -409,7 +412,6 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
             this.buttonsPanel.ResumeLayout(false);
