@@ -18,7 +18,6 @@ namespace graph_sandbox
         private const int HT_CLIENT = 0x1;
         private const int HT_CAPTION = 0x2;
 
-
         public Form1()
         {
             InitializeComponent();
@@ -34,12 +33,12 @@ namespace graph_sandbox
             Close();
         }
 
-      /* protected override void WndProc(ref Message m)
-       {
+      protected override void WndProc(ref Message m)
+      {
             base.WndProc(ref m);
             if (m.Msg == WM_NCHITTEST)
                 m.Result = (IntPtr)(HT_CAPTION);
-       }*/
+      }
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -80,8 +79,13 @@ namespace graph_sandbox
         private void DrawWertex(object sender, MouseEventArgs e)
         {
             Vertex circle = new Vertex(e.X, e.Y);
-            Graphics gDraw = drawPanel.CreateGraphics();
-            circle.Draw(gDraw);
+
+            if (VerticesList.IsValid(circle))
+            {
+                VerticesList.AddVertex(circle);
+                Graphics gDraw = drawPanel.CreateGraphics();
+                circle.Draw(gDraw);
+            } 
         }
     }
 }

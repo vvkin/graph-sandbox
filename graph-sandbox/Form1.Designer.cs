@@ -389,7 +389,8 @@
             // 
             this.drawPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.drawPanel.BackColor = System.Drawing.Color.White;
+            this.drawPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.drawPanel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.drawPanel.Location = new System.Drawing.Point(50, 42);
             this.drawPanel.Margin = new System.Windows.Forms.Padding(0);
             this.drawPanel.Name = "drawPanel";
