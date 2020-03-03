@@ -57,16 +57,18 @@
             this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.drawPanel = new System.Windows.Forms.Panel();
             this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.smallButtonsPanel.SuspendLayout();
             this.functionsPanel.SuspendLayout();
+            this.mainPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // topPanel
             // 
             this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
-            this.topPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.topPanel.Controls.Add(this.button6);
             this.topPanel.Controls.Add(this.label1);
             this.topPanel.Controls.Add(this.hideForm);
@@ -76,7 +78,7 @@
             this.topPanel.Margin = new System.Windows.Forms.Padding(0);
             this.topPanel.Name = "topPanel";
             this.topPanel.Size = new System.Drawing.Size(840, 42);
-            this.topPanel.TabIndex = 0;
+            this.topPanel.TabIndex = 1;
             // 
             // button6
             // 
@@ -91,7 +93,7 @@
             this.button6.Location = new System.Drawing.Point(0, 0);
             this.button6.Margin = new System.Windows.Forms.Padding(0);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(48, 40);
+            this.button6.Size = new System.Drawing.Size(50, 42);
             this.button6.TabIndex = 4;
             this.button6.UseVisualStyleBackColor = true;
             // 
@@ -113,9 +115,9 @@
             this.hideForm.Dock = System.Windows.Forms.DockStyle.Right;
             this.hideForm.FlatAppearance.BorderSize = 0;
             this.hideForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.hideForm.Location = new System.Drawing.Point(772, 0);
+            this.hideForm.Location = new System.Drawing.Point(774, 0);
             this.hideForm.Name = "hideForm";
-            this.hideForm.Size = new System.Drawing.Size(33, 40);
+            this.hideForm.Size = new System.Drawing.Size(33, 42);
             this.hideForm.TabIndex = 2;
             this.hideForm.UseVisualStyleBackColor = true;
             this.hideForm.Click += new System.EventHandler(this.hideForm_Click);
@@ -127,22 +129,24 @@
             this.closeForm.Dock = System.Windows.Forms.DockStyle.Right;
             this.closeForm.FlatAppearance.BorderSize = 0;
             this.closeForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.closeForm.Location = new System.Drawing.Point(805, 0);
+            this.closeForm.Location = new System.Drawing.Point(807, 0);
             this.closeForm.Name = "closeForm";
-            this.closeForm.Size = new System.Drawing.Size(33, 40);
+            this.closeForm.Size = new System.Drawing.Size(33, 42);
             this.closeForm.TabIndex = 2;
             this.closeForm.UseVisualStyleBackColor = true;
             this.closeForm.Click += new System.EventHandler(this.closeForm_Click);
             // 
             // buttonsPanel
             // 
+            this.buttonsPanel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.buttonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
-            this.buttonsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.buttonsPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonsPanel.Controls.Add(this.smallButtonsPanel);
             this.buttonsPanel.Controls.Add(this.functionsPanel);
             this.buttonsPanel.Location = new System.Drawing.Point(0, 42);
+            this.buttonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.buttonsPanel.Name = "buttonsPanel";
-            this.buttonsPanel.Size = new System.Drawing.Size(49, 424);
+            this.buttonsPanel.Size = new System.Drawing.Size(50, 424);
             this.buttonsPanel.TabIndex = 1;
             // 
             // smallButtonsPanel
@@ -154,7 +158,7 @@
             this.smallButtonsPanel.Controls.Add(this.functions);
             this.smallButtonsPanel.Controls.Add(this.download);
             this.smallButtonsPanel.Controls.Add(this.remove);
-            this.smallButtonsPanel.Location = new System.Drawing.Point(-2, -1);
+            this.smallButtonsPanel.Location = new System.Drawing.Point(0, 0);
             this.smallButtonsPanel.Margin = new System.Windows.Forms.Padding(0);
             this.smallButtonsPanel.Name = "smallButtonsPanel";
             this.smallButtonsPanel.Size = new System.Drawing.Size(50, 424);
@@ -369,13 +373,33 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // mainPanel
+            // 
+            this.mainPanel.Controls.Add(this.topPanel);
+            this.mainPanel.Controls.Add(this.buttonsPanel);
+            this.mainPanel.Controls.Add(this.drawPanel);
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.mainPanel.Location = new System.Drawing.Point(0, 0);
+            this.mainPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(840, 466);
+            this.mainPanel.TabIndex = 3;
+            // 
+            // drawPanel
+            // 
+            this.drawPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.drawPanel.Location = new System.Drawing.Point(53, 42);
+            this.drawPanel.Name = "drawPanel";
+            this.drawPanel.Size = new System.Drawing.Size(787, 424);
+            this.drawPanel.TabIndex = 2;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(840, 466);
-            this.Controls.Add(this.topPanel);
-            this.Controls.Add(this.buttonsPanel);
+            this.Controls.Add(this.mainPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -383,16 +407,15 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(840, 466);
             this.Name = "Form1";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
             this.topPanel.ResumeLayout(false);
             this.topPanel.PerformLayout();
             this.buttonsPanel.ResumeLayout(false);
             this.smallButtonsPanel.ResumeLayout(false);
             this.functionsPanel.ResumeLayout(false);
+            this.mainPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -426,6 +449,8 @@
         private System.Windows.Forms.Panel smallButtonsPanel;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel functionsPanel;
+        private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Panel drawPanel;
     }
 }
 

@@ -12,11 +12,12 @@ namespace graph_sandbox
 {
     public partial class Form1 : Form
     {
-        int MaxWidth = 200;
+        int MaxWidth = 230;
         bool Hided = true;
         private const int WM_NCHITTEST = 0x84;
         private const int HT_CLIENT = 0x1;
         private const int HT_CAPTION = 0x2;
+
 
         public Form1()
         {
@@ -30,21 +31,15 @@ namespace graph_sandbox
 
         private void closeForm_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            Close();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-
-       /*  protected override void WndProc(ref Message m)
-         {
+      /* protected override void WndProc(ref Message m)
+       {
             base.WndProc(ref m);
             if (m.Msg == WM_NCHITTEST)
                 m.Result = (IntPtr)(HT_CAPTION);
-         }*/
+       }*/
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -53,7 +48,7 @@ namespace graph_sandbox
 
         private void hideForm_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            WindowState = FormWindowState.Minimized;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
