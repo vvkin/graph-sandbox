@@ -71,42 +71,28 @@ namespace graph_sandbox
                     buttonsPanel.Width -= 30;
                 }
                 Hided = true;
-
-                Graphics gDraw = drawPanel.CreateGraphics();
-                VerticesList.ReDraw(gDraw);
-
             }
             timer1.Stop();
             functions.Visible = true;
         }
 
-        private void DrawWertex(object sender, MouseEventArgs e)
+        private bool addVertex_clicked = false;
+
+        private void addVertex_MouseClick(object sender, MouseEventArgs e)
+        {
+            Circle.canBeMoved = addVertex_clicked;
+            addVertex_clicked = !addVertex_clicked; 
+        }
+
+        private void DrawCircle(object sender, MouseEventArgs e)
         {
             if (addVertex_clicked)
             {
-                Vertex circle = new Vertex(e.X, e.Y, VerticesList.GetCount());
-
-                if (VerticesList.IsValid(circle))
-                {
-                    VerticesList.AddVertex(circle);
-                    Graphics gDraw = drawPanel.CreateGraphics();
-                    circle.Draw(gDraw);
-                }
+                Circle currentNew = new Circle();
+                currentNew.Center = new Point(e.X, e.Y);
+                drawingSurface1.Add(currentNew);
+                currentNew.Draw(drawingSurface1.CreateGraphics());
             }
-        }
-        private bool addVertex_clicked = false;
-        private int addVertex_click = 0;
-        private void addVertex_MouseClick(object sender, MouseEventArgs e)
-        {
-            addVertex_click++;
-            if (addVertex_click % 2 == 1)
-            {
-                addVertex_clicked = true;
-            }
-            else
-            {
-                addVertex_clicked = false;
-            }
-        }
+        } 
     }
 }

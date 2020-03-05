@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,17 +40,9 @@ namespace graph_sandbox
                 g.DrawString($"{number}", font, solidBrush, new PointF(coordinates.X + 8, coordinates.Y + 7));
         }
 
-        public double GetDistance(Vertex another)
-        {
-            return
-                Math.Sqrt(Math.Pow(this.coordinates.X - another.coordinates.X, 2) +
-                Math.Pow(this.coordinates.Y - another.coordinates.Y, 2));
+        
 
-        }
-
-        public bool IsOnSlidePanel()
-        {
-            return (coordinates.X < 230);
-        }
+        
     }
 }
+*/

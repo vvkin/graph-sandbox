@@ -10,7 +10,7 @@ namespace graph_sandbox
 {
     class Edge
     {
-        private Vertex[] adjacent_vertexes = new Vertex[2];
+        private Circle[] adjacent_vertexes = new Circle[2];
         private bool is_oriented;
         private Point start_point;
         private Point end_point;
@@ -20,7 +20,7 @@ namespace graph_sandbox
             weight = 1.0;
             is_oriented = false;
         }
-        public Edge(Vertex[] adjacent_vertexes, bool is_oriented,Point start_point,Point end_point, float weight)
+        public Edge(Circle[] adjacent_vertexes, bool is_oriented,Point start_point,Point end_point, float weight)
         {
             this.adjacent_vertexes = adjacent_vertexes;
             this.is_oriented = is_oriented;
@@ -28,7 +28,7 @@ namespace graph_sandbox
             this.end_point = end_point;
             this.weight = weight;
         }
-        public void SetAdjacentVertexes(Vertex vertex1, Vertex vertex2)
+        public void SetAdjacentVertexes(Circle vertex1, Circle vertex2)
         {
             adjacent_vertexes[0] = vertex1;
             adjacent_vertexes[1] = vertex2;

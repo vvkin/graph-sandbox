@@ -59,11 +59,13 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.mainPanel = new System.Windows.Forms.Panel();
             this.drawPanel = new System.Windows.Forms.Panel();
+            this.drawingSurface1 = new graph_sandbox.DrawingSurface();
             this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.smallButtonsPanel.SuspendLayout();
             this.functionsPanel.SuspendLayout();
             this.mainPanel.SuspendLayout();
+            this.drawPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // topPanel
@@ -104,7 +106,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(63, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(202, 31);
+            this.label1.Size = new System.Drawing.Size(162, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Graph Sandbox";
             // 
@@ -391,13 +393,24 @@
             this.drawPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.drawPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
+            this.drawPanel.Controls.Add(this.drawingSurface1);
             this.drawPanel.Font = new System.Drawing.Font("Times New Roman", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.drawPanel.Location = new System.Drawing.Point(50, 42);
             this.drawPanel.Margin = new System.Windows.Forms.Padding(0);
             this.drawPanel.Name = "drawPanel";
             this.drawPanel.Size = new System.Drawing.Size(790, 424);
             this.drawPanel.TabIndex = 2;
-            this.drawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawWertex);
+            // 
+            // drawingSurface1
+            // 
+            this.drawingSurface1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.drawingSurface1.Location = new System.Drawing.Point(0, 0);
+            this.drawingSurface1.Margin = new System.Windows.Forms.Padding(0);
+            this.drawingSurface1.Name = "drawingSurface1";
+            this.drawingSurface1.Size = new System.Drawing.Size(790, 423);
+            this.drawingSurface1.TabIndex = 0;
+            this.drawingSurface1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawCircle);
             // 
             // Form1
             // 
@@ -420,6 +433,7 @@
             this.smallButtonsPanel.ResumeLayout(false);
             this.functionsPanel.ResumeLayout(false);
             this.mainPanel.ResumeLayout(false);
+            this.drawPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -455,6 +469,7 @@
         private System.Windows.Forms.Panel functionsPanel;
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Panel drawPanel;
+        private DrawingSurface drawingSurface1;
     }
 }
 
