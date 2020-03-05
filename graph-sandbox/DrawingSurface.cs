@@ -13,14 +13,25 @@ namespace graph_sandbox
 
         public DrawingSurface() 
         { 
-            DoubleBuffered = true; Shapes = new List<Circle>(); 
+            DoubleBuffered = true; 
+            Shapes = new List<Circle>(); 
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             for (var i = Shapes.Count - 1; i >= 0; i--)
-                if (Shapes[i].HitTest(e.Location)) { selectedShape = Shapes[i]; break; }
-            if (selectedShape != null) { moving = true; previousPoint = e.Location; }
+                if (Shapes[i].HitTest(e.Location)) 
+                {
+                    selectedShape = Shapes[i]; 
+                    break; 
+                }
+
+            if (selectedShape != null) 
+            {
+                moving = true; 
+                previousPoint = e.Location; 
+            }
+
             base.OnMouseDown(e);
         }
         protected override void OnMouseMove(MouseEventArgs e)
@@ -47,11 +58,21 @@ namespace graph_sandbox
             Update();
         }
 
-        private bool isValid(Circle curr)
+        public bool isValid(Circle curr)
         {
+            while (curr.Center.X >= 765)
+            {
+                --curr.Center.X;
+            }
+
+            while (curr.Center.Y >= 400)
+            {
+                --curr.Center.Y;
+            }
+
             foreach (var shape in Shapes)
             {
-                if (curr.GetDistance(shape) > 50)
+                if (curr.GetDistance(shape) < 60)
                     return false;
             }
             return true;
@@ -59,7 +80,7 @@ namespace graph_sandbox
 
         public void Add(Circle curr)
         {
-            Shapes.Add(curr);
+           Shapes.Add(curr);
         }
     }
 }

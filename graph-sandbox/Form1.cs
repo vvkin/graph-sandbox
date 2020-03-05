@@ -17,6 +17,7 @@ namespace graph_sandbox
         private const int WM_NCHITTEST = 0x84;
         private const int HT_CLIENT = 0x1;
         private const int HT_CAPTION = 0x2;
+        private bool addVertex_clicked = false;
 
         public Form1()
         {
@@ -76,8 +77,6 @@ namespace graph_sandbox
             functions.Visible = true;
         }
 
-        private bool addVertex_clicked = false;
-
         private void addVertex_MouseClick(object sender, MouseEventArgs e)
         {
             Circle.canBeMoved = addVertex_clicked;
@@ -89,9 +88,18 @@ namespace graph_sandbox
             if (addVertex_clicked)
             {
                 Circle currentNew = new Circle();
+
                 currentNew.Center = new Point(e.X, e.Y);
-                drawingSurface1.Add(currentNew);
-                currentNew.Draw(drawingSurface1.CreateGraphics());
+                
+                if (drawingSurface1.isValid(currentNew))
+                {
+                    drawingSurface1.Add(currentNew);
+                    currentNew.Draw(drawingSurface1.CreateGraphics());
+                }
+                else
+                {
+                    --Circle.number;
+                }
             }
         } 
     }

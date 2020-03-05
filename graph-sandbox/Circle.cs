@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 public class Circle
 {
     public Color FillColor { get; set; }
-    public Point Center { get; set; }
+    public Point Center;
 
     public static bool canBeMoved = true;
 
@@ -47,7 +47,7 @@ public class Circle
 
         g.FillPath(brush, path);
 
-        if (number < 10)
+        if (uniqueNumber < 10)
             g.DrawString($"{uniqueNumber}", font, new SolidBrush(Color.Black), new PointF(Center.X - 6, Center.Y - 8));
         else
             g.DrawString($"{uniqueNumber}", font, new SolidBrush(Color.Black), new PointF(Center.X - 10, Center.Y - 8));
