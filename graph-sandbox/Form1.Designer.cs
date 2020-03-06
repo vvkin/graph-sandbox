@@ -233,6 +233,7 @@
             this.remove.Size = new System.Drawing.Size(50, 50);
             this.remove.TabIndex = 3;
             this.remove.UseVisualStyleBackColor = true;
+            this.remove.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChangeState);
             // 
             // functionsPanel
             // 

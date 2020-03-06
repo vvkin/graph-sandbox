@@ -18,6 +18,8 @@ namespace graph_sandbox
         private const int HT_CLIENT = 0x1;
         private const int HT_CAPTION = 0x2;
         private bool addVertex_clicked = false;
+        private bool removeObject_clicked = false;
+
 
         public Form1()
         {
@@ -80,17 +82,23 @@ namespace graph_sandbox
         private void addVertex_MouseClick(object sender, MouseEventArgs e)
         {
             Circle.canBeMoved = addVertex_clicked;
-            addVertex_clicked = !addVertex_clicked; 
+            addVertex_clicked = !addVertex_clicked;
+            removeObject_clicked = false;
         }
 
         private void DrawCircle(object sender, MouseEventArgs e)
         {
-            if (addVertex_clicked)
+            if (removeObject_clicked)
+            {
+                drawingSurface1.TryToRemove(e);
+            }
+
+            else if (addVertex_clicked)
             {
                 Circle currentNew = new Circle();
 
                 currentNew.Center = new Point(e.X, e.Y);
-                
+
                 if (drawingSurface1.isValid(currentNew))
                 {
                     drawingSurface1.Add(currentNew);
@@ -101,6 +109,12 @@ namespace graph_sandbox
                     --Circle.number;
                 }
             }
-        } 
+        }
+
+        private void ChangeState(object sender, MouseEventArgs e)
+        {
+            removeObject_clicked = !removeObject_clicked;
+            Circle.canBeMoved = false;
+        }
     }
 }

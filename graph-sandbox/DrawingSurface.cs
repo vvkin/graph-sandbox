@@ -40,7 +40,6 @@ namespace graph_sandbox
             if (moving)
             {
                 var d = new Point(e.X - previousPoint.X, e.Y - previousPoint.Y);
-                SolveOneOnAnother(selectedShape, Circle.Radious  * 2);
                 selectedShape.Move(d);
                 SolveOneOnAnother(selectedShape, Circle.Radious * 2);
                 previousPoint = e.Location;
@@ -50,7 +49,11 @@ namespace graph_sandbox
         }
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (moving) { selectedShape = null; moving = false; }
+            if (moving) 
+            { 
+                selectedShape = null; 
+                moving = false; 
+            }
             base.OnMouseUp(e);
         }
         protected override void OnPaint(PaintEventArgs e)
@@ -87,6 +90,7 @@ namespace graph_sandbox
         public bool isValid(Circle curr)
         {
            SolveOutOfTheBounds(curr);
+
            foreach (var shape in Shapes)
            {
                 if (curr.GetDistance(shape) < 60)
@@ -113,6 +117,30 @@ namespace graph_sandbox
                     }
                 }
             }
+        }
+
+        public void TryToRemove(MouseEventArgs e)
+        {
+            for(int i = 0; i < Shapes.Count; ++i)
+            {
+                if (Shapes[i].HitTest(e.Location))
+                {
+                    Shapes.RemoveAt(i);
+                    Shapes = new List<Circle>(Shapes);
+                    Rebuit();
+                    break;
+                }
+            }
+            Invalidate();
+        }
+
+        private void Rebuit()
+        {
+            for(int i = 0; i < Shapes.Count; ++i)
+            {
+                Shapes[i].uniqueNumber = i + 1;
+            }
+            Circle.number = Shapes.Count;
         }
 
         public void Add(Circle curr)

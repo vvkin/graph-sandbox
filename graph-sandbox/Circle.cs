@@ -7,7 +7,7 @@ public class Circle
     public Color FillColor { get; set; }
     public Point Center;
 
-    public static bool canBeMoved = true;
+    public static bool canBeMoved = false;
 
     public const int Radious = 20;
 
