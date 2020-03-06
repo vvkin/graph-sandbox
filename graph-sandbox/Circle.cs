@@ -13,7 +13,7 @@ public class Circle
 
     public static int number = 0;
 
-    private int uniqueNumber;
+    public int uniqueNumber;
 
     public Circle() 
     { 

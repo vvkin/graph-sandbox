@@ -31,17 +31,20 @@ namespace graph_sandbox
                 moving = true; 
                 previousPoint = e.Location; 
             }
-
             base.OnMouseDown(e);
         }
+
+   
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (moving)
             {
                 var d = new Point(e.X - previousPoint.X, e.Y - previousPoint.Y);
+                SolveOneOnAnother(selectedShape, Circle.Radious  * 2);
                 selectedShape.Move(d);
+                SolveOneOnAnother(selectedShape, Circle.Radious * 2);
                 previousPoint = e.Location;
-                this.Invalidate();
+                Invalidate();
             }
             base.OnMouseMove(e);
         }
@@ -55,10 +58,10 @@ namespace graph_sandbox
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             foreach (var shape in Shapes)
                 shape.Draw(e.Graphics);
-            Update();
         }
 
-        public bool isValid(Circle curr)
+
+        private void SolveOutOfTheBounds(Circle curr)
         {
             while (curr.Center.X >= 765)
             {
@@ -70,12 +73,46 @@ namespace graph_sandbox
                 --curr.Center.Y;
             }
 
-            foreach (var shape in Shapes)
+            while (curr.Center.Y <= 20)
             {
+                ++curr.Center.Y;
+            }
+
+            while (curr.Center.X <= 20)
+            {
+                ++curr.Center.X;
+            }
+        }
+
+        public bool isValid(Circle curr)
+        {
+           SolveOutOfTheBounds(curr);
+           foreach (var shape in Shapes)
+           {
                 if (curr.GetDistance(shape) < 60)
                     return false;
-            }
+           }
+
             return true;
+        }
+
+        private void SolveOneOnAnother(Circle curr, int Distance)
+        {
+            SolveOutOfTheBounds(curr);
+
+            for (int i = 0; i < Shapes.Count; ++i)
+            {
+                if (i != curr.uniqueNumber - 1)
+                {
+                    while(curr.GetDistance(Shapes[i]) < Distance)
+                    {
+                        if (curr.Center.X < Shapes[i].Center.X) --curr.Center.X;
+                        if (curr.Center.Y < Shapes[i].Center.Y) --curr.Center.Y;
+                        if (curr.Center.X > Shapes[i].Center.X) ++curr.Center.X;
+                        if (curr.Center.Y > Shapes[i].Center.Y) ++curr.Center.Y;
+                    }
+                }
+            }
         }
 
         public void Add(Circle curr)
