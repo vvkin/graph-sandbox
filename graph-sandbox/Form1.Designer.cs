@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.topPanel = new System.Windows.Forms.Panel();
+            this.hideForm = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.hideForm = new System.Windows.Forms.Button();
             this.closeForm = new System.Windows.Forms.Button();
             this.buttonsPanel = new System.Windows.Forms.Panel();
             this.smallButtonsPanel = new System.Windows.Forms.Panel();
@@ -71,9 +71,9 @@
             // topPanel
             // 
             this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.topPanel.Controls.Add(this.hideForm);
             this.topPanel.Controls.Add(this.button6);
             this.topPanel.Controls.Add(this.label1);
-            this.topPanel.Controls.Add(this.hideForm);
             this.topPanel.Controls.Add(this.closeForm);
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
@@ -81,6 +81,23 @@
             this.topPanel.Name = "topPanel";
             this.topPanel.Size = new System.Drawing.Size(840, 42);
             this.topPanel.TabIndex = 1;
+            this.topPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MakeDragable);
+            this.topPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragForm);
+            this.topPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DisableDrag);
+            // 
+            // hideForm
+            // 
+            this.hideForm.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("hideForm.BackgroundImage")));
+            this.hideForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.hideForm.Dock = System.Windows.Forms.DockStyle.Right;
+            this.hideForm.FlatAppearance.BorderSize = 0;
+            this.hideForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.hideForm.Location = new System.Drawing.Point(774, 0);
+            this.hideForm.Name = "hideForm";
+            this.hideForm.Size = new System.Drawing.Size(33, 42);
+            this.hideForm.TabIndex = 2;
+            this.hideForm.UseVisualStyleBackColor = true;
+            this.hideForm.Click += new System.EventHandler(this.hideForm_Click);
             // 
             // button6
             // 
@@ -109,20 +126,6 @@
             this.label1.Size = new System.Drawing.Size(162, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Graph Sandbox";
-            // 
-            // hideForm
-            // 
-            this.hideForm.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("hideForm.BackgroundImage")));
-            this.hideForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.hideForm.Dock = System.Windows.Forms.DockStyle.Right;
-            this.hideForm.FlatAppearance.BorderSize = 0;
-            this.hideForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.hideForm.Location = new System.Drawing.Point(774, 0);
-            this.hideForm.Name = "hideForm";
-            this.hideForm.Size = new System.Drawing.Size(33, 42);
-            this.hideForm.TabIndex = 2;
-            this.hideForm.UseVisualStyleBackColor = true;
-            this.hideForm.Click += new System.EventHandler(this.hideForm_Click);
             // 
             // closeForm
             // 

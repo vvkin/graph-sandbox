@@ -14,12 +14,12 @@ namespace graph_sandbox
     {
         int MaxWidth = 230;
         bool Hided = true;
-        private const int WM_NCHITTEST = 0x84;
-        private const int HT_CLIENT = 0x1;
-        private const int HT_CAPTION = 0x2;
         private bool addVertex_clicked = false;
         private bool removeObject_clicked = false;
-
+        private Color activeButtonColor = Color.FromArgb(100, 100, 100);
+        private Color passiveButtonColor = Color.FromArgb(51, 75, 180);
+        private bool dragable;
+        private Point startPosition;
 
         public Form1()
         {
@@ -35,13 +35,6 @@ namespace graph_sandbox
         {
             Close();
         }
-
-      protected override void WndProc(ref Message m)
-      {
-            base.WndProc(ref m);
-            if (m.Msg == WM_NCHITTEST)
-                m.Result = (IntPtr)(HT_CAPTION);
-      }
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -81,9 +74,10 @@ namespace graph_sandbox
 
         private void addVertex_MouseClick(object sender, MouseEventArgs e)
         {
-            Circle.canBeMoved = addVertex_clicked;
             addVertex_clicked = !addVertex_clicked;
             removeObject_clicked = false;
+            ChangeButtonsColor();
+            ChangeCanBeMoved();
         }
 
         private void DrawCircle(object sender, MouseEventArgs e)
@@ -114,7 +108,44 @@ namespace graph_sandbox
         private void ChangeState(object sender, MouseEventArgs e)
         {
             removeObject_clicked = !removeObject_clicked;
-            Circle.canBeMoved = false;
+            addVertex_clicked = false;
+            ChangeButtonsColor();
+            ChangeCanBeMoved();
         }
+
+        private void ChangeCanBeMoved()
+        {
+            Circle.canBeMoved = !(addVertex_clicked || removeObject_clicked);
+        }
+
+
+        private void ChangeButtonsColor()
+        {
+            remove.BackColor = (removeObject_clicked) ? activeButtonColor : passiveButtonColor;
+            addVertex.BackColor = (addVertex_clicked) ? activeButtonColor : passiveButtonColor;
+        }
+
+        // Drag window when drag topPanel
+
+        private void MakeDragable(object sender, MouseEventArgs e)
+        {
+            dragable = true;
+            startPosition = e.Location;
+        }
+
+        private void DragForm(object sender, MouseEventArgs e)
+        {
+            if (dragable)
+            {
+                Location = new Point(Cursor.Position.X - startPosition.X, Cursor.Position.Y - startPosition.Y);
+            }
+        }
+
+        private void DisableDrag(object sender, MouseEventArgs e)
+        {
+            dragable = false;
+        }
+
+        // End
     }
 }
