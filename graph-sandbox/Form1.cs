@@ -81,11 +81,11 @@ namespace graph_sandbox
             {
                 drawingSurface1.TryToRemove(e);
             }
-            else if (addVertex_clicked)
+            else if(addVertex_clicked)
             {
                 drawingSurface1.TryToAddVertex(e);
             }
-            else
+            else if(addEdge_clicked)
             {
                 drawingSurface1.TryToAddEdge(e);
             }
@@ -112,6 +112,7 @@ namespace graph_sandbox
         private void addEdgeButtonChangeState(object sender, MouseEventArgs e)
         {
             addEdge_clicked = !addEdge_clicked;
+            drawingSurface1.edgeStartPoint = null;
             addVertex_clicked = false;
             removeObject_clicked = false;
             ChangeButtonsColor();

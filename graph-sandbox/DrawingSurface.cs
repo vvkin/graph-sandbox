@@ -12,7 +12,7 @@ namespace graph_sandbox
         Circle selectedShape;
         bool moving;
         Point previousPoint = Point.Empty;
-        Circle edgeStartPoint = null;
+        public Circle edgeStartPoint = null;
 
         public DrawingSurface() 
         { 
@@ -71,9 +71,7 @@ namespace graph_sandbox
                 foreach (var edge in Edges)
                     edge.Draw(e.Graphics);
             }
-            
         }
-
 
         private void SolveOutOfTheBounds(Circle curr)
         {
@@ -132,12 +130,14 @@ namespace graph_sandbox
 
         public void TryToRemove(MouseEventArgs e)
         {
-            for(int i = 0; i < Vertices.Count; ++i)
+            edgeStartPoint = null;
+
+            for (int i = 0; i < Vertices.Count; ++i)
             {
                 if (Vertices[i].HitTest(e.Location))
                 {
+                    RebulidEdges(Vertices[i]);
                     Vertices.RemoveAt(i);
-                    Vertices = new List<Circle>(Vertices);
                     Rebuit();
                     break;
                 }
@@ -147,21 +147,36 @@ namespace graph_sandbox
 
         private void Rebuit()
         {
-            for(int i = 0; i < Vertices.Count; ++i)
+            for (int i = 0; i < Vertices.Count; ++i)
             {
                 Vertices[i].uniqueNumber = i + 1;
             }
             Circle.number = Vertices.Count;
         }
 
-        public void AddVertex(Circle curr)
+        private void RebulidEdges(Circle deletedVertex)
         {
-           Vertices.Add(curr);
-        }
+            bool isInList = true;
 
+            while(isInList)
+            {
+                isInList = false;
+                for(int i = 0; i < Edges.Count; ++i)
+                {
+                    if(Edges[i].Contains(deletedVertex))
+                    {
+                        isInList = true;
+                        Edges.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+        }
 
         public void TryToAddVertex(MouseEventArgs e)
         {
+            edgeStartPoint = null;
+
             Circle tempCircle = new Circle(e.X, e.Y);
 
             if (isValid(tempCircle))
@@ -175,6 +190,16 @@ namespace graph_sandbox
             }
         }
 
+        private bool ContainsThisEdge(Edge currEdge)
+        {
+            foreach(var edge in Edges)
+            {
+                if (currEdge.IsEquals(edge))
+                    return true;
+            }
+            return false;
+        }
+
         public void TryToAddEdge(MouseEventArgs e)
         {
             foreach(var vertex in Vertices)
@@ -184,14 +209,21 @@ namespace graph_sandbox
                     if (edgeStartPoint == null)
                     {
                         edgeStartPoint = vertex;
+                        vertex.FillColor = Color.FromArgb(100, 100, 100);
                     }
                     else
                     {
                         Edge toAdd = new Edge(edgeStartPoint, vertex);
-                        Edges.Add(toAdd);
-                        toAdd.Draw(CreateGraphics());
+
+                        if (!ContainsThisEdge(toAdd))
+                        {
+                            Edges.Add(toAdd);
+                            toAdd.Draw(CreateGraphics());
+                        }
+                        edgeStartPoint.FillColor = Color.White;
                         edgeStartPoint = null;
                     }
+                    Invalidate();
                     break;
                 }
             }

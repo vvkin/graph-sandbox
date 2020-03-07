@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,32 +11,36 @@ namespace graph_sandbox
 {
     class Edge
     {
-        private bool is_directed;
-        private Circle start_point;
-        private Circle end_point;
-        private double weight;
+        private bool isDirected;
+        private Circle startVertex;
+        private Circle endVertex;
+        //public double weight;
         private Color FillColor = Color.White;
         
         public Edge(Circle startPoint, Circle endPoint)
         {
-            start_point = startPoint;
-            end_point = endPoint;
+            startVertex = startPoint;
+            endVertex = endPoint;
         }
 
         public void Draw(Graphics g)
         {
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
             Brush newBrush = new SolidBrush(FillColor);
             Pen newPen = new Pen(newBrush);
-            g.DrawLine(newPen, start_point.Center, end_point.Center);
+            g.DrawLine(newPen, startVertex.Center, endVertex.Center);
         }
-       
 
-       /* public void SetStartPoint(Point p) => start_point = p;
+        public bool IsEquals(Edge toCompare)
+        {
+            return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex);
+        }
 
-        public void SetEndPoint(Point p) => end_point = p;
-        
-        public void SetWeight(int w) => weight = w;*/
-
+        public bool Contains(Circle vertex)
+        {
+            return (startVertex == vertex || endVertex == vertex);
+        }
 
     }
     
