@@ -182,7 +182,7 @@
             this.addVertex.Size = new System.Drawing.Size(50, 50);
             this.addVertex.TabIndex = 2;
             this.addVertex.UseVisualStyleBackColor = true;
-            this.addVertex.MouseClick += new System.Windows.Forms.MouseEventHandler(this.addVertex_MouseClick);
+            this.addVertex.MouseClick += new System.Windows.Forms.MouseEventHandler(this.addVertexButtonChangeState);
             // 
             // addEdge
             // 
@@ -196,6 +196,7 @@
             this.addEdge.Size = new System.Drawing.Size(50, 50);
             this.addEdge.TabIndex = 3;
             this.addEdge.UseVisualStyleBackColor = true;
+            this.addEdge.MouseClick += new System.Windows.Forms.MouseEventHandler(this.addEdgeButtonChangeState);
             // 
             // functions
             // 
@@ -236,7 +237,7 @@
             this.remove.Size = new System.Drawing.Size(50, 50);
             this.remove.TabIndex = 3;
             this.remove.UseVisualStyleBackColor = true;
-            this.remove.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ChangeState);
+            this.remove.MouseClick += new System.Windows.Forms.MouseEventHandler(this.RemoveButtonChangeState);
             // 
             // functionsPanel
             // 
@@ -414,7 +415,7 @@
             this.drawingSurface1.Name = "drawingSurface1";
             this.drawingSurface1.Size = new System.Drawing.Size(790, 423);
             this.drawingSurface1.TabIndex = 0;
-            this.drawingSurface1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawCircle);
+            this.drawingSurface1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddOrRemove);
             // 
             // Form1
             // 

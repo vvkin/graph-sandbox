@@ -10,36 +10,31 @@ namespace graph_sandbox
 {
     class Edge
     {
-        private Circle[] adjacent_vertexes = new Circle[2];
-        private bool is_oriented;
-        private Point start_point;
-        private Point end_point;
+        private bool is_directed;
+        private Circle start_point;
+        private Circle end_point;
         private double weight;
-        public Edge()
+        private Color FillColor = Color.White;
+        
+        public Edge(Circle startPoint, Circle endPoint)
         {
-            weight = 1.0;
-            is_oriented = false;
+            start_point = startPoint;
+            end_point = endPoint;
         }
-        public Edge(Circle[] adjacent_vertexes, bool is_oriented,Point start_point,Point end_point, float weight)
+
+        public void Draw(Graphics g)
         {
-            this.adjacent_vertexes = adjacent_vertexes;
-            this.is_oriented = is_oriented;
-            this.start_point = start_point;
-            this.end_point = end_point;
-            this.weight = weight;
+            Brush newBrush = new SolidBrush(FillColor);
+            Pen newPen = new Pen(newBrush);
+            g.DrawLine(newPen, start_point.Center, end_point.Center);
         }
-        public void SetAdjacentVertexes(Circle vertex1, Circle vertex2)
-        {
-            adjacent_vertexes[0] = vertex1;
-            adjacent_vertexes[1] = vertex2;
-            
-        }
-        public void SetOriented(bool value)=> is_oriented = value;
-        public void SetStartPoint(Point p) => start_point = p;
+       
+
+       /* public void SetStartPoint(Point p) => start_point = p;
 
         public void SetEndPoint(Point p) => end_point = p;
         
-        public void SetWeight(int w) => weight = w;
+        public void SetWeight(int w) => weight = w;*/
 
 
     }

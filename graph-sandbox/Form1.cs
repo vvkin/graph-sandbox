@@ -14,8 +14,11 @@ namespace graph_sandbox
     {
         int MaxWidth = 230;
         bool Hided = true;
+
         private bool addVertex_clicked = false;
         private bool removeObject_clicked = false;
+        private bool addEdge_clicked = false;
+
         private Color activeButtonColor = Color.FromArgb(100, 100, 100);
         private Color passiveButtonColor = Color.FromArgb(51, 75, 180);
         private bool dragable;
@@ -72,57 +75,59 @@ namespace graph_sandbox
             functions.Visible = true;
         }
 
-        private void addVertex_MouseClick(object sender, MouseEventArgs e)
-        {
-            addVertex_clicked = !addVertex_clicked;
-            removeObject_clicked = false;
-            ChangeButtonsColor();
-            ChangeCanBeMoved();
-        }
-
-        private void DrawCircle(object sender, MouseEventArgs e)
+        private void AddOrRemove(object sender, MouseEventArgs e)
         {
             if (removeObject_clicked)
             {
                 drawingSurface1.TryToRemove(e);
             }
-
             else if (addVertex_clicked)
             {
-                Circle currentNew = new Circle();
-
-                currentNew.Center = new Point(e.X, e.Y);
-
-                if (drawingSurface1.isValid(currentNew))
-                {
-                    drawingSurface1.Add(currentNew);
-                    currentNew.Draw(drawingSurface1.CreateGraphics());
-                }
-                else
-                {
-                    --Circle.number;
-                }
+                drawingSurface1.TryToAddVertex(e);
+            }
+            else
+            {
+                drawingSurface1.TryToAddEdge(e);
             }
         }
 
-        private void ChangeState(object sender, MouseEventArgs e)
+        private void addVertexButtonChangeState(object sender, MouseEventArgs e)
+        {
+            addVertex_clicked = !addVertex_clicked;
+            removeObject_clicked = false;
+            addEdge_clicked = false;
+            ChangeButtonsColor();
+            ChangeCanBeMoved();
+        }
+
+        private void RemoveButtonChangeState(object sender, MouseEventArgs e)
         {
             removeObject_clicked = !removeObject_clicked;
             addVertex_clicked = false;
+            addEdge_clicked = false;
+            ChangeButtonsColor();
+            ChangeCanBeMoved();
+        }
+
+        private void addEdgeButtonChangeState(object sender, MouseEventArgs e)
+        {
+            addEdge_clicked = !addEdge_clicked;
+            addVertex_clicked = false;
+            removeObject_clicked = false;
             ChangeButtonsColor();
             ChangeCanBeMoved();
         }
 
         private void ChangeCanBeMoved()
         {
-            Circle.canBeMoved = !(addVertex_clicked || removeObject_clicked);
+            Circle.canBeMoved = !(addVertex_clicked || removeObject_clicked || addEdge_clicked);
         }
-
 
         private void ChangeButtonsColor()
         {
             remove.BackColor = (removeObject_clicked) ? activeButtonColor : passiveButtonColor;
             addVertex.BackColor = (addVertex_clicked) ? activeButtonColor : passiveButtonColor;
+            addEdge.BackColor = (addEdge_clicked) ? activeButtonColor : passiveButtonColor;
         }
 
         // Drag window when drag topPanel
@@ -145,7 +150,5 @@ namespace graph_sandbox
         {
             dragable = false;
         }
-
-        // End
     }
 }

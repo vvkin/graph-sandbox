@@ -6,23 +6,27 @@ namespace graph_sandbox
 {
     public class DrawingSurface : Panel
     {
-        private List<Circle> Shapes;
+        private List<Circle> Vertices;
+        private List<Edge> Edges;
+
         Circle selectedShape;
         bool moving;
         Point previousPoint = Point.Empty;
+        Circle edgeStartPoint = null;
 
         public DrawingSurface() 
         { 
             DoubleBuffered = true; 
-            Shapes = new List<Circle>(); 
+            Vertices = new List<Circle>();
+            Edges = new List<Edge>();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            for (var i = Shapes.Count - 1; i >= 0; i--)
-                if (Shapes[i].HitTest(e.Location)) 
+            for (var i = Vertices.Count - 1; i >= 0; i--)
+                if (Vertices[i].HitTest(e.Location)) 
                 {
-                    selectedShape = Shapes[i]; 
+                    selectedShape = Vertices[i]; 
                     break; 
                 }
 
@@ -59,8 +63,15 @@ namespace graph_sandbox
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            foreach (var shape in Shapes)
+            foreach (var shape in Vertices)
                 shape.Draw(e.Graphics);
+
+            if(Edges.Count > 0)
+            {
+                foreach (var edge in Edges)
+                    edge.Draw(e.Graphics);
+            }
+            
         }
 
 
@@ -91,7 +102,7 @@ namespace graph_sandbox
         {
            SolveOutOfTheBounds(curr);
 
-           foreach (var shape in Shapes)
+           foreach (var shape in Vertices)
            {
                 if (curr.GetDistance(shape) < 60)
                     return false;
@@ -104,16 +115,16 @@ namespace graph_sandbox
         {
             SolveOutOfTheBounds(curr);
 
-            for (int i = 0; i < Shapes.Count; ++i)
+            for (int i = 0; i < Vertices.Count; ++i)
             {
                 if (i != curr.uniqueNumber - 1)
                 {
-                    while(curr.GetDistance(Shapes[i]) < Distance)
+                    while(curr.GetDistance(Vertices[i]) < Distance)
                     {
-                        if (curr.Center.X < Shapes[i].Center.X) --curr.Center.X;
-                        if (curr.Center.Y < Shapes[i].Center.Y) --curr.Center.Y;
-                        if (curr.Center.X > Shapes[i].Center.X) ++curr.Center.X;
-                        if (curr.Center.Y > Shapes[i].Center.Y) ++curr.Center.Y;
+                        if (curr.Center.X < Vertices[i].Center.X) --curr.Center.X;
+                        if (curr.Center.Y < Vertices[i].Center.Y) --curr.Center.Y;
+                        if (curr.Center.X > Vertices[i].Center.X) ++curr.Center.X;
+                        if (curr.Center.Y > Vertices[i].Center.Y) ++curr.Center.Y;
                     }
                 }
             }
@@ -121,12 +132,12 @@ namespace graph_sandbox
 
         public void TryToRemove(MouseEventArgs e)
         {
-            for(int i = 0; i < Shapes.Count; ++i)
+            for(int i = 0; i < Vertices.Count; ++i)
             {
-                if (Shapes[i].HitTest(e.Location))
+                if (Vertices[i].HitTest(e.Location))
                 {
-                    Shapes.RemoveAt(i);
-                    Shapes = new List<Circle>(Shapes);
+                    Vertices.RemoveAt(i);
+                    Vertices = new List<Circle>(Vertices);
                     Rebuit();
                     break;
                 }
@@ -136,16 +147,54 @@ namespace graph_sandbox
 
         private void Rebuit()
         {
-            for(int i = 0; i < Shapes.Count; ++i)
+            for(int i = 0; i < Vertices.Count; ++i)
             {
-                Shapes[i].uniqueNumber = i + 1;
+                Vertices[i].uniqueNumber = i + 1;
             }
-            Circle.number = Shapes.Count;
+            Circle.number = Vertices.Count;
         }
 
-        public void Add(Circle curr)
+        public void AddVertex(Circle curr)
         {
-           Shapes.Add(curr);
+           Vertices.Add(curr);
+        }
+
+
+        public void TryToAddVertex(MouseEventArgs e)
+        {
+            Circle tempCircle = new Circle(e.X, e.Y);
+
+            if (isValid(tempCircle))
+            {
+                Vertices.Add(tempCircle);
+                tempCircle.Draw(CreateGraphics());
+            }
+            else
+            {
+                --Circle.number;
+            }
+        }
+
+        public void TryToAddEdge(MouseEventArgs e)
+        {
+            foreach(var vertex in Vertices)
+            {
+                if(vertex.HitTest(e.Location))
+                {
+                    if (edgeStartPoint == null)
+                    {
+                        edgeStartPoint = vertex;
+                    }
+                    else
+                    {
+                        Edge toAdd = new Edge(edgeStartPoint, vertex);
+                        Edges.Add(toAdd);
+                        toAdd.Draw(CreateGraphics());
+                        edgeStartPoint = null;
+                    }
+                    break;
+                }
+            }
         }
     }
 }

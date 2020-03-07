@@ -15,8 +15,10 @@ public class Circle
 
     public int uniqueNumber;
 
-    public Circle() 
-    { 
+    public Circle(int x, int y) 
+    {
+        Center.X = x;
+        Center.Y = y;
         FillColor = Color.White;
         uniqueNumber = ++number;
     }
