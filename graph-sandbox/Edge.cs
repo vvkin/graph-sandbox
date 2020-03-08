@@ -15,8 +15,8 @@ namespace graph_sandbox
         private Circle startVertex;
         private Circle endVertex;
         //public double weight;
-        private Color FillColor = Color.White;
-        
+        public Color FillColor = Color.White;
+
         public Edge(Circle startPoint, Circle endPoint)
         {
             startVertex = startPoint;
@@ -28,8 +28,15 @@ namespace graph_sandbox
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
             Brush newBrush = new SolidBrush(FillColor);
-            Pen newPen = new Pen(newBrush);
-            g.DrawLine(newPen, startVertex.Center, endVertex.Center);
+            Pen newPen = new Pen(newBrush,2);
+            g.DrawLine(newPen,startVertex.Center, endVertex.Center);
+
+            var startRect = new Rectangle(startVertex.Center.X, startVertex.Center.Y, 10, 10);
+            var endRect = new Rectangle(endVertex.Center.X, endVertex.Center.Y, 1, 1);
+
+            g.DrawRectangle(newPen, startRect);
+            g.DrawRectangle(newPen, endRect);
+
         }
 
         public bool IsEquals(Edge toCompare)
@@ -40,6 +47,16 @@ namespace graph_sandbox
         public bool Contains(Circle vertex)
         {
             return (startVertex == vertex || endVertex == vertex);
+        }
+
+        public bool HitTest(Point p)
+        {
+            using (var path = new GraphicsPath())
+            {
+                path.AddLine(startVertex.Center, endVertex.Center);
+                    return path.IsOutlineVisible(p, (new Pen(new SolidBrush(FillColor), 8)));
+
+            }
         }
 
     }

@@ -62,15 +62,15 @@ namespace graph_sandbox
         }
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            foreach (var shape in Vertices)
-                shape.Draw(e.Graphics);
-
-            if(Edges.Count > 0)
+            if (Edges.Count > 0)
             {
                 foreach (var edge in Edges)
                     edge.Draw(e.Graphics);
             }
+
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            foreach (var shape in Vertices)
+                shape.Draw(e.Graphics);
         }
 
         private void SolveOutOfTheBounds(Circle curr)
@@ -130,8 +130,6 @@ namespace graph_sandbox
 
         public void TryToRemove(MouseEventArgs e)
         {
-            edgeStartPoint = null;
-
             for (int i = 0; i < Vertices.Count; ++i)
             {
                 if (Vertices[i].HitTest(e.Location))
@@ -142,6 +140,16 @@ namespace graph_sandbox
                     break;
                 }
             }
+          
+            for(int i = 0; i < Edges.Count; ++i)
+            {
+                if (Edges[i].HitTest(e.Location))
+                {
+                    Edges.RemoveAt(i);
+                    break; 
+                }
+            }
+
             Invalidate();
         }
 
@@ -173,10 +181,16 @@ namespace graph_sandbox
             }
         }
 
+        public void ClearActiveVertex()
+        {
+            if (edgeStartPoint != null)
+                edgeStartPoint.FillColor = Color.White;
+            edgeStartPoint = null;
+            Invalidate();
+        }
+
         public void TryToAddVertex(MouseEventArgs e)
         {
-            edgeStartPoint = null;
-
             Circle tempCircle = new Circle(e.X, e.Y);
 
             if (isValid(tempCircle))

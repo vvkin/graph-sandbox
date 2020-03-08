@@ -93,6 +93,7 @@ namespace graph_sandbox
 
         private void addVertexButtonChangeState(object sender, MouseEventArgs e)
         {
+            drawingSurface1.ClearActiveVertex();
             addVertex_clicked = !addVertex_clicked;
             removeObject_clicked = false;
             addEdge_clicked = false;
@@ -102,6 +103,7 @@ namespace graph_sandbox
 
         private void RemoveButtonChangeState(object sender, MouseEventArgs e)
         {
+            drawingSurface1.ClearActiveVertex();
             removeObject_clicked = !removeObject_clicked;
             addVertex_clicked = false;
             addEdge_clicked = false;
