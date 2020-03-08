@@ -63,10 +63,10 @@ public class Circle
         }
     }
 
-    public double GetDistance(Circle another)
+    public float GetDistance(Circle another)
     {
         return
-            Math.Sqrt(Math.Pow(this.Center.X - another.Center.X, 2) +
-            Math.Pow(this.Center.Y - another.Center.Y, 2));
+            (float)Math.Sqrt(Math.Pow(this.Center.X - another.Center.X, 2) +
+            (float)Math.Pow(this.Center.Y - another.Center.Y, 2));
     }
 }

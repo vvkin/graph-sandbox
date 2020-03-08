@@ -62,13 +62,14 @@ namespace graph_sandbox
         }
         protected override void OnPaint(PaintEventArgs e)
         {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
             if (Edges.Count > 0)
             {
                 foreach (var edge in Edges)
                     edge.Draw(e.Graphics);
             }
 
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             foreach (var shape in Vertices)
                 shape.Draw(e.Graphics);
         }
