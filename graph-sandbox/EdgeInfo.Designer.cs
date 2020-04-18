@@ -166,7 +166,6 @@
             this.Controls.Add(this.edgeType);
             this.Controls.Add(this.TopPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "EdgeInfo";
             this.Text = "EdgeInfo";
             this.TopPanel.ResumeLayout(false);

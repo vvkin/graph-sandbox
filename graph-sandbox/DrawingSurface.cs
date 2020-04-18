@@ -73,7 +73,6 @@ namespace graph_sandbox
 
             foreach (var shape in Vertices)
                 shape.Draw(e.Graphics);
-            e.Dispose();
         }
 
         private void SolveOutOfTheBounds(Circle curr)
@@ -189,26 +188,25 @@ namespace graph_sandbox
             }
         }
 
-        private bool ContainsThisEdge(Edge currEdge)
+        private void TryToAddEdge(Edge currEdge)
         {
-            foreach(var edge in Edges)
+            for (var i = 0; i < Edges.Count; ++i)
             {
-                if (currEdge.IsEquals(edge))
-                    return true;
+                if (Edges[i].IsEquals(currEdge))
+                {
+                    Edges[i] = currEdge;
+                    return;
+                }
             }
-            return false;
+            Edges.Add(currEdge);
         }
 
         private void CreateEdge(Circle vertex)
         {
             edgeForm.ShowDialog();
             Edge toAdd = edgeForm.GetEdge(edgeStartPoint, vertex);
-
-            if (!ContainsThisEdge(toAdd))
-            {
-                Edges.Add(toAdd);
-                toAdd.Draw(CreateGraphics());
-            }
+            TryToAddEdge(toAdd);
+            toAdd.Draw(CreateGraphics());
             edgeStartPoint.FillColor = Color.White;
             edgeStartPoint = null; 
         }

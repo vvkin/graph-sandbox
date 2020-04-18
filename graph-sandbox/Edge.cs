@@ -37,8 +37,8 @@ namespace graph_sandbox
                     g.DrawLine(newPen, startPoint, endPoint);
                     if (weight != 0)
                     {
-                        g.DrawString(Convert.ToString(weight), new Font("Calibri", 18), 
-                            new SolidBrush(System.Drawing.Color.LightBlue), new PointF((startPoint.X + endPoint.X) / 2,
+                        g.DrawString(Convert.ToString(weight), new Font("Arial", 16, FontStyle.Bold), 
+                            new SolidBrush(Color.FromArgb(0, 124, 234)), new PointF((startPoint.X + endPoint.X) / 2,
                             (startPoint.Y + endPoint.Y) / 2));
                     }
                 }

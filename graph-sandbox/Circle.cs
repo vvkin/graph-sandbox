@@ -51,7 +51,6 @@ public class Circle
                 }
             }            
         }
-       // brush.Dispose(); font.Dispose(); path.Dispose();
     }
     public void Move(Point d)
     {
