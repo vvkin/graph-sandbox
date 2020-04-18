@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace graph_sandbox
 {
@@ -29,10 +30,17 @@ namespace graph_sandbox
             {
                 using (AdjustableArrowCap bigArrow = new AdjustableArrowCap(5, 5))
                 {
-                    newPen.CustomEndCap = bigArrow;
+                    if (isDirected)
+                    {
+                        newPen.CustomEndCap = bigArrow;
+                    }
                     g.DrawLine(newPen, startPoint, endPoint);
-                }
-            }  
+                    if (weight != 0)
+                    {
+                        g.DrawString(Convert.ToString(weight), new Font("Calibri", 18), new SolidBrush(System.Drawing.Color.LightBlue), new PointF((startPoint.X + endPoint.X) / 2, (startPoint.Y + endPoint.Y) / 2));
+                    }
+                    }
+            }
         }
 
         private (float, float) GetDeltaCoords()
