@@ -210,8 +210,7 @@ namespace graph_sandbox
                 toAdd.Draw(CreateGraphics());
             }
             edgeStartPoint.FillColor = Color.White;
-            edgeStartPoint = null;
-            
+            edgeStartPoint = null; 
         }
 
         public void TryToAddEdge(MouseEventArgs e)

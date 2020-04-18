@@ -8,10 +8,13 @@ namespace graph_sandbox
     {
         private int weight = 0;
         private bool isDirected = false;
+        private bool dragable;
+        Point startPosition;
 
         public EdgeInfo()
         {
             InitializeComponent();
+            CenterToParent();
         }
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -39,9 +42,14 @@ namespace graph_sandbox
 
         private void Normalize(object sender, EventArgs e)
         {
-            if (!int.TryParse(edgeWeight.Text, out weight))
+
+            if (!int.TryParse(edgeWeight.Text, out int _))
             {
                 edgeWeight.Text = weight.ToString();
+            }
+            else
+            {
+                weight = int.Parse(edgeWeight.Text);
             }
         }
 
@@ -64,6 +72,25 @@ namespace graph_sandbox
             edgeWeight.Text = "0";
             return toReturn;
            
+        }
+
+        private void MakeDragable(object sender, MouseEventArgs e)
+        {
+            dragable = true;
+            startPosition = e.Location;
+        }
+
+        private void DisableDrag(object sender, MouseEventArgs e)
+        {
+            dragable = false;
+        }
+
+        private void DragForm(object sender, MouseEventArgs e)
+        {
+            if (dragable)
+            {
+                Location = new Point(Cursor.Position.X - startPosition.X, Cursor.Position.Y - startPosition.Y);
+            }
         }
     }
 }

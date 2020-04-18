@@ -56,7 +56,6 @@
             this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.mainPanel = new System.Windows.Forms.Panel();
             this.drawPanel = new System.Windows.Forms.Panel();
             this.drawingSurface1 = new graph_sandbox.DrawingSurface();
@@ -242,7 +241,6 @@
             // functionsPanel
             // 
             this.functionsPanel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            //this.functionsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
             this.functionsPanel.Controls.Add(this.button1);
             this.functionsPanel.Controls.Add(this.button9);
             this.functionsPanel.Controls.Add(this.button2);
@@ -377,10 +375,6 @@
             this.button5.Text = "Topological Sort";
             this.button5.UseVisualStyleBackColor = false;
             // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
             // mainPanel
             // 
             this.mainPanel.Controls.Add(this.topPanel);
@@ -423,6 +417,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(33)))), ((int)(((byte)(33)))));
             this.ClientSize = new System.Drawing.Size(840, 466);
             this.Controls.Add(this.mainPanel);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -470,7 +465,6 @@
         private System.Windows.Forms.Button download;
         private System.Windows.Forms.Button functions;
         private System.Windows.Forms.Panel smallButtonsPanel;
-        private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel functionsPanel;
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Panel drawPanel;

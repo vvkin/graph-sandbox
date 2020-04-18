@@ -36,22 +36,13 @@ namespace graph_sandbox
 
         private void button5_Click(object sender, EventArgs e)
         {
-            timer1.Start();
-        }
-
-        private void hideForm_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
             if (Hided)
             {
-                while(buttonsPanel.Width < MaxWidth)
+                functions.Enabled = false;
+                while (buttonsPanel.Width < MaxWidth)
                 {
                     buttonsPanel.Width += 30;
-                    functions.Enabled = false;
+                    Update();
                 }
                 functionsPanel.Visible = true;
                 functions.Enabled = true;
@@ -63,11 +54,16 @@ namespace graph_sandbox
                 while (buttonsPanel.Width > 60)
                 {
                     buttonsPanel.Width -= 30;
+                    Update();
                 }
                 Hided = true;
             }
-            timer1.Stop();
             functions.Visible = true;
+        }
+
+        private void hideForm_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
         }
 
         private void AddOrRemove(object sender, MouseEventArgs e)

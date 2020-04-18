@@ -49,6 +49,9 @@
             this.TopPanel.Name = "TopPanel";
             this.TopPanel.Size = new System.Drawing.Size(415, 29);
             this.TopPanel.TabIndex = 0;
+            this.TopPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MakeDragable);
+            this.TopPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.DragForm);
+            this.TopPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.DisableDrag);
             // 
             // headerEdge
             // 
@@ -153,6 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(415, 186);
             this.Controls.Add(this.increaseWeight);
             this.Controls.Add(this.decreaseWeight);
@@ -162,6 +166,7 @@
             this.Controls.Add(this.edgeType);
             this.Controls.Add(this.TopPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "EdgeInfo";
             this.Text = "EdgeInfo";
             this.TopPanel.ResumeLayout(false);
