@@ -134,7 +134,6 @@ namespace graph_sandbox
         }
 
         // Drag window when drag topPanel
-
         private void MakeDragable(object sender, MouseEventArgs e)
         {
             dragable = true;

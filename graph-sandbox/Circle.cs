@@ -8,11 +8,8 @@ public class Circle
     public Point Center;
 
     public static bool canBeMoved = false;
-
     public const int Radious = 20;
-
     public static int number = 0;
-
     public int uniqueNumber;
 
     public Circle(int x, int y) 
@@ -42,18 +39,14 @@ public class Circle
     public void Draw(Graphics g)
     {
         g.SmoothingMode = SmoothingMode.AntiAlias;
-
         var path = GetPath();
         var brush = new SolidBrush(FillColor);
         var font = new Font(new FontFamily("MV Boli"), 16, FontStyle.Bold, GraphicsUnit.Pixel);
 
         g.FillPath(brush, path);
-
-        if (uniqueNumber < 10)
-            g.DrawString($"{uniqueNumber}", font, new SolidBrush(Color.Black), new PointF(Center.X - 6, Center.Y - 8));
-        else
-            g.DrawString($"{uniqueNumber}", font, new SolidBrush(Color.Black), new PointF(Center.X - 10, Center.Y - 8));
-
+        g.DrawString($"{uniqueNumber}", font, new SolidBrush(Color.Black), 
+                new PointF(Center.X - (6 + ((uniqueNumber > 10) ? 4 : 0)) , Center.Y - 8));
+        brush.Dispose(); font.Dispose(); path.Dispose();
     }
     public void Move(Point d)
     {

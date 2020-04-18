@@ -9,9 +9,9 @@ namespace graph_sandbox
         private List<Circle> Vertices;
         private List<Edge> Edges;
 
-        Circle selectedShape;
-        bool moving;
-        Point previousPoint = Point.Empty;
+        private Circle selectedShape;
+        private bool moving;
+        private Point previousPoint = Point.Empty;
         public Circle edgeStartPoint = null;
 
         public DrawingSurface() 
@@ -23,7 +23,7 @@ namespace graph_sandbox
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            for (var i = Vertices.Count - 1; i >= 0; i--)
+            for (var i = Vertices.Count - 1; i >= 0; --i)
                 if (Vertices[i].HitTest(e.Location)) 
                 {
                     selectedShape = Vertices[i]; 
@@ -38,7 +38,6 @@ namespace graph_sandbox
             base.OnMouseDown(e);
         }
 
-   
         protected override void OnMouseMove(MouseEventArgs e)
         {
             if (moving)
@@ -76,25 +75,8 @@ namespace graph_sandbox
 
         private void SolveOutOfTheBounds(Circle curr)
         {
-            while (curr.Center.X >= 765)
-            {
-                --curr.Center.X;
-            }
-
-            while (curr.Center.Y >= 400)
-            {
-                --curr.Center.Y;
-            }
-
-            while (curr.Center.Y <= 20)
-            {
-                ++curr.Center.Y;
-            }
-
-            while (curr.Center.X <= 20)
-            {
-                ++curr.Center.X;
-            }
+            curr.Center.X = System.Math.Min(765, System.Math.Max(20, curr.Center.X));
+            curr.Center.Y = System.Math.Min(400, System.Math.Max(20, curr.Center.Y));
         }
 
         public bool isValid(Circle curr)
@@ -138,7 +120,8 @@ namespace graph_sandbox
                     RebulidEdges(Vertices[i]);
                     Vertices.RemoveAt(i);
                     Rebuit();
-                    break;
+                    Invalidate();
+                    return;
                 }
             }
           
@@ -147,11 +130,10 @@ namespace graph_sandbox
                 if (Edges[i].HitTest(e.Location))
                 {
                     Edges.RemoveAt(i);
-                    break; 
+                    Invalidate();
+                    return;
                 }
             }
-
-            Invalidate();
         }
 
         private void Rebuit()
@@ -166,7 +148,6 @@ namespace graph_sandbox
         private void RebulidEdges(Circle deletedVertex)
         {
             bool isInList = true;
-
             while(isInList)
             {
                 isInList = false;
@@ -228,7 +209,7 @@ namespace graph_sandbox
                     }
                     else
                     {
-                        Edge toAdd = new Edge(edgeStartPoint, vertex);
+                        Edge toAdd = new Edge(edgeStartPoint, vertex); 
 
                         if (!ContainsThisEdge(toAdd))
                         {

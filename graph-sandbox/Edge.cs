@@ -1,32 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace graph_sandbox
 {
     class Edge
     {
-       // private bool isDirected;
+        private bool isDirected;
         private Circle startVertex;
         private Circle endVertex;
         private float weight;
         private Color FillColor = Color.White;
 
-        public Edge(Circle startPoint, Circle endPoint, float weight = 1)
+        public Edge(Circle startVertex, Circle endVertex, float weight = 1, bool isDirected = false)
         {
-            startVertex = startPoint;
-            endVertex = endPoint;
+            this.startVertex = startVertex;
+            this.endVertex = endVertex;
             this.weight = weight;
+            this.isDirected = isDirected;
         }
 
         public void Draw(Graphics g)
         {
             g.SmoothingMode = SmoothingMode.AntiAlias;
-
             (PointF startPoint, PointF endPoint) = GetNewCoords();
             
             using (Pen newPen = new Pen(new SolidBrush(FillColor), 2))
@@ -39,7 +35,7 @@ namespace graph_sandbox
             }  
         }
 
-        private (float,float) GetDeltaCoords()
+        private (float, float) GetDeltaCoords()
         {
             float distance = startVertex.GetDistance(endVertex);
             float sinA = (endVertex.Center.Y - startVertex.Center.Y) / distance;
@@ -63,14 +59,8 @@ namespace graph_sandbox
             double cosx1 = Math.Cos(degrees);
             double siny1 = Math.Sin(degrees);
 
-            double cosx2 = Math.Cos(degrees + Math.PI);
-            double siny2 = Math.Sin(degrees + Math.PI);
-
             return new PointF((int)(cosx1 * (float)(radius) + (float)p1.X), (int)(siny1 * (float)(radius) + (float)p1.Y));
         }
-
-
-
 
         public bool IsEquals(Edge toCompare)
         {
@@ -88,7 +78,6 @@ namespace graph_sandbox
             {
                 path.AddLine(startVertex.Center, endVertex.Center);
                     return path.IsOutlineVisible(p, (new Pen(new SolidBrush(FillColor), 8)));
-
             }
         }
 
