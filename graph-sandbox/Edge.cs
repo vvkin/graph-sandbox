@@ -4,15 +4,15 @@ using System.Drawing.Drawing2D;
 
 namespace graph_sandbox
 {
-    class Edge
+    public class Edge
     {
-        private bool isDirected;
         private Circle startVertex;
         private Circle endVertex;
         private float weight;
+        private bool isDirected;
         private Color FillColor = Color.White;
 
-        public Edge(Circle startVertex, Circle endVertex, float weight = 1, bool isDirected = false)
+        public Edge(Circle startVertex, Circle endVertex, float weight, bool isDirected)
         {
             this.startVertex = startVertex;
             this.endVertex = endVertex;

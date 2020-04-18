@@ -39,14 +39,19 @@ public class Circle
     public void Draw(Graphics g)
     {
         g.SmoothingMode = SmoothingMode.AntiAlias;
-        var path = GetPath();
-        var brush = new SolidBrush(FillColor);
-        var font = new Font(new FontFamily("MV Boli"), 16, FontStyle.Bold, GraphicsUnit.Pixel);
-
-        g.FillPath(brush, path);
-        g.DrawString($"{uniqueNumber}", font, new SolidBrush(Color.Black), 
-                new PointF(Center.X - (6 + ((uniqueNumber > 10) ? 4 : 0)) , Center.Y - 8));
-        brush.Dispose(); font.Dispose(); path.Dispose();
+        using (var path = GetPath())
+        {
+            using (var brush = new SolidBrush(FillColor))
+            {
+                using(var font = new Font(new FontFamily("MV Boli"), 16, FontStyle.Bold, GraphicsUnit.Pixel))
+                {
+                    g.FillPath(brush, path);
+                    g.DrawString($"{uniqueNumber}", font, new SolidBrush(Color.Black),
+                    new PointF(Center.X - (6 + ((uniqueNumber > 10) ? 4 : 0)), Center.Y - 8));
+                }
+            }            
+        }
+       // brush.Dispose(); font.Dispose(); path.Dispose();
     }
     public void Move(Point d)
     {

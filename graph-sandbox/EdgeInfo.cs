@@ -1,0 +1,69 @@
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace graph_sandbox
+{
+    public partial class EdgeInfo : Form
+    {
+        private int weight = 0;
+        private bool isDirected = false;
+
+        public EdgeInfo()
+        {
+            InitializeComponent();
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            weight = 0;
+            edgeWeight.Text = weight.ToString();
+        }
+
+        private void increaseWeight_Click(object sender, EventArgs e)
+        {
+            ++weight;
+            edgeWeight.Text = weight.ToString();
+        }
+
+        private void decreaseWeight_Click(object sender, EventArgs e)
+        {
+            --weight;
+            edgeWeight.Text = weight.ToString();
+        }
+
+        private void Normalize(object sender, EventArgs e)
+        {
+            if (!int.TryParse(edgeWeight.Text, out weight))
+            {
+                edgeWeight.Text = weight.ToString();
+            }
+        }
+
+        private void directed_Click(object sender, EventArgs e)
+        {
+            isDirected = !isDirected;
+            edgeType.Text = (isDirected) ? "Directed" : "Undirected"; 
+        }
+
+
+        private void returnInfo_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        public Edge GetEdge(Circle start, Circle end)
+        {
+            var toReturn = new Edge(start, end, weight, isDirected);
+            isDirected = false;
+            weight = 0;
+            edgeWeight.Text = "0";
+            return toReturn;
+           
+        }
+    }
+}

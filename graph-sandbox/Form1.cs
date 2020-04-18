@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace graph_sandbox
 {
@@ -27,11 +22,11 @@ namespace graph_sandbox
         public Form1()
         {
             InitializeComponent();
-            toolTip1.SetToolTip(this.addVertex, "Add vertex");
-            toolTip2.SetToolTip(this.addEdge, "Add edge");
-            toolTip3.SetToolTip(this.remove, "Remove");
-            toolTip4.SetToolTip(this.download, "Download graph");
-            toolTip5.SetToolTip(this.functions, "Functions");
+            toolTip1.SetToolTip(addVertex, "Add vertex");
+            toolTip2.SetToolTip(addEdge, "Add edge");
+            toolTip3.SetToolTip(remove, "Remove");
+            toolTip4.SetToolTip(download, "Download graph");
+            toolTip5.SetToolTip(functions, "Functions");
         }
 
         private void closeForm_Click(object sender, EventArgs e)

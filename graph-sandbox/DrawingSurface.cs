@@ -13,12 +13,14 @@ namespace graph_sandbox
         private bool moving;
         private Point previousPoint = Point.Empty;
         public Circle edgeStartPoint = null;
+        private EdgeInfo edgeForm;
 
         public DrawingSurface() 
         { 
             DoubleBuffered = true; 
             Vertices = new List<Circle>();
             Edges = new List<Edge>();
+            edgeForm = new EdgeInfo();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -71,6 +73,7 @@ namespace graph_sandbox
 
             foreach (var shape in Vertices)
                 shape.Draw(e.Graphics);
+            e.Dispose();
         }
 
         private void SolveOutOfTheBounds(Circle curr)
@@ -119,7 +122,7 @@ namespace graph_sandbox
                 {
                     RebulidEdges(Vertices[i]);
                     Vertices.RemoveAt(i);
-                    Rebuit();
+                    Rebuilt();
                     Invalidate();
                     return;
                 }
@@ -136,7 +139,7 @@ namespace graph_sandbox
             }
         }
 
-        private void Rebuit()
+        private void Rebuilt()
         {
             for (int i = 0; i < Vertices.Count; ++i)
             {
@@ -196,6 +199,21 @@ namespace graph_sandbox
             return false;
         }
 
+        private void CreateEdge(Circle vertex)
+        {
+            edgeForm.ShowDialog();
+            Edge toAdd = edgeForm.GetEdge(edgeStartPoint, vertex);
+
+            if (!ContainsThisEdge(toAdd))
+            {
+                Edges.Add(toAdd);
+                toAdd.Draw(CreateGraphics());
+            }
+            edgeStartPoint.FillColor = Color.White;
+            edgeStartPoint = null;
+            
+        }
+
         public void TryToAddEdge(MouseEventArgs e)
         {
             foreach(var vertex in Vertices)
@@ -209,15 +227,7 @@ namespace graph_sandbox
                     }
                     else
                     {
-                        Edge toAdd = new Edge(edgeStartPoint, vertex); 
-
-                        if (!ContainsThisEdge(toAdd))
-                        {
-                            Edges.Add(toAdd);
-                            toAdd.Draw(CreateGraphics());
-                        }
-                        edgeStartPoint.FillColor = Color.White;
-                        edgeStartPoint = null;
+                        CreateEdge(vertex);
                     }
                     Invalidate();
                     break;

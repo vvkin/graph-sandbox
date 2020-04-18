@@ -242,7 +242,7 @@
             // functionsPanel
             // 
             this.functionsPanel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.functionsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            //this.functionsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
             this.functionsPanel.Controls.Add(this.button1);
             this.functionsPanel.Controls.Add(this.button9);
             this.functionsPanel.Controls.Add(this.button2);
