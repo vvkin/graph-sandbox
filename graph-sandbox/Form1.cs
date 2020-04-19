@@ -115,7 +115,7 @@ namespace graph_sandbox
 
         private void ChangeCanBeMoved()
         {
-            Circle.canBeMoved = !(addVertex_clicked || removeObject_clicked || addEdge_clicked);
+            drawingSurface1.TurnMoving(!(addVertex_clicked || removeObject_clicked || addEdge_clicked));
         }
 
         private void ChangeButtonsColor()

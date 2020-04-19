@@ -7,7 +7,6 @@ public class Circle
     public Color FillColor { get; set; }
     public Point Center;
 
-    public static bool canBeMoved = false;
     public const int Radious = 20;
     public static int number = 0;
     public int uniqueNumber;
@@ -54,10 +53,7 @@ public class Circle
     }
     public void Move(Point d)
     {
-        if (canBeMoved)
-        {
-            Center = new Point(Center.X + d.X, Center.Y + d.Y);
-        }
+        Center = new Point(Center.X + d.X, Center.Y + d.Y);
     }
 
     public float GetDistance(Circle another)

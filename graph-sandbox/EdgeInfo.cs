@@ -70,6 +70,7 @@ namespace graph_sandbox
             isDirected = false;
             weight = 0;
             edgeWeight.Text = "0";
+            edgeType.Text = "Undirected";
             return toReturn;
            
         }

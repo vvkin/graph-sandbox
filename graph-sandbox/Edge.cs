@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 
 namespace graph_sandbox
 {
@@ -84,7 +83,15 @@ namespace graph_sandbox
 
         public bool IsEquals(Edge toCompare)
         {
-            return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex);
+            if (toCompare.isDirected && this.isDirected)
+            {
+                return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex);
+            }
+            else
+            {
+                return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex) ||
+                       (endVertex == toCompare.startVertex && startVertex == toCompare.endVertex);
+            }
         }
 
         public bool Contains(Circle vertex)
@@ -109,7 +116,8 @@ namespace graph_sandbox
         private bool IsValid(PointF p)
         {
             var distance = Math.Max(startVertex.GetDistance(endVertex) / 1.5, 60);
-            return (GetDistance(p, startVertex.Center) < distance && GetDistance(p, endVertex.Center) < distance);
+            return (p.X < 770 && p.X > 0 && p.Y < 410 && p.Y > 0) &&
+                   (GetDistance(p, startVertex.Center) < distance && GetDistance(p, endVertex.Center) < distance);
         }
 
         public void Move(Point d)

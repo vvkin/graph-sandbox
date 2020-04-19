@@ -13,6 +13,7 @@ namespace graph_sandbox
         private Circle selectedShape;
         private Edge selectedEdge;
         private bool moving;
+        private bool canBeMoved;
         private Point previousPoint = Point.Empty;
         public Circle edgeStartPoint = null;
         private EdgeInfo edgeForm;
@@ -23,17 +24,17 @@ namespace graph_sandbox
             Vertices = new List<Circle>();
             Edges = new List<Edge>();
             edgeForm = new EdgeInfo();
+            canBeMoved = true;
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            for (var i = Vertices.Count - 1; i >= 0; --i)
-                if (Vertices[i].HitTest(e.Location)) 
+            foreach (var cell in Vertices)
+                if (cell.HitTest(e.Location))
                 {
-                    selectedShape = Vertices[i]; 
-                    break; 
+                    selectedShape = cell;
+                    break;
                 }
-
             foreach(var edge in Edges)
             {
                 if (edge.HitTest(e.Location))
@@ -42,24 +43,17 @@ namespace graph_sandbox
                     break;
                 }
             }
-
-            if (selectedShape != null) 
+            if (selectedShape != null || selectedEdge != null) 
             {
                 moving = true; 
                 previousPoint = e.Location; 
-            }
-
-            if (selectedEdge != null)
-            {
-                moving = true;
-                previousPoint = e.Location;
             }
             base.OnMouseDown(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (moving)
+            if (moving && canBeMoved)
             {
                 if (selectedShape != null)
                 {
@@ -102,6 +96,11 @@ namespace graph_sandbox
 
             foreach (var shape in Vertices)
                 shape.Draw(e.Graphics);
+        }
+
+        public void TurnMoving(bool newValue)
+        {
+            canBeMoved = newValue;
         }
 
         private void SolveOutOfTheBounds(Circle curr)
