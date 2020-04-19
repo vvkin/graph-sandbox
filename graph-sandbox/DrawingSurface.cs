@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -10,6 +11,7 @@ namespace graph_sandbox
         private List<Edge> Edges;
 
         private Circle selectedShape;
+        private Edge selectedEdge;
         private bool moving;
         private Point previousPoint = Point.Empty;
         public Circle edgeStartPoint = null;
@@ -32,10 +34,25 @@ namespace graph_sandbox
                     break; 
                 }
 
+            foreach(var edge in Edges)
+            {
+                if (edge.HitTest(e.Location))
+                {
+                    selectedEdge = edge;
+                    break;
+                }
+            }
+
             if (selectedShape != null) 
             {
                 moving = true; 
                 previousPoint = e.Location; 
+            }
+
+            if (selectedEdge != null)
+            {
+                moving = true;
+                previousPoint = e.Location;
             }
             base.OnMouseDown(e);
         }
@@ -44,11 +61,21 @@ namespace graph_sandbox
         {
             if (moving)
             {
-                var d = new Point(e.X - previousPoint.X, e.Y - previousPoint.Y);
-                selectedShape.Move(d);
-                SolveOneOnAnother(selectedShape, Circle.Radious * 2);
-                previousPoint = e.Location;
-                Invalidate();
+                if (selectedShape != null)
+                {
+                    var d = new Point(e.X - previousPoint.X, e.Y - previousPoint.Y);
+                    selectedShape.Move(d);
+                    SolveOneOnAnother(selectedShape, Circle.Radious * 2);
+                    previousPoint = e.Location;
+                    Invalidate();
+                }
+                else
+                {
+                    var d = new Point(e.X - previousPoint.X, e.Y - previousPoint.Y);
+                    selectedEdge.Move(d);
+                    previousPoint = e.Location;
+                    Invalidate();
+                }
             }
             base.OnMouseMove(e);
         }
@@ -56,10 +83,12 @@ namespace graph_sandbox
         {
             if (moving) 
             { 
-                selectedShape = null; 
+                selectedShape = null;
+                selectedEdge = null;
                 moving = false; 
             }
             base.OnMouseUp(e);
+            GC.Collect();
         }
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -90,7 +119,6 @@ namespace graph_sandbox
                 if (curr.GetDistance(shape) < 60)
                     return false;
            }
-
             return true;
         }
 
@@ -190,6 +218,7 @@ namespace graph_sandbox
 
         private void TryToAddEdge(Edge currEdge)
         {
+            GC.Collect();
             for (var i = 0; i < Edges.Count; ++i)
             {
                 if (Edges[i].IsEquals(currEdge))

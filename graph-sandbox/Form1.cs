@@ -8,6 +8,7 @@ namespace graph_sandbox
     public partial class Form1 : Form
     {
         int MaxWidth = 230;
+        int MinWidth = 50;
         bool Hided = true;
 
         private bool addVertex_clicked = false;
@@ -39,7 +40,7 @@ namespace graph_sandbox
             if (Hided)
             {
                 functions.Enabled = false;
-                while (buttonsPanel.Width < MaxWidth)
+                while (buttonsPanel.Width != MaxWidth)
                 {
                     buttonsPanel.Width += 30;
                     Update();
@@ -51,7 +52,7 @@ namespace graph_sandbox
             else
             {
                 functions.Visible = false;
-                while (buttonsPanel.Width > 60)
+                while (buttonsPanel.Width != MinWidth)
                 {
                     buttonsPanel.Width -= 30;
                     Update();
