@@ -101,9 +101,21 @@ namespace graph_sandbox
             }
         }
 
+        private double GetDistance(PointF a, PointF b)
+        {
+            return Math.Sqrt(Math.Pow((a.X - b.X), 2) + Math.Pow((a.Y - b.Y), 2));
+        }
+
+        private bool IsValid(PointF p)
+        {
+            var distance = Math.Max(startVertex.GetDistance(endVertex) / 1.5, 60);
+            return (GetDistance(p, startVertex.Center) < distance && GetDistance(p, endVertex.Center) < distance);
+        }
+
         public void Move(Point d)
         {
-           midPoint = new PointF(midPoint.X + d.X, midPoint.Y + d.Y);
+           var tempPoint = new PointF(midPoint.X + d.X, midPoint.Y + d.Y);
+           midPoint = (IsValid(tempPoint)) ? tempPoint : midPoint;
         }
     }
     
