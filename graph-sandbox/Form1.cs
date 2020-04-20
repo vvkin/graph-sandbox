@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace graph_sandbox
 {
@@ -143,6 +142,12 @@ namespace graph_sandbox
         private void DisableDrag(object sender, MouseEventArgs e)
         {
             dragable = false;
+        }
+
+        private void button4_Click(object sender, MouseEventArgs e)
+        {
+            functions.PerformClick();
+            Algorithms.BFS(drawingSurface1, 1);
         }
     }
 }

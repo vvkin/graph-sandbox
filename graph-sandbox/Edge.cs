@@ -10,11 +10,14 @@ namespace graph_sandbox
         private Circle endVertex;
         private PointF midPoint;
         private float weight;
-        private bool isDirected;
         private bool isBended;
         private Color FillColor = Color.Gray;
         private PointF oldStart;
         private PointF oldEnd;
+
+        public bool isDirected;
+        public int start => startVertex.uniqueNumber - 1;
+        public int end => endVertex.uniqueNumber - 1;
 
         public Edge(Circle startVertex, Circle endVertex, float weight, bool isDirected)
         {

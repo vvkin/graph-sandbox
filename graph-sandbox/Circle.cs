@@ -51,6 +51,14 @@ public class Circle
             }            
         }
     }
+
+    public void ReDraw(Graphics g, Color color)
+    {
+        FillColor = color;
+        Draw(g);
+    }
+
+
     public void Move(Point d)
     {
         Center = new Point(Center.X + d.X, Center.Y + d.Y);

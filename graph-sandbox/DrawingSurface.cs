@@ -7,8 +7,8 @@ namespace graph_sandbox
 {
     public class DrawingSurface : Panel
     {
-        private List<Circle> Vertices;
-        private List<Edge> Edges;
+        public List<Circle> Vertices;
+        public List<Edge> Edges;
 
         private Circle selectedShape;
         private Edge selectedEdge;
@@ -138,6 +138,28 @@ namespace graph_sandbox
                     }
                 }
             }
+        }
+
+
+        public Dictionary<int, List<int>> GetAdjList()
+        {
+            var adjList = new Dictionary<int, List<int>>();
+            for (var i = 0; i < Vertices.Count; ++i)
+                adjList.Add(i, new List<int>());
+
+            foreach(var edge in Edges)
+            {
+                if (edge.isDirected)
+                {
+                    adjList[edge.start].Add(edge.end);
+                }
+                else
+                {
+                    adjList[edge.start].Add(edge.end);
+                    adjList[edge.end].Add(edge.start);
+                }
+            }
+            return adjList;
         }
 
         public void TryToRemove(MouseEventArgs e)

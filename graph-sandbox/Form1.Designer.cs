@@ -359,6 +359,7 @@
             this.button4.TabIndex = 6;
             this.button4.Text = "BFS";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button4_Click);
             // 
             // button5
             // 
