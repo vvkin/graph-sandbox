@@ -49,7 +49,54 @@ namespace graph_sandbox
             g.Dispose();
             ClearVertices(ds.Vertices);
         }
-
+        public static void DFS(DrawingSurface ds, int start)
+        {
+            
+            Stack<int> stack = new Stack<int>();
+            stack.Push(start-1);
+            var adjList = ds.GetAdjList();
+            bool[] visited = new bool[ds.Vertices.Count];
+            var g = ds.CreateGraphics();
+            while (stack.Count>0)
+            {
+                int vertex = stack.Peek();
+                ds.Vertices[vertex].ReDraw(g, activeVertex);
+                ds.Invalidate();
+                Thread.Sleep(700);
+                if (!visited[vertex])
+                {
+                    visited[vertex] = true;
+                    ds.Vertices[vertex].FillColor = processedVertex;
+                    ds.Vertices[vertex].ReDraw(g, processedVertex);
+                    ds.Invalidate();
+                    Thread.Sleep(700);
+                }
+                bool remove = true;
+                foreach (int adjvertex in adjList[vertex])
+                {
+                    if (!visited[adjvertex])
+                    {
+                        stack.Push(adjvertex);
+                        remove = false;
+                        ds.Vertices[vertex].FillColor = processedVertex;
+                        ds.Vertices[vertex].ReDraw(g, processedVertex);
+                        ds.Invalidate();
+                        Thread.Sleep(700);
+                        break;
+                    }
+                }
+                if (remove)
+                {
+                    int v = stack.Pop();
+                    ds.Vertices[v].FillColor = processedVertex;
+                    ds.Vertices[v].ReDraw(g, processedVertex);
+                    ds.Invalidate();
+                    Thread.Sleep(700);
+                }
+            }
+            g.Dispose();
+            ClearVertices(ds.Vertices);
+        }
 
         private static void ClearVertices(List<Circle> vertices)
         {

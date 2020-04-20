@@ -329,6 +329,7 @@
             this.button3.TabIndex = 5;
             this.button3.Text = "DFS";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button3_Click);
             // 
             // button7
             // 
