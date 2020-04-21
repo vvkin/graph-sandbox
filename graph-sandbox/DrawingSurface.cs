@@ -161,7 +161,16 @@ namespace graph_sandbox
             }
             return adjList;
         }
-
+        public List<int> GetNodePowers()
+        {
+            var adjList = GetAdjList();
+            var nodePowers = new List<int> { };
+            foreach(var key in adjList.Keys)
+            {
+                nodePowers.Add(adjList[key].Count);
+            }
+            return nodePowers;
+        }
         public void TryToRemove(MouseEventArgs e)
         {
             for (int i = 0; i < Vertices.Count; ++i)

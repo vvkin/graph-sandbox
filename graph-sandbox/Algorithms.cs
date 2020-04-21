@@ -51,7 +51,7 @@ namespace graph_sandbox
         }
         public static void DFS(DrawingSurface ds, int start)
         {
-            
+            if (start > ds.Vertices.Count) return;
             Stack<int> stack = new Stack<int>();
             stack.Push(start-1);
             var adjList = ds.GetAdjList();
@@ -97,7 +97,60 @@ namespace graph_sandbox
             g.Dispose();
             ClearVertices(ds.Vertices);
         }
-
+        public static void Colouring(DrawingSurface ds)
+        {
+            Random rnd = new Random { };
+            var g = ds.CreateGraphics();
+            var adjList = ds.GetAdjList();
+            List<int> nodePowers = ds.GetNodePowers();
+            List<int> vertices = Enumerable.Range(0, ds.Vertices.Count).ToList();
+            List<Color> colors = new List<Color> { };
+            for(int i = 0; i < 50; i++)
+            {
+                colors.Add(Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)));
+            }
+            List<int> colors_list = new List<int> { };
+            for(int i=0; i < ds.Vertices.Count; i++)
+            {
+                colors_list.Add(-1);
+            }
+            int colors_used = 1;
+            colors_list[vertices[0]] = 0;
+            foreach(var vertex in vertices)
+            {
+                if (vertex == vertices[0]) continue;
+                HashSet<int> adjacentColors = new HashSet<int> { };
+                foreach(var adjvertices in adjList[vertex])
+                {
+                    if (colors_list[adjvertices] != -1)
+                    {
+                        adjacentColors.Add(colors_list[adjvertices]);
+                    }
+                }
+                HashSet<int> possibleColors = colors_list.Where(u=>u!=-1).Except(adjacentColors).ToHashSet();
+                if (possibleColors.Count ==0)
+                {
+                    colors_used += 1;
+                    colors_list[vertex] = colors_used;
+                }
+                else
+                {
+                    if(colors_list[vertex]==-1)
+                    {
+                        colors_list[vertex] = possibleColors.Min();
+                    }
+                }    
+            }
+            foreach(var vertex in vertices)
+            {  
+                ds.Vertices[vertex].ReDraw(g, colors[colors_list[vertex]]);
+                ds.Invalidate();
+                Thread.Sleep(1000);
+            }
+            Thread.Sleep(5000);
+            g.Dispose();
+            ClearVertices(ds.Vertices);
+        }
         private static void ClearVertices(List<Circle> vertices)
         {
             for(var i = 0; i < vertices.Count; ++i)

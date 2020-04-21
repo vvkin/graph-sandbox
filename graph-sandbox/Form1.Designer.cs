@@ -343,8 +343,9 @@
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(140, 37);
             this.button7.TabIndex = 8;
-            this.button7.Text = "Graph Type";
+            this.button7.Text = "Colouring";
             this.button7.UseVisualStyleBackColor = false;
+            this.button7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button7_Click);
             // 
             // button4
             // 

@@ -154,5 +154,10 @@ namespace graph_sandbox
             functions.PerformClick();
             Algorithms.DFS(drawingSurface1, 1);
         }
+        private void button7_Click(object sender, MouseEventArgs e)
+        {
+            functions.PerformClick();
+            Algorithms.Colouring(drawingSurface1);
+        }
     }
 }
