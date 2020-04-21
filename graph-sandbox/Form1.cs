@@ -19,9 +19,12 @@ namespace graph_sandbox
         private bool dragable;
         private Point startPosition;
 
+        StartVertexInfo startVertex;
+
         public Form1()
         {
             InitializeComponent();
+            startVertex = new StartVertexInfo();
             toolTip1.SetToolTip(addVertex, "Add vertex");
             toolTip2.SetToolTip(addEdge, "Add edge");
             toolTip3.SetToolTip(remove, "Remove");
@@ -147,12 +150,12 @@ namespace graph_sandbox
         private void button4_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            Algorithms.BFS(drawingSurface1, 1);
+            Algorithms.BFS(drawingSurface1, startVertex.Get_Input(Circle.number));
         }
         private void button3_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            Algorithms.DFS(drawingSurface1, 1);
+            Algorithms.DFS(drawingSurface1, startVertex.Get_Input(Circle.number));
         }
         private void button7_Click(object sender, MouseEventArgs e)
         {

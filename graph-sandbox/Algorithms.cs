@@ -14,6 +14,13 @@ namespace graph_sandbox
         private static readonly Color activeVertex = Color.Red;
         private static readonly Color processedVertex = Color.YellowGreen;
         private static readonly Color passiveVertex = Color.White;
+
+        private static Color[] colors = new Color[] {
+            Color.Red, Color.Yellow, Color.Blue, Color.Green, Color.Gray, Color.Chocolate,
+            Color.Lime, Color.Cyan, Color.Magenta, Color.Maroon, Color.Olive, Color.Purple,
+            Color.Teal, Color.Wheat, Color.Indigo
+        };
+
         public static void BFS(DrawingSurface ds, int start)
         {
             if (start > ds.Vertices.Count) return;
@@ -103,19 +110,12 @@ namespace graph_sandbox
             var g = ds.CreateGraphics();
             var adjList = ds.GetAdjList();
             List<int> nodePowers = ds.GetNodePowers();
-            List<int> vertices = Enumerable.Range(0, ds.Vertices.Count).ToList();
-            List<Color> colors = new List<Color> { };
-            for(int i = 0; i < 50; i++)
-            {
-                colors.Add(Color.FromArgb(255, rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255)));
-            }
-            List<int> colors_list = new List<int> { };
-            for(int i=0; i < ds.Vertices.Count; i++)
-            {
-                colors_list.Add(-1);
-            }
+            List<int> vertices = Enumerable.Range(0, ds.Vertices.Count).OrderByDescending(u => nodePowers[u]).ToList();
+            List<int> colors_list = Enumerable.Repeat(-1, ds.Vertices.Count).ToList();
+            colors = colors.OrderBy(x => rnd.Next()).ToArray();
             int colors_used = 1;
             colors_list[vertices[0]] = 0;
+
             foreach(var vertex in vertices)
             {
                 if (vertex == vertices[0]) continue;
@@ -128,7 +128,7 @@ namespace graph_sandbox
                     }
                 }
                 HashSet<int> possibleColors = colors_list.Where(u=>u!=-1).Except(adjacentColors).ToHashSet();
-                if (possibleColors.Count ==0)
+                if (possibleColors.Count == 0)
                 {
                     colors_used += 1;
                     colors_list[vertex] = colors_used;

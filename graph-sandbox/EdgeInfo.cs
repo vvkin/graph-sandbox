@@ -17,6 +17,15 @@ namespace graph_sandbox
             CenterToParent();
         }
 
+        private void EdgeInfo_Load(object sender, EventArgs e)
+        {
+            CenterToParent();
+            isDirected = false;
+            weight = 0;
+            edgeWeight.Text = "0";
+            edgeType.Text = "Undirected";
+        }
+
         private void closeButton_Click(object sender, EventArgs e)
         {
             Close();
@@ -67,10 +76,6 @@ namespace graph_sandbox
         public Edge GetEdge(Circle start, Circle end)
         {
             var toReturn = new Edge(start, end, weight, isDirected);
-            isDirected = false;
-            weight = 0;
-            edgeWeight.Text = "0";
-            edgeType.Text = "Undirected";
             return toReturn;
            
         }
