@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace graph_sandbox
@@ -147,20 +148,20 @@ namespace graph_sandbox
             dragable = false;
         }
 
-        private void button4_Click(object sender, MouseEventArgs e)
+        private async void button4_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            Algorithms.BFS(drawingSurface1, startVertex.Get_Input(Circle.number));
+            await Task.Run(() => Algorithms.BFS(drawingSurface1, startVertex.Get_Input(Circle.number)));
         }
-        private void button3_Click(object sender, MouseEventArgs e)
+        private async void button3_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            Algorithms.DFS(drawingSurface1, startVertex.Get_Input(Circle.number));
+            await Task.Run(() => Algorithms.DFS(drawingSurface1, startVertex.Get_Input(Circle.number)));
         }
-        private void button7_Click(object sender, MouseEventArgs e)
+        private async void button7_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            Algorithms.Colouring(drawingSurface1);
+            await Task.Run(() => Algorithms.Colouring(drawingSurface1));
         }
     }
 }

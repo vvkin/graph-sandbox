@@ -16,9 +16,9 @@ namespace graph_sandbox
         private void StartVertexInfo_Load(object sender, EventArgs e)
         {
             CenterToParent();
-            inputBox.Text = "1";
+            inputBox.Text = "0";
             inputBox.SelectionLength = 0;
-            vertex = 1;
+            vertex = 0;
         }
 
         public int Get_Input(int verticesCount)
