@@ -18,7 +18,7 @@ namespace graph_sandbox
         public bool isDirected;
         public int start => startVertex.uniqueNumber - 1;
         public int end => endVertex.uniqueNumber - 1;
-
+        public float w => weight;
         public Edge(Circle startVertex, Circle endVertex, float weight, bool isDirected)
         {
             this.startVertex = startVertex;

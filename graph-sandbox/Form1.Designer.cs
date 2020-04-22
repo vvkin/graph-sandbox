@@ -58,6 +58,7 @@
             this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
             this.mainPanel = new System.Windows.Forms.Panel();
             this.drawPanel = new System.Windows.Forms.Panel();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.drawingSurface1 = new graph_sandbox.DrawingSurface();
             this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
@@ -122,7 +123,7 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(63, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(162, 25);
+            this.label1.Size = new System.Drawing.Size(202, 31);
             this.label1.TabIndex = 3;
             this.label1.Text = "Graph Sandbox";
             // 
@@ -223,6 +224,7 @@
             this.download.Size = new System.Drawing.Size(50, 50);
             this.download.TabIndex = 3;
             this.download.UseVisualStyleBackColor = true;
+            this.download.Click += new System.EventHandler(this.saveGraph);
             // 
             // remove
             // 
@@ -403,6 +405,13 @@
             this.drawPanel.Size = new System.Drawing.Size(790, 424);
             this.drawPanel.TabIndex = 2;
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "Xml file .xml|*.xml|Все файлы|*.*\"";
+            this.saveFileDialog1.InitialDirectory = "C:/";
+            this.saveFileDialog1.RestoreDirectory = true;
+            this.saveFileDialog1.Title = "Save as";
+            // 
             // drawingSurface1
             // 
             this.drawingSurface1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -472,6 +481,7 @@
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Panel drawPanel;
         private DrawingSurface drawingSurface1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

@@ -163,5 +163,13 @@ namespace graph_sandbox
             functions.PerformClick();
             await Task.Run(() => Algorithms.Colouring(drawingSurface1));
         }
+
+        private void saveGraph(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
+                XMLParser xmlparser = new XMLParser(saveFileDialog1.FileName);
+                xmlparser.Save(drawingSurface1);
+            }
+        }
     }
 }

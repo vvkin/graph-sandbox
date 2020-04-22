@@ -79,6 +79,7 @@
     <Compile Include="StartVertexInfo.Designer.cs">
       <DependentUpon>StartVertexInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="XMLParser.cs" />
     <EmbeddedResource Include="EdgeInfo.resx">
       <DependentUpon>EdgeInfo.cs</DependentUpon>
     </EmbeddedResource>
