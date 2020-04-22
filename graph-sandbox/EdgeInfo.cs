@@ -14,7 +14,6 @@ namespace graph_sandbox
         public EdgeInfo()
         {
             InitializeComponent();
-            CenterToParent();
         }
 
         private void EdgeInfo_Load(object sender, EventArgs e)
@@ -31,22 +30,35 @@ namespace graph_sandbox
             Close();
         }
 
+        private void MoveCursorToEnd()
+        {
+            edgeWeight.SelectionStart = edgeWeight.Text.Length;
+            edgeWeight.SelectionLength = 0;
+        }
+
+        private void ChangeTextBoxValue()
+        {
+            edgeWeight.Text = weight.ToString();
+            edgeWeight.Focus();
+            MoveCursorToEnd();
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             weight = 0;
-            edgeWeight.Text = weight.ToString();
+            ChangeTextBoxValue();
         }
 
         private void increaseWeight_Click(object sender, EventArgs e)
         {
-            ++weight;
-            edgeWeight.Text = weight.ToString();
+            weight = Math.Min(int.MaxValue, weight + 1);
+            ChangeTextBoxValue();
         }
 
         private void decreaseWeight_Click(object sender, EventArgs e)
         {
-            --weight;
-            edgeWeight.Text = weight.ToString();
+            weight = Math.Max(int.MinValue, weight - 1);
+            ChangeTextBoxValue();
         }
 
         private void Normalize(object sender, EventArgs e)
@@ -65,9 +77,9 @@ namespace graph_sandbox
         private void directed_Click(object sender, EventArgs e)
         {
             isDirected = !isDirected;
-            edgeType.Text = (isDirected) ? "Directed" : "Undirected"; 
+            edgeType.Text = (isDirected) ? "Directed" : "Undirected";
+            ChangeTextBoxValue();
         }
-
 
         private void returnInfo_Click(object sender, EventArgs e)
         {
@@ -75,9 +87,9 @@ namespace graph_sandbox
         }
         public Edge GetEdge(Circle start, Circle end)
         {
-            var toReturn = new Edge(start, end, weight, isDirected);
-            return toReturn;
-           
+            ShowDialog();
+            return new Edge(start, end, weight, isDirected);
+
         }
 
         private void MakeDragable(object sender, MouseEventArgs e)
@@ -96,6 +108,14 @@ namespace graph_sandbox
             if (dragable)
             {
                 Location = new Point(Cursor.Position.X - startPosition.X, Cursor.Position.Y - startPosition.Y);
+            }
+        }
+
+        private void edgeWeight_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                Close();
             }
         }
     }

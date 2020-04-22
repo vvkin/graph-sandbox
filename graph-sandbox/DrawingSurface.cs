@@ -262,7 +262,6 @@ namespace graph_sandbox
 
         private void CreateEdge(Circle vertex)
         {
-            edgeForm.ShowDialog();
             Edge toAdd = edgeForm.GetEdge(edgeStartPoint, vertex);
             TryToAddEdge(toAdd);
             toAdd.Draw(CreateGraphics());

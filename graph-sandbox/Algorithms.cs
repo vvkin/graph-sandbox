@@ -23,7 +23,7 @@ namespace graph_sandbox
 
         public static void BFS(DrawingSurface ds, int start)
         {
-            if (start > ds.Vertices.Count) return;
+            if (start > ds.Vertices.Count || start < 1) return;
             var adjList = ds.GetAdjList();
             var que = new Queue<int>();
             bool[] visited = new bool[ds.Vertices.Count];
@@ -58,7 +58,7 @@ namespace graph_sandbox
         }
         public static void DFS(DrawingSurface ds, int start)
         {
-            if (start > ds.Vertices.Count) return;
+            if (start > ds.Vertices.Count || start < 1) return;
             Stack<int> stack = new Stack<int>();
             stack.Push(start-1);
             var adjList = ds.GetAdjList();
@@ -106,6 +106,7 @@ namespace graph_sandbox
         }
         public static void Colouring(DrawingSurface ds)
         {
+            if (ds.Vertices.Count == 0) return;
             Random rnd = new Random { };
             var g = ds.CreateGraphics();
             var adjList = ds.GetAdjList();

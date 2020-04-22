@@ -17,6 +17,7 @@ namespace graph_sandbox
         {
             CenterToParent();
             inputBox.Text = "1";
+            inputBox.SelectionLength = 0;
             vertex = 1;
         }
 
@@ -29,10 +30,9 @@ namespace graph_sandbox
 
         private void TryToParse(object sender, EventArgs e)
         {
-            vertex = (!int.TryParse(inputBox.Text, out int _)) ? vertex : 
-                      Math.Max(0, int.Parse(inputBox.Text));
+            vertex = (inputBox.Text == "") ? 0 : (!int.TryParse(inputBox.Text, out int _)) ? vertex : 
+                      int.Parse(inputBox.Text);
             inputBox.Text = vertex.ToString();
-            MoveCursorToEnd();
         }
 
         private void MoveCursorToEnd()
@@ -56,7 +56,7 @@ namespace graph_sandbox
 
         private void decreaseVertex_Click(object sender, EventArgs e)
         {
-            vertex = Math.Max(1, vertex - 1);
+            vertex = Math.Max(0, vertex - 1);
             ChangeTextBoxValue();
         }
 

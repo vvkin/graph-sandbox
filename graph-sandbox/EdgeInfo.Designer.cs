@@ -106,6 +106,7 @@
             this.edgeWeight.Text = "0";
             this.edgeWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.edgeWeight.TextChanged += new System.EventHandler(this.Normalize);
+            this.edgeWeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.edgeWeight_KeyPress);
             // 
             // button1
             // 
