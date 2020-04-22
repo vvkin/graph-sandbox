@@ -54,7 +54,7 @@ namespace graph_sandbox
                 ds.Vertices[start].ReDraw(g, processedVertex);
             }
             g.Dispose();
-            ClearVertices(ds.Vertices);
+            ClearVertices(ds, ds.Vertices);
         }
         public static void DFS(DrawingSurface ds, int start)
         {
@@ -102,7 +102,7 @@ namespace graph_sandbox
                 }
             }
             g.Dispose();
-            ClearVertices(ds.Vertices);
+            ClearVertices(ds, ds.Vertices);
         }
         public static void Colouring(DrawingSurface ds)
         {
@@ -150,14 +150,15 @@ namespace graph_sandbox
             }
             Thread.Sleep(5000);
             g.Dispose();
-            ClearVertices(ds.Vertices);
+            ClearVertices(ds, ds.Vertices);
         }
-        private static void ClearVertices(List<Circle> vertices)
+        private static void ClearVertices(DrawingSurface ds,List<Circle> vertices)
         {
             for(var i = 0; i < vertices.Count; ++i)
             {
                 vertices[i].FillColor = Color.White;
             }
+            ds.Invalidate();
         }
     }
 }
