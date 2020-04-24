@@ -32,16 +32,21 @@ namespace graph_sandbox
             g.SmoothingMode = SmoothingMode.AntiAlias;
             DetectVertexMoving();
             var points = GetNewCoords();
-            Pen newPen = new Pen(new SolidBrush(FillColor), 2);
+            SolidBrush brush = new SolidBrush(FillColor);
+            Pen newPen = new Pen(brush, 2);
             if (isDirected)
                 newPen.CustomEndCap = new AdjustableArrowCap(5, 5);
             g.DrawCurve(newPen, points);
             if (weight != 0)
             {
-                g.DrawString(Convert.ToString(weight), new Font("Arial", 16, FontStyle.Bold),
-                    new SolidBrush(Color.White), midPoint);
+                Font font = new Font("Arial", 16, FontStyle.Bold);
+                brush.Color = Color.White;
+                g.DrawString(Convert.ToString(weight),font,
+                    brush, midPoint);
+                font.Dispose();
             }
             newPen.Dispose();
+            brush.Dispose();
         }
 
         private void DetectVertexMoving()
@@ -70,7 +75,7 @@ namespace graph_sandbox
         {
             (float deltaX, float deltaY) = GetDeltaCoords();
             (float endX, float endY) = (endVertex.Center.X - deltaX, endVertex.Center.Y - deltaY);
-            (float startX, float startY) = (startVertex.Center.X + deltaX, startVertex.Center.Y + deltaY);
+            (float startX, float startY) = ((startVertex.Center.X + deltaX, startVertex.Center.Y + deltaY));
             midPoint = (isBended) ? midPoint : new PointF((startX + endX) / 2, (startY + endY) / 2);
             return new PointF[] { new PointF(startX, startY), midPoint, new PointF(endX, endY) };
         }
@@ -129,5 +134,4 @@ namespace graph_sandbox
            midPoint = (IsValid(tempPoint)) ? tempPoint : midPoint;
         }
     }
-    
 }

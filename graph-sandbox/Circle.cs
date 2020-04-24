@@ -70,4 +70,11 @@ public class Circle
             (float)Math.Sqrt(Math.Pow(this.Center.X - another.Center.X, 2) +
             (float)Math.Pow(this.Center.Y - another.Center.Y, 2));
     }
+
+    public float GetDistToPoint(Point p)
+    {
+        return
+           (float)Math.Sqrt(Math.Pow(this.Center.X - p.X, 2) +
+           (float)Math.Pow(this.Center.Y - p.Y, 2));
+    }
 }

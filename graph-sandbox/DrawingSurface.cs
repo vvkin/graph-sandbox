@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -82,25 +81,33 @@ namespace graph_sandbox
                 moving = false; 
             }
             base.OnMouseUp(e);
-            GC.Collect();
+            //GC.Collect();
         }
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
             if (Edges.Count > 0)
             {
                 foreach (var edge in Edges)
                     edge.Draw(e.Graphics);
             }
-
             foreach (var shape in Vertices)
                 shape.Draw(e.Graphics);
+            e.Dispose();
         }
 
         public void TurnMoving(bool newValue)
         {
             canBeMoved = newValue;
+        }
+
+        private void SolveCirclesProblems()
+        {
+            foreach(var circle in Vertices)
+            {
+                SolveOneOnAnother(circle, Circle.Radious);
+                SolveOutOfTheBounds(circle);
+            }
         }
 
         private void SolveOutOfTheBounds(Circle curr)
@@ -140,6 +147,15 @@ namespace graph_sandbox
             }
         }
 
+        public void ChangeVertices(List<Circle> newVertices)
+        {
+            for(var i = 0; i < Vertices.Count; ++i)
+            {
+                Vertices[i].Center = newVertices[i].Center;
+            }
+            //SolveCirclesProblems();
+            //Rebuilt();
+        }
 
         public Dictionary<int, List<int>> GetAdjList()
         {
@@ -248,7 +264,7 @@ namespace graph_sandbox
 
         private void TryToAddEdge(Edge currEdge)
         {
-            GC.Collect();
+            //GC.Collect();
             for (var i = 0; i < Edges.Count; ++i)
             {
                 if (Edges[i].IsEquals(currEdge))

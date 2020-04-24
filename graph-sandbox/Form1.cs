@@ -171,5 +171,12 @@ namespace graph_sandbox
                 xmlparser.Save(drawingSurface1);
             }
         }
+
+        private async void button9_Click(object sender, MouseEventArgs e)
+        {
+            GraphBuilder gb = new GraphBuilder(drawingSurface1.Edges, drawingSurface1.Vertices.Count);
+            functions.PerformClick();
+            await Task.Run(() => gb.Build(drawingSurface1, drawingSurface1.Vertices.Count));
+        }
     }
 }

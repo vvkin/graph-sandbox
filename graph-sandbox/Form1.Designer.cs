@@ -284,8 +284,9 @@
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(140, 37);
             this.button9.TabIndex = 10;
-            this.button9.Text = "Graph";
+            this.button9.Text = "Force Algorithm";
             this.button9.UseVisualStyleBackColor = false;
+            this.button9.MouseClick += new System.Windows.Forms.MouseEventHandler(button9_Click);
             // 
             // button2
             // 
