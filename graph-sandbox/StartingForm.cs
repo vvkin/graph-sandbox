@@ -22,8 +22,6 @@ namespace graph_sandbox
             toolTip2.SetToolTip(button2, "Upload a graph");
         }
 
-        
-
         private void closeForm_Click(object sender, EventArgs e)
         {
             Close();
@@ -62,23 +60,17 @@ namespace graph_sandbox
             form1.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void uploadGraph(object sender, EventArgs e)
         {
-
-        }
-
-        
-
-        private void toolTip1_Popup(object sender, PopupEventArgs e)
-        {
-
-        }
-
-        private void button1_MouseHover(object sender, EventArgs e)
-        {
-            if(button1.Focus() == true)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                label1.Focus();
+                this.Hide();
+                Form1 form1 = new Form1();
+                XMLParser xmlparser = new XMLParser(openFileDialog1.FileName);
+                xmlparser.UpLoad(form1.drawingSurface1);
+                form1.Show();
+                GraphBuilder gb = new GraphBuilder(form1.drawingSurface1.Edges, form1.drawingSurface1.Vertices.Count);
+                await Task.Run(() => gb.Build(form1.drawingSurface1, form1.drawingSurface1.Vertices.Count));
             }
         }
     }

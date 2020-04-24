@@ -58,8 +58,8 @@
             this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
             this.mainPanel = new System.Windows.Forms.Panel();
             this.drawPanel = new System.Windows.Forms.Panel();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.drawingSurface1 = new graph_sandbox.DrawingSurface();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.smallButtonsPanel.SuspendLayout();
@@ -406,13 +406,6 @@
             this.drawPanel.Size = new System.Drawing.Size(790, 424);
             this.drawPanel.TabIndex = 2;
             // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.Filter = "Xml file .xml|*.xml|Все файлы|*.*\"";
-            this.saveFileDialog1.InitialDirectory = "C:/";
-            this.saveFileDialog1.RestoreDirectory = true;
-            this.saveFileDialog1.Title = "Save as";
-            // 
             // drawingSurface1
             // 
             this.drawingSurface1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -424,6 +417,13 @@
             this.drawingSurface1.TabIndex = 0;
             this.drawingSurface1.Paint += new System.Windows.Forms.PaintEventHandler(this.drawingSurface1_Paint);
             this.drawingSurface1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddOrRemove);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "Xml file .xml|*.xml|Все файлы|*.*\"";
+            this.saveFileDialog1.InitialDirectory = "C:/";
+            this.saveFileDialog1.RestoreDirectory = true;
+            this.saveFileDialog1.Title = "Save as";
             // 
             // Form1
             // 
@@ -482,8 +482,8 @@
         private System.Windows.Forms.Panel functionsPanel;
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Panel drawPanel;
-        private DrawingSurface drawingSurface1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        protected internal DrawingSurface drawingSurface1;
     }
 }
 
