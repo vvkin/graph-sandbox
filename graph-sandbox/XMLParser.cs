@@ -9,13 +9,14 @@ namespace graph_sandbox
     class XMLParser
     {
         private readonly string filename;
+        
         public XMLParser(string filename) { this.filename = filename; }
         public void Save(DrawingSurface ds)
         {
             FileStream fs = File.Create(filename);
             fs.Close();
             StreamWriter sr = new StreamWriter(filename);
-            sr.WriteLine("<?xml version='1.0' encoding='UTF - 8'?>");
+            sr.WriteLine("<?xml version='1.0' encoding='utf-8'?>");
             sr.WriteLine("<graphml xmlns='http://graphml.graphdrawing.org/xmlns'\n xmlns:xsi = 'http://www.w3.org/2001/XMLSchema-instance' \n xsi: schemaLocation = 'http://graphml.graphdrawing.org/x \n http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd'>");
             sr.WriteLine("  <key id='d1' for='edge' attr.name='weight' attr.type='float'/>");
             sr.WriteLine("  <graph id='G'>");
@@ -33,7 +34,9 @@ namespace graph_sandbox
             sr.WriteLine("</graphml>");
             sr.Close();
         }
-
+        public void UpLoad(DrawingSurface ds)
+        {
+        }
     }
 
 }

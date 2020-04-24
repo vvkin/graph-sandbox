@@ -21,7 +21,7 @@ namespace graph_sandbox
         private Point startPosition;
 
         StartVertexInfo startVertex;
-
+        
         public Form1()
         {
             InitializeComponent();
@@ -31,11 +31,14 @@ namespace graph_sandbox
             toolTip3.SetToolTip(remove, "Remove");
             toolTip4.SetToolTip(download, "Download graph");
             toolTip5.SetToolTip(functions, "Functions");
+            this.Hide();
         }
 
         private void closeForm_Click(object sender, EventArgs e)
         {
             Close();
+            Application.ExitThread();
+            Application.Exit();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -177,6 +180,11 @@ namespace graph_sandbox
             GraphBuilder gb = new GraphBuilder(drawingSurface1.Edges, drawingSurface1.Vertices.Count);
             functions.PerformClick();
             await Task.Run(() => gb.Build(drawingSurface1, drawingSurface1.Vertices.Count));
+        }
+
+        private void drawingSurface1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

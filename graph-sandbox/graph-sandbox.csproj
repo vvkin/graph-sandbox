@@ -74,6 +74,12 @@
     <Compile Include="GraphBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StartingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StartingForm.Designer.cs">
+      <DependentUpon>StartingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="StartVertexInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,6 +102,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StartingForm.resx">
+      <DependentUpon>StartingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StartVertexInfo.resx">
       <DependentUpon>StartVertexInfo.cs</DependentUpon>
     </EmbeddedResource>
