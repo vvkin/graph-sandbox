@@ -65,6 +65,12 @@
     <Compile Include="EdgeInfo.Designer.cs">
       <DependentUpon>EdgeInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="ErrorBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorBox.Designer.cs">
+      <DependentUpon>ErrorBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,9 @@
     <Compile Include="XMLParser.cs" />
     <EmbeddedResource Include="EdgeInfo.resx">
       <DependentUpon>EdgeInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorBox.resx">
+      <DependentUpon>ErrorBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
