@@ -69,8 +69,8 @@ namespace graph_sandbox
                 XMLParser xmlparser = new XMLParser(openFileDialog1.FileName);
                 xmlparser.UpLoad(form1.drawingSurface1);
                 form1.Show();
-                GraphBuilder gb = new GraphBuilder(form1.drawingSurface1.Edges, form1.drawingSurface1.Vertices.Count);
-                await Task.Run(() => gb.Build(form1.drawingSurface1, form1.drawingSurface1.Vertices.Count));
+                GraphBuilder gb = new GraphBuilder(form1.drawingSurface1.Vertices.Count);
+                await Task.Run(() => gb.Build(form1.drawingSurface1));
             }
         }
     }
