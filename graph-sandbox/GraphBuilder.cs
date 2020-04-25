@@ -45,7 +45,7 @@ namespace graph_sandbox
             (width, height) = (ds.Width - 2 * Circle.Radious, ds.Height - 2 * Circle.Radious);
             var adjM = GetAdjMatrix(ds.Edges);
             FillArrays();
-            for (var i = 0; i < 100000 && !isReady; ++i)
+            for (var i = 0; i < 10000 && !isReady; ++i)
             {
                 Move(adjM);
             }
@@ -65,17 +65,6 @@ namespace graph_sandbox
             ds = Math.Sqrt(ds2);
             constV = (ds2 * ds == 0.0) ? 0 : beta / (ds2 * ds);
             return new Force(-constV * dx, -constV * dy);
-        }
-
-        private (double, double) GetMaxMin()
-        {
-            (double min, double max) = (100, -100);
-            foreach (var force in x)
-            {
-                min = Math.Min(min, Math.Min(force.dx, force.dy));
-                max = Math.Max(max, Math.Max(force.dx, force.dy));
-            }
-            return (max, min);
         }
 
         private static Force HookeForce(Force xi, Force xj, double dij)
@@ -109,7 +98,7 @@ namespace graph_sandbox
                 v[i].dy = (v[i].dy + alpha * Fy * deltaT) * eta;
                 ekint.dx += alpha * (v[i].dx * v[i].dx);
                 ekint.dy += alpha * (v[i].dy * v[i].dy);
-                if (Math.Sqrt(ekint.dx * ekint.dx + ekint.dy * ekint.dy) < Math.Pow(10, -8))
+                if (Math.Sqrt(ekint.dx * ekint.dx + ekint.dy * ekint.dy) < Math.Pow(10, - 10))
                 {
                     isReady = true;
                     return;
@@ -134,12 +123,26 @@ namespace graph_sandbox
             return adjM;
         }
 
+        private (double, double) GetMaxMin()
+        {
+            (double max, double min) = (-100, 100);
+            foreach(var force in x)
+            {
+                max = Math.Max(max, Math.Max(force.dx, force.dy));
+                min = Math.Min(min, Math.Min(force.dx, force.dy));
+            }
+            return ((max > 1) ? Math.Abs(max) : 1, Math.Abs(min));
+        }
         private void MoveCircle(int i, double max, double min)
         {
             x[i].dx /= max; x[i].dy /= max;
-            int newX = (int)(x[i].dx * width);
-            ; int newY = (int)(x[i].dy * height);
-            vertices[i].Center = new Point(newX, newY);
+            double Xvalue = (Math.Abs(width * min / max) + Circle.Radious * 2);
+            double Yvalue = (Math.Abs(height * min / max) + Circle.Radious * 2);
+            double Xscaler = (width + Xvalue) / width;
+            double Yscaler = (height + Yvalue) / height;
+            int newX = (int)((x[i].dx * (width) + Xvalue) / Xscaler);
+            int newY = (int)((x[i].dy * (height) + Yvalue) / Yscaler);
+            vertices[i].Center = new Point(newX, newY); 
         }
 
         private void FillArrays()
@@ -157,29 +160,8 @@ namespace graph_sandbox
             return new Force(rnd.NextDouble(),
                               rnd.NextDouble());
         }
-
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*private readonly List<Edge> edges;
 private readonly int vertexNum;
