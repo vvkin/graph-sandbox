@@ -152,11 +152,141 @@ namespace graph_sandbox
             g.Dispose();
             ClearVertices(ds, ds.Vertices);
         }
+        private static int[] TopologicalSort(DrawingSurface ds)
+        {
+            HashSet<int> visited = new HashSet<int>();
+            int[] answer = new int[ds.Vertices.Count];
+            Dictionary<int, List<int>> adjList = ds.GetAdjList();
+            int currentPlace = ds.Vertices.Count;
+
+
+            for (int vertex = 0; vertex < ds.Vertices.Count; ++vertex)
+            {
+                if (!visited.Contains(vertex))
+                {
+                    DFS(vertex);
+                }
+            }
+
+            void DFS(int start)
+            {
+                visited.Add(start);
+
+                foreach (var vertex in adjList[start])
+                {
+                    if (!visited.Contains(vertex))
+                    {
+                        DFS(vertex);
+                    }
+                }
+                answer[--currentPlace] = start;
+            }
+            return answer;
+        }
+
+        public static void ConnectedComponents(DrawingSurface ds)
+        {
+            var g = ds.CreateGraphics();
+            int[] sortedVertices = TopologicalSort(ds);
+            var OldGraphEdges = new List<Edge>();
+            for(var i =0; i < ds.Edges.Count; i++)
+            {
+                OldGraphEdges.Add(ds.Edges[i]);
+            }
+            foreach(var edge in ds.Edges)
+            {
+                var tmp = edge.start;
+                edge.setStart(ds.Vertices[edge.end]);
+                edge.setEnd(ds.Vertices[tmp]);
+            }
+            Dictionary<int, List<int>> adjList = ds.GetAdjList();
+            HashSet<int> visited = new HashSet<int>();
+            List<int> component = new List<int>();
+            List<List<int>> componentsList = new List<List<int>>();
+            foreach (var vertex in sortedVertices)
+            {
+                if (!visited.Contains(vertex))
+                {
+                    DFS(vertex);
+                }
+                if (component.Count != 0)
+                {
+                    componentsList.Add(new List<int>(component));
+                    component.Clear();
+                }
+            }
+
+            void DFS(int start)
+            {
+                visited.Add(start);
+                component.Add(start);
+
+                foreach (var vertex in adjList[start])
+                {
+                    if (!visited.Contains(vertex))
+                    {
+                        DFS(vertex);
+                    }
+                }
+            }
+            foreach (var edge in ds.Edges)
+            {
+                var tmp = edge.start;
+                edge.setStart(ds.Vertices[edge.end]);
+                edge.setEnd(ds.Vertices[tmp]);
+            }
+            Random rnd = new Random();
+            foreach (var c in componentsList)
+            {
+               
+                
+                Color colorForCurrentComponent = Color.FromArgb(255, rnd.Next(255), rnd.Next(255), rnd.Next(255));
+                foreach(var el in c)
+                {
+                    ds.Vertices[el].ReDraw(g, colorForCurrentComponent);
+                }
+                for (int i = 0; i < ds.Vertices.Count; i++)
+                {
+                    for(int j = 0; j < ds.Vertices.Count; j++)
+                    {
+                        
+                        if (i != j)
+                        {
+                           
+                            for(int k = 0; k < ds.Edges.Count; k++)
+                            {
+                                if(((ds.Edges[k].start == i && ds.Edges[k].end == j) || (ds.Edges[k].start == j && ds.Edges[k].end == i))&&c.Contains(i)&&c.Contains(j))
+                                {
+                                    
+                                    ds.Edges[k].FillColor = colorForCurrentComponent;
+                                    ds.Edges[k].Draw(g);
+                                }
+                            }
+                        }
+                       
+                    }
+                }
+            }
+            
+            Thread.Sleep(5000);
+            ClearEdges(ds, ds.Edges);
+            ClearVertices(ds, ds.Vertices);
+            ds.Invalidate();
+        }
+        
         private static void ClearVertices(DrawingSurface ds,List<Circle> vertices)
         {
             for(var i = 0; i < vertices.Count; ++i)
             {
                 vertices[i].FillColor = Color.White;
+            }
+            ds.Invalidate();
+        }
+        private static void ClearEdges(DrawingSurface ds, List<Edge> edges)
+        {
+            for(var i = 0; i < ds.Edges.Count; i++)
+            {
+                edges[i].FillColor = Color.Gray;
             }
             ds.Invalidate();
         }

@@ -237,5 +237,11 @@ namespace graph_sandbox
             panel1.Width = 0;
             HidedFilePanel = true;
         }
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            functions.PerformClick();
+            await Task.Run(()=>Algorithms.ConnectedComponents(drawingSurface1));
+            
+        }
     }
 }

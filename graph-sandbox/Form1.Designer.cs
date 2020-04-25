@@ -308,8 +308,9 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 37);
             this.button2.TabIndex = 4;
-            this.button2.Text = "Floid";
+            this.button2.Text = "Connected Components";
             this.button2.UseVisualStyleBackColor = false;
+	    this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_Click);
             // 
             // button8
             // 
