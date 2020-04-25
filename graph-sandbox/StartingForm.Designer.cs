@@ -148,10 +148,6 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.uploadGraph);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // StartingForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;

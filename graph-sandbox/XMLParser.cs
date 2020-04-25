@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Xml;
 namespace graph_sandbox
@@ -39,7 +35,6 @@ namespace graph_sandbox
             XmlDocument xml = new XmlDocument();
             xml.Load(filename);
             XmlElement xroot = xml.DocumentElement;
-            Console.WriteLine(xroot.Name);
             foreach (XmlElement xnode in xroot)
             {
                 foreach (XmlElement xNode in xnode)
@@ -62,6 +57,7 @@ namespace graph_sandbox
                     }
                 }
             }
+            
         }
     }
 }

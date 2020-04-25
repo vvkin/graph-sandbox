@@ -10,7 +10,7 @@ namespace graph_sandbox
         int MaxWidth = 230;
         int MinWidth = 50;
         bool Hided = true;
-
+        bool HidedFilePanel = true;
         private bool addVertex_clicked = false;
         private bool removeObject_clicked = false;
         private bool addEdge_clicked = false;
@@ -29,8 +29,10 @@ namespace graph_sandbox
             toolTip1.SetToolTip(addVertex, "Add vertex");
             toolTip2.SetToolTip(addEdge, "Add edge");
             toolTip3.SetToolTip(remove, "Remove");
-            toolTip4.SetToolTip(download, "Download graph");
+            toolTip4.SetToolTip(download, "Download/upload graph");
             toolTip5.SetToolTip(functions, "Functions");
+            toolTip6.SetToolTip(button10, "Download graph");
+            toolTip7.SetToolTip(button11, "Upload graph");
             this.Hide();
         }
 
@@ -66,6 +68,7 @@ namespace graph_sandbox
                 Hided = true;
             }
             functions.Visible = true;
+            
         }
 
         private void hideForm_Click(object sender, EventArgs e)
@@ -169,10 +172,35 @@ namespace graph_sandbox
 
         private void saveGraph(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
-                XMLParser xmlparser = new XMLParser(saveFileDialog1.FileName);
-                xmlparser.Save(drawingSurface1);
+
+            if (!Hided)
+            {
+                return;
             }
+            if (HidedFilePanel)
+            {
+                panel1.Enabled = true;
+                while (panel1.Width != 100)
+                {
+                    panel1.Width += 20;
+                    Update();
+                }
+                panel1.Visible = true;
+                button10.Enabled = true;
+                button11.Enabled = true;
+                HidedFilePanel = false;
+            }
+            else
+            {
+                panel1.Visible = false;
+                while (panel1.Width != 0)
+                {
+                    panel1.Width -= 20;
+                    Update();
+                }
+                HidedFilePanel = true;
+            }
+            
         }
 
         private async void button9_Click(object sender, MouseEventArgs e)
@@ -185,6 +213,29 @@ namespace graph_sandbox
         private void drawingSurface1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
+               XMLParser xmlparser = new XMLParser(saveFileDialog1.FileName);
+               xmlparser.Save(drawingSurface1);
+           }
+            panel1.Width = 0;
+            HidedFilePanel = true;
+        }
+
+        private async void button11_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                XMLParser xmlparser = new XMLParser(openFileDialog1.FileName);
+                xmlparser.UpLoad(drawingSurface1);
+                GraphBuilder gb = new GraphBuilder(drawingSurface1.Edges, drawingSurface1.Vertices.Count);
+                await Task.Run(() => gb.Build(drawingSurface1, drawingSurface1.Vertices.Count));
+            }
+            panel1.Width = 0;
+            HidedFilePanel = true;
         }
     }
 }

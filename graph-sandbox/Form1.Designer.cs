@@ -58,14 +58,22 @@
             this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
             this.mainPanel = new System.Windows.Forms.Panel();
             this.drawPanel = new System.Windows.Forms.Panel();
-            this.drawingSurface1 = new graph_sandbox.DrawingSurface();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.toolTip6 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip7 = new System.Windows.Forms.ToolTip(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.drawingSurface1 = new graph_sandbox.DrawingSurface();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.smallButtonsPanel.SuspendLayout();
             this.functionsPanel.SuspendLayout();
             this.mainPanel.SuspendLayout();
             this.drawPanel.SuspendLayout();
+            this.drawingSurface1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // topPanel
@@ -406,10 +414,22 @@
             this.drawPanel.Size = new System.Drawing.Size(790, 424);
             this.drawPanel.TabIndex = 2;
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "Xml file .xml|*.xml|Все файлы|*.*\"";
+            this.saveFileDialog1.InitialDirectory = "C:/";
+            this.saveFileDialog1.RestoreDirectory = true;
+            this.saveFileDialog1.Title = "Save as";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // drawingSurface1
             // 
             this.drawingSurface1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.drawingSurface1.Controls.Add(this.panel1);
             this.drawingSurface1.Location = new System.Drawing.Point(0, 0);
             this.drawingSurface1.Margin = new System.Windows.Forms.Padding(0);
             this.drawingSurface1.Name = "drawingSurface1";
@@ -418,12 +438,50 @@
             this.drawingSurface1.Paint += new System.Windows.Forms.PaintEventHandler(this.drawingSurface1_Paint);
             this.drawingSurface1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddOrRemove);
             // 
-            // saveFileDialog1
+            // panel1
             // 
-            this.saveFileDialog1.Filter = "Xml file .xml|*.xml|Все файлы|*.*\"";
-            this.saveFileDialog1.InitialDirectory = "C:/";
-            this.saveFileDialog1.RestoreDirectory = true;
-            this.saveFileDialog1.Title = "Save as";
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.panel1.Controls.Add(this.button11);
+            this.panel1.Controls.Add(this.button10);
+            this.panel1.Location = new System.Drawing.Point(0, 263);
+            this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(0, 50);
+            this.panel1.TabIndex = 0;
+            // 
+            // button11
+            // 
+            this.button11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.button11.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button11.BackgroundImage")));
+            this.button11.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.button11.FlatAppearance.BorderSize = 0;
+            this.button11.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.button11.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button11.Location = new System.Drawing.Point(50, -1);
+            this.button11.Margin = new System.Windows.Forms.Padding(0);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(50, 50);
+            this.button11.TabIndex = 2;
+            this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
+            // button10
+            // 
+            this.button10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.button10.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button10.BackgroundImage")));
+            this.button10.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.button10.FlatAppearance.BorderSize = 0;
+            this.button10.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button10.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button10.Location = new System.Drawing.Point(0, 0);
+            this.button10.Margin = new System.Windows.Forms.Padding(0);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(50, 50);
+            this.button10.TabIndex = 1;
+            this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // Form1
             // 
@@ -448,6 +506,8 @@
             this.functionsPanel.ResumeLayout(false);
             this.mainPanel.ResumeLayout(false);
             this.drawPanel.ResumeLayout(false);
+            this.drawingSurface1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -484,6 +544,12 @@
         private System.Windows.Forms.Panel drawPanel;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         protected internal DrawingSurface drawingSurface1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.ToolTip toolTip6;
+        private System.Windows.Forms.ToolTip toolTip7;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
