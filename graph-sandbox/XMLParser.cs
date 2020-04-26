@@ -35,6 +35,8 @@ namespace graph_sandbox
             XmlDocument xml = new XmlDocument();
             xml.Load(filename);
             XmlElement xroot = xml.DocumentElement;
+            ds.Edges.Clear();
+            ds.Vertices.Clear();
             foreach (XmlElement xnode in xroot)
             {
                 foreach (XmlElement xNode in xnode)

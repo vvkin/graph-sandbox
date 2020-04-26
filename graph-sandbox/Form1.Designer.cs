@@ -436,7 +436,6 @@
             this.drawingSurface1.Name = "drawingSurface1";
             this.drawingSurface1.Size = new System.Drawing.Size(790, 423);
             this.drawingSurface1.TabIndex = 0;
-            this.drawingSurface1.Paint += new System.Windows.Forms.PaintEventHandler(this.drawingSurface1_Paint);
             this.drawingSurface1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddOrRemove);
             // 
             // panel1

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Drawing;
+using System.Threading;
 
 namespace graph_sandbox
 {
@@ -40,20 +41,43 @@ namespace graph_sandbox
             rnd = new Random();
         }
 
-        public void Build(DrawingSurface ds)
+        public void Build(DrawingSurface ds, bool visualize)
         {
+            isReady = false;
+            int sleepTime = 25;
             (width, height) = (ds.Width - 2 * Circle.Radious, ds.Height - 2 * Circle.Radious);
             var adjM = GetAdjMatrix(ds.Edges);
             FillArrays();
             for (var i = 0; i < 10000 && !isReady; ++i)
             {
                 Move(adjM);
+                if (visualize) 
+                    Visualize(ds, sleepTime);
+                if (i > 2000) sleepTime = 10;
             }
             (double max, double min) = GetMaxMin();
             for (var i = 0; i < vertexNum; ++i) MoveCircle(i, max, min);
+            /* If there is collision between vertices
+            /* then try to build new graph */
+            if (PositionsAreNotValid()) Build(ds, visualize);
             ds.ChangeVertices(vertices);
-            Circle.number -= vertexNum;
             ds.Invalidate();
+
+            if (visualize)
+            {
+                ds.FillGraph(Color.Lime, Color.Lime);
+                Thread.Sleep(1000);
+                ds.FillGraph(Color.White, Color.Gray);
+            }
+        }
+
+        private void Visualize(DrawingSurface ds, int sleepTime)
+        {
+            (double max, double min) = GetMaxMin();
+            for (var i = 0; i < vertexNum; ++i) MoveCircle(i, max, min);
+            ds.ChangeVertices(vertices);
+            ds.Invalidate();
+            Thread.Sleep(sleepTime);
         }
 
         private Force CoulombForce(Force xi, Force xj)
@@ -65,6 +89,19 @@ namespace graph_sandbox
             ds = Math.Sqrt(ds2);
             constV = (ds2 * ds == 0.0) ? 0 : beta / (ds2 * ds);
             return new Force(-constV * dx, -constV * dy);
+        }
+
+        private bool PositionsAreNotValid()
+        {
+            for(var i = 0; i < vertexNum; ++i)
+            {
+                for(var j = 0; j < vertexNum; ++j)
+                {
+                    if (i != j && vertices[i].GetDistance(vertices[j]) < 60)
+                        return true;
+                }
+            }
+            return false;
         }
 
         private static Force HookeForce(Force xi, Force xj, double dij)
@@ -98,7 +135,7 @@ namespace graph_sandbox
                 v[i].dy = (v[i].dy + alpha * Fy * deltaT) * eta;
                 ekint.dx += alpha * (v[i].dx * v[i].dx);
                 ekint.dy += alpha * (v[i].dy * v[i].dy);
-                if (Math.Sqrt(ekint.dx * ekint.dx + ekint.dy * ekint.dy) < Math.Pow(10, - 10))
+                if (Math.Sqrt(ekint.dx * ekint.dx + ekint.dy * ekint.dy) < Math.Pow(10, - 8))
                 {
                     isReady = true;
                     return;
@@ -117,8 +154,7 @@ namespace graph_sandbox
             foreach (var edge in edges)
             {
                 adjM[edge.start, edge.end] = 1;
-                if (!edge.isDirected)
-                    adjM[edge.end, edge.start] = 1;
+                adjM[edge.end, edge.start] = 1;
             }
             return adjM;
         }

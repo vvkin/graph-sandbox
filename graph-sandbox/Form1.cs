@@ -207,12 +207,7 @@ namespace graph_sandbox
         {
             GraphBuilder gb = new GraphBuilder(drawingSurface1.Vertices.Count);
             functions.PerformClick();
-            await Task.Run(() => gb.Build(drawingSurface1));
-        }
-
-        private void drawingSurface1_Paint(object sender, PaintEventArgs e)
-        {
-
+            await Task.Run(() => gb.Build(drawingSurface1, true));
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -232,7 +227,7 @@ namespace graph_sandbox
                 XMLParser xmlparser = new XMLParser(openFileDialog1.FileName);
                 xmlparser.UpLoad(drawingSurface1);
                 GraphBuilder gb = new GraphBuilder(drawingSurface1.Vertices.Count);
-                await Task.Run(() => gb.Build(drawingSurface1));
+                await Task.Run(() => gb.Build(drawingSurface1, false));
             }
             panel1.Width = 0;
             HidedFilePanel = true;

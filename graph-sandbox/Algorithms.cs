@@ -238,12 +238,10 @@ namespace graph_sandbox
             Random rnd = new Random();
             foreach (var c in componentsList)
             {
-               
-                
                 Color colorForCurrentComponent = Color.FromArgb(255, rnd.Next(255), rnd.Next(255), rnd.Next(255));
                 foreach(var el in c)
                 {
-                    ds.Vertices[el].ReDraw(g, colorForCurrentComponent);
+                    ds.Vertices[el].FillColor = colorForCurrentComponent;
                 }
                 for (int i = 0; i < ds.Vertices.Count; i++)
                 {
@@ -255,19 +253,20 @@ namespace graph_sandbox
                            
                             for(int k = 0; k < ds.Edges.Count; k++)
                             {
-                                if(((ds.Edges[k].start == i && ds.Edges[k].end == j) || (ds.Edges[k].start == j && ds.Edges[k].end == i))&&c.Contains(i)&&c.Contains(j))
+                                if(((ds.Edges[k].start == i && ds.Edges[k].end == j) || 
+                                    (ds.Edges[k].start == j && ds.Edges[k].end == i))&&
+                                     c.Contains(i)&&c.Contains(j))
                                 {
                                     
                                     ds.Edges[k].FillColor = colorForCurrentComponent;
-                                    ds.Edges[k].Draw(g);
                                 }
                             }
                         }
                        
                     }
                 }
+                ds.Invalidate();
             }
-            
             Thread.Sleep(5000);
             ClearEdges(ds, ds.Edges);
             ClearVertices(ds, ds.Vertices);

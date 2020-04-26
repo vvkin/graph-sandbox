@@ -81,7 +81,6 @@ namespace graph_sandbox
                 moving = false; 
             }
             base.OnMouseUp(e);
-            //GC.Collect();
         }
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -153,8 +152,7 @@ namespace graph_sandbox
             {
                 Vertices[i].Center = newVertices[i].Center;
             }
-            //SolveCirclesProblems();
-            //Rebuilt();
+            Circle.number = Vertices.Count;
         }
 
         public Dictionary<int, List<int>> GetAdjList()
@@ -174,6 +172,10 @@ namespace graph_sandbox
                     adjList[edge.start].Add(edge.end);
                     adjList[edge.end].Add(edge.start);
                 }
+            }
+            foreach(var key in adjList.Keys)
+            {
+                adjList[key].Sort();
             }
             return adjList;
         }
@@ -247,6 +249,16 @@ namespace graph_sandbox
             Invalidate();
         }
 
+        public void FillGraph(Color vColor, Color eColor)
+        {
+            foreach (var vertex in Vertices)
+                vertex.FillColor = vColor;
+            foreach (var edge in Edges)
+                edge.FillColor = eColor;
+            Invalidate();
+        }
+
+
         public void TryToAddVertex(MouseEventArgs e)
         {
             Circle tempCircle = new Circle(e.X, e.Y);
@@ -264,7 +276,6 @@ namespace graph_sandbox
 
         private void TryToAddEdge(Edge currEdge)
         {
-            //GC.Collect();
             for (var i = 0; i < Edges.Count; ++i)
             {
                 if (Edges[i].IsEquals(currEdge))

@@ -70,7 +70,7 @@ namespace graph_sandbox
                 xmlparser.UpLoad(form1.drawingSurface1);
                 form1.Show();
                 GraphBuilder gb = new GraphBuilder(form1.drawingSurface1.Vertices.Count);
-                await Task.Run(() => gb.Build(form1.drawingSurface1));
+                await Task.Run(() => gb.Build(form1.drawingSurface1, false));
             }
         }
     }
