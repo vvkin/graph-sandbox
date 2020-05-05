@@ -238,5 +238,10 @@ namespace graph_sandbox
             await Task.Run(()=>Algorithms.ConnectedComponents(drawingSurface1));
             
         }
+        private async void button8_Click(object sender, EventArgs e)
+        {
+            functions.PerformClick();
+            await Task.Run(() => Algorithms.PrimSpanningTree(drawingSurface1));
+        }
     }
 }

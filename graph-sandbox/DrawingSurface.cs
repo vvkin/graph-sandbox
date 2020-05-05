@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace graph_sandbox
@@ -178,6 +179,32 @@ namespace graph_sandbox
                 adjList[key].Sort();
             }
             return adjList;
+        }
+        public List<List<float>> GetAdjMatrix()
+        {
+            List<List<float>> adjmat = new List<List<float>> { };
+            for(int i = 0; i < Vertices.Count; i++)
+            {
+                var help = new List<float> { };
+                for(int j = 0; j < Vertices.Count; j++)
+                {
+                    help.Add(int.MaxValue);
+                }
+                adjmat.Add(help);
+            }
+            foreach(var edge in Edges)
+            {
+                if (edge.isDirected) 
+                {
+                    adjmat[edge.start][edge.end] = edge.w;
+                }
+                else
+                {
+                    adjmat[edge.start][edge.end] = edge.w;
+                    adjmat[edge.end][edge.start] = edge.w;
+                }
+            }
+            return adjmat;
         }
         public List<int> GetNodePowers()
         {

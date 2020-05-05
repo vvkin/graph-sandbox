@@ -310,7 +310,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "Connected Components";
             this.button2.UseVisualStyleBackColor = false;
-	    this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_Click);
+	        this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_Click);
             // 
             // button8
             // 
@@ -324,8 +324,9 @@
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(140, 37);
             this.button8.TabIndex = 9;
-            this.button8.Text = "Graph";
+            this.button8.Text = "Prim Tree";
             this.button8.UseVisualStyleBackColor = false;
+            this.button8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button8_Click);
             // 
             // button3
             // 

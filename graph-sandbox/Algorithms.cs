@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading;
+using System.Windows.Controls;
+using System.Windows.Forms.VisualStyles;
 
 namespace graph_sandbox
 {
@@ -183,7 +185,6 @@ namespace graph_sandbox
             }
             return answer;
         }
-
         public static void ConnectedComponents(DrawingSurface ds)
         {
             var g = ds.CreateGraphics();
@@ -272,7 +273,68 @@ namespace graph_sandbox
             ClearVertices(ds, ds.Vertices);
             ds.Invalidate();
         }
-        
+        public static void PrimSpanningTree(DrawingSurface ds)
+        {
+            int n = ds.Vertices.Count;
+            var gr = ds.CreateGraphics();
+            Color SpanningTreeColor = Color.Red;
+            var adjList = ds.GetAdjList();
+            var g = ds.GetAdjMatrix();
+            const int INF = int.MaxValue;
+            bool[] used = new bool[n];
+            float[] min_e = new float[n];
+            int[] sel_e = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                min_e[i] = INF;
+                sel_e[i] = -1;
+            }
+            min_e[0] = 0;
+            for (int i = 0; i < n; ++i)
+            {
+                int v = -1;
+                for (int j = 0; j < n; ++j)
+                {
+                    if (!used[j] && (v == -1 || min_e[j] < min_e[v]))
+                    {
+                        v = j;
+                    }
+                }
+                if (min_e[v] == INF)
+                {
+                    ErrorBox er = new ErrorBox("Minimum spanning tree cannot be found");
+                    er.Show();
+                    return;
+                }
+                used[v] = true;
+                if (sel_e[v] != -1)
+                {
+                    for (int k = 0; k < ds.Edges.Count; k++)
+                    {
+                        if (((ds.Edges[k].start == v && ds.Edges[k].end == sel_e[v]) ||
+                            (ds.Edges[k].start == sel_e[v] && ds.Edges[k].end == v)))
+                        {
+                            ds.Edges[k].FillColor = SpanningTreeColor;
+                            ds.Edges[k].Draw(gr);
+                            ds.Vertices[ds.Edges[k].start].ReDraw(gr,SpanningTreeColor);
+                            ds.Vertices[ds.Edges[k].end].ReDraw(gr, SpanningTreeColor);
+                        }
+                    }
+                }
+                for(int to = 0; to < n; ++to)
+                {
+                    if(g[v][to]< min_e[to])
+                    {
+                        min_e[to] = g[v][to];
+                        sel_e[to] = v;
+                    }
+                }
+            }
+            Thread.Sleep(5000);
+            ClearEdges(ds, ds.Edges);
+            ClearVertices(ds, ds.Vertices);
+            ds.Invalidate();
+        }
         private static void ClearVertices(DrawingSurface ds,List<Circle> vertices)
         {
             for(var i = 0; i < vertices.Count; ++i)
