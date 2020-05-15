@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Collections;
+using System.Collections.Generic;
+
 
 namespace graph_sandbox
 {
@@ -20,7 +23,7 @@ namespace graph_sandbox
         public Circle setStart(Circle start) => startVertex = start;
         public Circle setEnd(Circle end) => endVertex = end;
         public int end => endVertex.uniqueNumber - 1;
-        public float w => weight;
+        public float w { get => weight; set { } }
         public Edge(Circle startVertex, Circle endVertex, float weight, bool isDirected)
         {
             this.startVertex = startVertex;
@@ -132,8 +135,16 @@ namespace graph_sandbox
 
         public void Move(Point d)
         {
-           var tempPoint = new PointF(midPoint.X + d.X, midPoint.Y + d.Y);
-           midPoint = (IsValid(tempPoint)) ? tempPoint : midPoint;
+            var tempPoint = new PointF(midPoint.X + d.X, midPoint.Y + d.Y);
+            midPoint = (IsValid(tempPoint)) ? tempPoint : midPoint;
+        }
+    }
+
+    public class EdgeCompare : IComparer<Edge>
+    {
+        public int Compare(Edge a, Edge b)
+        {
+            return a.w.CompareTo(b.w);
         }
     }
 }

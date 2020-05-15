@@ -59,7 +59,7 @@ namespace graph_sandbox
             for (var i = 0; i < vertexNum; ++i) MoveCircle(i, max, min);
             /* If there is collision between vertices
             /* then try to build new graph */
-            if (PositionsAreNotValid()) Build(ds, visualize);
+            //if (PositionsAreNotValid()) Build(ds, visualize);
             ds.ChangeVertices(vertices);
             ds.Invalidate();
 

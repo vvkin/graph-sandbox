@@ -180,6 +180,32 @@ namespace graph_sandbox
             }
             return adjList;
         }
+
+        public bool ContainsNegativeEdge()
+        {
+            foreach(var edge in Edges)
+            {
+                if (edge.w < 0)
+                    return true;
+            }
+            return false;
+        }
+
+        public Dictionary<int, List<Edge>> GetDestAdjList()
+        {
+            var adjL = new Dictionary<int, List<Edge>>();
+            for (var i = 0; i < Vertices.Count; ++i)
+                adjL.Add(i, new List<Edge>());
+            foreach(var edge in Edges)
+            {
+                adjL[edge.start].Add(edge);
+                if (!edge.isDirected)
+                    adjL[edge.end].Add(edge);
+            }
+            return adjL;
+        }
+
+
         public List<List<float>> GetAdjMatrix()
         {
             List<List<float>> adjmat = new List<List<float>> { };
@@ -334,7 +360,7 @@ namespace graph_sandbox
                         edgeStartPoint = vertex;
                         vertex.FillColor = Color.FromArgb(100, 100, 100);
                     }
-                    else
+                    else if (edgeStartPoint != vertex)
                     {
                         CreateEdge(vertex);
                     }

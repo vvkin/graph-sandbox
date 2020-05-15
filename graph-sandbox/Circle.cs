@@ -10,13 +10,15 @@ public class Circle
     public const int Radious = 20;
     public static int number = 0;
     public int uniqueNumber;
+    public string label;
 
-    public Circle(int x, int y) 
+    public Circle(int x, int y, string label = "") 
     {
         Center.X = x;
         Center.Y = y;
         FillColor = Color.White;
         uniqueNumber = ++number;
+        this.label = label;
     }
 
     public GraphicsPath GetPath()
@@ -26,6 +28,15 @@ public class Circle
         p.Offset(-Radious, -Radious);
         path.AddEllipse(p.X, p.Y, 2 * Radious, 2 * Radious);
         return path;
+    }
+
+    private void DrawLabel(Graphics g)
+    {
+        using (var font = new Font(new FontFamily("MV Boli"), 16, FontStyle.Bold, GraphicsUnit.Pixel))
+        {
+            g.DrawString(label, font, new SolidBrush(Color.White),
+                        new PointF(Center.X + Radious - 10, Center.Y + Radious - 10));
+        }
     }
 
     public bool HitTest(Point p)
@@ -50,6 +61,8 @@ public class Circle
                 }
             }            
         }
+        if (label != "")
+            DrawLabel(g);
     }
 
     public void ReDraw(Graphics g, Color color)

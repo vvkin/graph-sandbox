@@ -56,7 +56,7 @@ namespace graph_sandbox
                 ds.Vertices[start].ReDraw(g, processedVertex);
             }
             g.Dispose();
-            ClearVertices(ds, ds.Vertices);
+            ClearVertices(ds);
         }
         public static void DFS(DrawingSurface ds, int start)
         {
@@ -104,7 +104,7 @@ namespace graph_sandbox
                 }
             }
             g.Dispose();
-            ClearVertices(ds, ds.Vertices);
+            ClearVertices(ds);
         }
         public static void Colouring(DrawingSurface ds)
         {
@@ -152,7 +152,7 @@ namespace graph_sandbox
             }
             Thread.Sleep(5000);
             g.Dispose();
-            ClearVertices(ds, ds.Vertices);
+            ClearVertices(ds);
         }
         private static int[] TopologicalSort(DrawingSurface ds)
         {
@@ -269,8 +269,8 @@ namespace graph_sandbox
                 ds.Invalidate();
             }
             Thread.Sleep(5000);
-            ClearEdges(ds, ds.Edges);
-            ClearVertices(ds, ds.Vertices);
+            ClearEdges(ds);
+            ClearVertices(ds);
             ds.Invalidate();
         }
         public static void PrimSpanningTree(DrawingSurface ds)
@@ -331,23 +331,79 @@ namespace graph_sandbox
                 }
             }
             Thread.Sleep(5000);
-            ClearEdges(ds, ds.Edges);
-            ClearVertices(ds, ds.Vertices);
+            ClearEdges(ds);
+            ClearVertices(ds);
             ds.Invalidate();
         }
-        private static void ClearVertices(DrawingSurface ds,List<Circle> vertices)
+
+        public static void Dijkstra(DrawingSurface ds, int start)
         {
-            for(var i = 0; i < vertices.Count; ++i)
+            if (ds.ContainsNegativeEdge())
             {
-                vertices[i].FillColor = Color.White;
+                var err = new ErrorBox("Graph contains negative edges");
+                err.ShowDialog();
+                return;
+            }
+            var adjList = ds.GetDestAdjList();
+            var que = new C5.IntervalHeap<Edge>(new EdgeCompare());
+            var dist = Enumerable.Repeat((float)int.MaxValue, adjList.Count).ToList();
+            que.Add(new Edge(ds.Vertices[start], ds.Vertices[start], 0, true));
+            dist[start] = 0;
+            for(var i = 0; i < ds.Vertices.Count; ++i)
+                ds.Vertices[i].label = "INF";
+            ds.Vertices[start].label = "0";
+           
+            while(que.Count != 0)
+            {
+                var currEdge = que.FindMin(); que.DeleteMin();
+                var startVertex = (ds.Vertices[currEdge.end].FillColor == Color.Green) ? currEdge.start : currEdge.end;
+                ds.Vertices[startVertex].FillColor = Color.Green;
+                ds.Invalidate();
+                Thread.Sleep(1000);
+                foreach (var edge in adjList[startVertex])
+                {
+                    var currVertex = (edge.end != startVertex) ? edge.end : edge.start;
+                    edge.FillColor = Color.Red;
+                    ds.Invalidate();
+                    Thread.Sleep(250);
+                    if (ds.Vertices[currVertex].FillColor != Color.Green)
+                    {
+                        ds.Vertices[currVertex].FillColor = Color.Yellow;
+                        ds.Invalidate();
+                    }
+                    Thread.Sleep(1000);
+                    if (dist[currVertex] > dist[startVertex] + edge.w)
+                    {
+                        dist[currVertex] = dist[startVertex] + edge.w;
+                        ds.Vertices[currVertex].label = $"{dist[currEdge.end]}+{edge.w}";
+                        ds.Invalidate();
+                        Thread.Sleep(1000);
+                        que.Add(edge);
+                    }
+                    ds.Vertices[currVertex].label = (dist[currVertex] == int.MaxValue) ? "INF" : $"{dist[currVertex]}";
+                    edge.FillColor = Color.Gray;
+                    ds.Invalidate();
+                }
+            }
+            Thread.Sleep(5000);
+            ClearEdges(ds);
+            ClearVertices(ds);
+        }
+
+        private static void ClearVertices(DrawingSurface ds)
+        {
+            for(var i = 0; i < ds.Vertices.Count; ++i)
+            {
+                ds.Vertices[i].label = "";
+                ds.Vertices[i].FillColor = Color.White;
             }
             ds.Invalidate();
         }
-        private static void ClearEdges(DrawingSurface ds, List<Edge> edges)
+        private static void ClearEdges(DrawingSurface ds)
         {
             for(var i = 0; i < ds.Edges.Count; i++)
             {
-                edges[i].FillColor = Color.Gray;
+                ds.Edges[i].FillColor = Color.Gray;
             }
             ds.Invalidate();
         }

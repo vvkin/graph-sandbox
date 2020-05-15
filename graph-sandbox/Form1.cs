@@ -243,5 +243,11 @@ namespace graph_sandbox
             functions.PerformClick();
             await Task.Run(() => Algorithms.PrimSpanningTree(drawingSurface1));
         }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            functions.PerformClick();
+            await Task.Run(() => Algorithms.Dijkstra(drawingSurface1, startVertex.Get_Input(Circle.number) - 1));
+        }
     }
 }
