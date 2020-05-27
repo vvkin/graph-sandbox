@@ -242,6 +242,32 @@ namespace graph_sandbox
             }
             return adjmat;
         }
+        public List<List<int>> GetBoolAdjMatrix()
+        {
+            List<List<int>> adjmat = new List<List<int>> { };
+            for (int i = 0; i < Vertices.Count; i++)
+            {
+                var help = new List<int> { };
+                for (int j = 0; j < Vertices.Count; j++)
+                {
+                    help.Add(0);
+                }
+                adjmat.Add(help);
+            }
+            foreach (var edge in Edges)
+            {
+                if (edge.isDirected)
+                {
+                    adjmat[edge.start][edge.end] = 1;
+                }
+                else
+                {
+                    adjmat[edge.start][edge.end] = 1;
+                    adjmat[edge.end][edge.start] = 1;
+                }
+            }
+            return adjmat;
+        }
         public List<int> GetNodePowers()
         {
             var adjList = GetAdjList();

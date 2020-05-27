@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.Threading;
+using Microsoft.SqlServer.Server;
+
 namespace graph_sandbox
 {
     struct FulkersonItem
@@ -17,8 +19,6 @@ namespace graph_sandbox
         }
 
     }
-
-
     static class Algorithms
     {
         private static readonly Color activeVertex = Color.Red;
@@ -116,7 +116,8 @@ namespace graph_sandbox
         }
         public static void Colouring(DrawingSurface ds)
         {
-            if (ds.Vertices.Count == 0) return;
+            if (ds.Vertices.Count == 0) 
+                return;
             Random rnd = new Random { };
             var g = ds.CreateGraphics();
             var adjList = ds.GetAdjList();
@@ -326,6 +327,7 @@ namespace graph_sandbox
                             ds.Edges[k].Draw(gr);
                             ds.Vertices[ds.Edges[k].start].ReDraw(gr, SpanningTreeColor);
                             ds.Vertices[ds.Edges[k].end].ReDraw(gr, SpanningTreeColor);
+                            Thread.Sleep(2000);
                         }
                     }
                 }
@@ -594,7 +596,109 @@ namespace graph_sandbox
             ClearEdges(ds, true);
             ds.FillGraph(Color.White, Color.Gray);
         }
-
+        public static void KruskalSpanningTree(DrawingSurface ds)
+        {
+            Color SpanningTreeColor = Color.Green;
+            var gr = ds.CreateGraphics();
+            int m = ds.Edges.Count;
+            var w = ds.GetAdjMatrix();
+            int cost = 0;
+            List<Tuple<int, int>> res = new List<Tuple<int, int>> { };
+            ds.Edges.OrderBy(x => w[x.start][x.end]);
+            List<int> tree_id = new List<int>{ };
+            for(int i =0; i < ds.Vertices.Count; ++i)
+            {
+                tree_id.Add(i);
+            }
+            for(int i =0; i < m; ++i)
+            {
+                int a = ds.Edges[i].start, b = ds.Edges[i].end; float l = w[a][b];
+                if(tree_id[a]!= tree_id[b])
+                {
+                    cost += 1;
+                    for (int k = 0; k < ds.Edges.Count; k++)
+                    {
+                        if (((ds.Edges[k].start == a && ds.Edges[k].end == b) ||
+                            (ds.Edges[k].start == b && ds.Edges[k].end == a)))
+                        {
+                            ds.Edges[k].FillColor = SpanningTreeColor;
+                            ds.Edges[k].Draw(gr);
+                            ds.Vertices[ds.Edges[k].start].ReDraw(gr, SpanningTreeColor);
+                            ds.Vertices[ds.Edges[k].end].ReDraw(gr, SpanningTreeColor);
+                            Thread.Sleep(2000);
+                        }
+                    }
+                    int old_id = tree_id[b], new_id = tree_id[a];
+                    for(int j = 0; j< ds.Vertices.Count; ++j)
+                    {
+                        if(tree_id[j]== old_id)
+                        {
+                            tree_id[j] = new_id;
+                        }
+                    }
+                }
+            }
+            Thread.Sleep(5000);
+            ClearEdges(ds, false);
+            ClearVertices(ds);
+            ds.Invalidate();
+        }
+        public static void KuhnMatching(DrawingSurface ds)
+        {
+            var gr = ds.CreateGraphics();
+            var adjMat = ds.GetAdjList();
+            Color MaxMatchingColor = Color.Yellow;
+            List<bool> used = new List<bool> { };
+            List<int> matching = new List<int> { };
+            for (int i = 0; i < ds.Vertices.Count; i++)
+            {
+                matching.Add(-1);
+            }
+            bool dfs(int v)
+            {
+                if (used[v]) return false;
+                used[v] = true;
+                foreach (var to in adjMat[v])
+                {
+                    if (matching[to] == -1 || (dfs(matching[to])))
+                    {
+                        matching[to] = v;
+                        return true;
+                    }
+                }
+                return false;
+            }
+            for (int i = 0; i < ds.Vertices.Count; i++)
+            {
+                for (int j = 0; j < ds.Vertices.Count; j++)
+                {
+                    used.Add(false);
+                }
+                dfs(i);
+            }
+            for (int i = 0; i < ds.Vertices.Count; i++)
+            {
+                if (matching[i] != 1)
+                {
+                    for (int k = 0; k < ds.Edges.Count; k++)
+                    {
+                        if (((ds.Edges[k].start == i && ds.Edges[k].end == matching[i]) ||
+                            (ds.Edges[k].start == matching[i] && ds.Edges[k].end == i)))
+                        {
+                            ds.Edges[k].FillColor = MaxMatchingColor;
+                            ds.Edges[k].Draw(gr);
+                            ds.Vertices[ds.Edges[k].start].ReDraw(gr, MaxMatchingColor);
+                            ds.Vertices[ds.Edges[k].end].ReDraw(gr, MaxMatchingColor);
+                            Thread.Sleep(2000);
+                        }
+                    }
+                }
+            }
+            Thread.Sleep(5000);
+            ClearEdges(ds, false);
+            ClearVertices(ds);
+            ds.Invalidate();
+        }
         private static void ClearVertices(DrawingSurface ds)
         {
             for(var i = 0; i < ds.Vertices.Count; ++i)
