@@ -53,7 +53,7 @@ namespace graph_sandbox
             this.button3 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.Ford_Fulkerson = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
@@ -61,14 +61,14 @@ namespace graph_sandbox
             this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
             this.mainPanel = new System.Windows.Forms.Panel();
             this.drawPanel = new System.Windows.Forms.Panel();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.toolTip6 = new System.Windows.Forms.ToolTip(this.components);
-            this.toolTip7 = new System.Windows.Forms.ToolTip(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.drawingSurface1 = new graph_sandbox.DrawingSurface();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button11 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.toolTip6 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip7 = new System.Windows.Forms.ToolTip(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.smallButtonsPanel.SuspendLayout();
@@ -134,7 +134,7 @@ namespace graph_sandbox
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(63, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(202, 31);
+            this.label1.Size = new System.Drawing.Size(162, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Graph Sandbox";
             // 
@@ -261,8 +261,8 @@ namespace graph_sandbox
             this.functionsPanel.Controls.Add(this.button3);
             this.functionsPanel.Controls.Add(this.button7);
             this.functionsPanel.Controls.Add(this.button4);
-            this.functionsPanel.Controls.Add(this.button5);
-            this.functionsPanel.Location = new System.Drawing.Point(3, 0);
+            this.functionsPanel.Controls.Add(this.Ford_Fulkerson);
+            this.functionsPanel.Location = new System.Drawing.Point(3, 1);
             this.functionsPanel.Name = "functionsPanel";
             this.functionsPanel.Size = new System.Drawing.Size(140, 423);
             this.functionsPanel.TabIndex = 2;
@@ -314,7 +314,7 @@ namespace graph_sandbox
             this.button2.TabIndex = 4;
             this.button2.Text = "Connected Components";
             this.button2.UseVisualStyleBackColor = false;
-	        this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_Click);
+            this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_Click);
             // 
             // button8
             // 
@@ -380,20 +380,21 @@ namespace graph_sandbox
             this.button4.UseVisualStyleBackColor = false;
             this.button4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button4_Click);
             // 
-            // button5
+            // Ford_Fulkerson
             // 
-            this.button5.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.button5.BackColor = System.Drawing.Color.Navy;
-            this.button5.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(0, 214);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(140, 37);
-            this.button5.TabIndex = 7;
-            this.button5.Text = "Topological Sort";
-            this.button5.UseVisualStyleBackColor = false;
+            this.Ford_Fulkerson.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Ford_Fulkerson.BackColor = System.Drawing.Color.Navy;
+            this.Ford_Fulkerson.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.Ford_Fulkerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Ford_Fulkerson.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Ford_Fulkerson.ForeColor = System.Drawing.Color.White;
+            this.Ford_Fulkerson.Location = new System.Drawing.Point(0, 214);
+            this.Ford_Fulkerson.Name = "Ford_Fulkerson";
+            this.Ford_Fulkerson.Size = new System.Drawing.Size(140, 37);
+            this.Ford_Fulkerson.TabIndex = 7;
+            this.Ford_Fulkerson.Text = "Ford-Fulkerson";
+            this.Ford_Fulkerson.UseVisualStyleBackColor = false;
+            this.Ford_Fulkerson.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Ford_Fulkerson_Click);
             // 
             // mainPanel
             // 
@@ -419,17 +420,6 @@ namespace graph_sandbox
             this.drawPanel.Name = "drawPanel";
             this.drawPanel.Size = new System.Drawing.Size(790, 424);
             this.drawPanel.TabIndex = 2;
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.Filter = "Xml file .xml|*.xml|Все файлы|*.*\"";
-            this.saveFileDialog1.InitialDirectory = "C:/";
-            this.saveFileDialog1.RestoreDirectory = true;
-            this.saveFileDialog1.Title = "Save as";
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // drawingSurface1
             // 
@@ -488,6 +478,17 @@ namespace graph_sandbox
             this.button10.UseVisualStyleBackColor = false;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "Xml file .xml|*.xml|Все файлы|*.*\"";
+            this.saveFileDialog1.InitialDirectory = "C:/";
+            this.saveFileDialog1.RestoreDirectory = true;
+            this.saveFileDialog1.Title = "Save as";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -533,7 +534,7 @@ namespace graph_sandbox
         private System.Windows.Forms.Button button9;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button Ford_Fulkerson;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;

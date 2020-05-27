@@ -17,6 +17,7 @@ namespace graph_sandbox
         protected internal Color FillColor = Color.Gray;
         private PointF oldStart;
         private PointF oldEnd;
+        private string label;
 
         public bool isDirected;
         public int start => startVertex.uniqueNumber - 1;
@@ -30,6 +31,7 @@ namespace graph_sandbox
             this.endVertex = endVertex;
             this.weight = weight;
             this.isDirected = isDirected;
+            this.label = "";
         }
 
         public void Draw(Graphics g)
@@ -46,7 +48,8 @@ namespace graph_sandbox
             {
                 Font font = new Font("Arial", 16, FontStyle.Bold);
                 brush.Color = Color.White;
-                g.DrawString(Convert.ToString(weight),font,
+                var text = (label == "") ? Convert.ToString(weight) : label;
+                g.DrawString(text,font,
                     brush, midPoint);
                 font.Dispose();
             }
@@ -137,6 +140,10 @@ namespace graph_sandbox
         {
             var tempPoint = new PointF(midPoint.X + d.X, midPoint.Y + d.Y);
             midPoint = (IsValid(tempPoint)) ? tempPoint : midPoint;
+        }
+        public void SetLabel(string label)
+        {
+            this.label = label;
         }
     }
 

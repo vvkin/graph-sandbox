@@ -21,7 +21,7 @@ namespace graph_sandbox
         private Point startPosition;
 
         StartVertexInfo startVertex;
-        
+
         public Form1()
         {
             InitializeComponent();
@@ -68,7 +68,7 @@ namespace graph_sandbox
                 Hided = true;
             }
             functions.Visible = true;
-            
+
         }
 
         private void hideForm_Click(object sender, EventArgs e)
@@ -82,11 +82,11 @@ namespace graph_sandbox
             {
                 drawingSurface1.TryToRemove(e);
             }
-            else if(addVertex_clicked)
+            else if (addVertex_clicked)
             {
                 drawingSurface1.TryToAddVertex(e);
             }
-            else if(addEdge_clicked)
+            else if (addEdge_clicked)
             {
                 drawingSurface1.TryToAddEdge(e);
             }
@@ -200,7 +200,7 @@ namespace graph_sandbox
                 }
                 HidedFilePanel = true;
             }
-            
+
         }
 
         private async void button9_Click(object sender, MouseEventArgs e)
@@ -212,10 +212,11 @@ namespace graph_sandbox
 
         private void button10_Click(object sender, EventArgs e)
         {
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
-               XMLParser xmlparser = new XMLParser(saveFileDialog1.FileName);
-               xmlparser.Save(drawingSurface1);
-           }
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                XMLParser xmlparser = new XMLParser(saveFileDialog1.FileName);
+                xmlparser.Save(drawingSurface1);
+            }
             panel1.Width = 0;
             HidedFilePanel = true;
         }
@@ -235,8 +236,8 @@ namespace graph_sandbox
         private async void button2_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
-            await Task.Run(()=>Algorithms.ConnectedComponents(drawingSurface1));
-            
+            await Task.Run(() => Algorithms.ConnectedComponents(drawingSurface1));
+
         }
         private async void button8_Click(object sender, EventArgs e)
         {
@@ -248,6 +249,12 @@ namespace graph_sandbox
         {
             functions.PerformClick();
             await Task.Run(() => Algorithms.Dijkstra(drawingSurface1, startVertex.Get_Input(Circle.number) - 1));
+        }
+
+        private async void Ford_Fulkerson_Click(object sender, EventArgs e)
+        {
+            functions.PerformClick();
+            await Task.Run(() => Algorithms.FordFulkerson(drawingSurface1));
         }
     }
 }

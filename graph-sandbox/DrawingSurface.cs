@@ -181,6 +181,16 @@ namespace graph_sandbox
             return adjList;
         }
 
+        public bool IsUndirected()
+        {
+            foreach(var edge in Edges)
+            {
+                if (!edge.isDirected)
+                    return true;
+            }
+            return false;
+        }
+     
         public bool ContainsNegativeEdge()
         {
             foreach(var edge in Edges)

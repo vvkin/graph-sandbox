@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Threading;
-using System.Windows.Controls;
-using System.Windows.Forms.VisualStyles;
 
 namespace graph_sandbox
 {
+    struct FulkersonItem
+    {
+        public double toFlow;
+        public double backFlow;
+
+        public FulkersonItem(float toFlow = 0, float backFlow = 0)
+        {
+            this.toFlow = toFlow;
+            this.backFlow = backFlow;
+        }
+
+    }
+
+
     static class Algorithms
     {
         private static readonly Color activeVertex = Color.Red;
@@ -33,7 +42,7 @@ namespace graph_sandbox
             que.Enqueue(start - 1);
             visited[start - 1] = true;
 
-            while(que.Count > 0)
+            while (que.Count > 0)
             {
                 start = que.Dequeue();
                 ds.Vertices[start].ReDraw(g, activeVertex);
@@ -41,7 +50,7 @@ namespace graph_sandbox
                 Thread.Sleep(700);
 
                 visited[start] = true;
-                foreach(var vertex in adjList[start])
+                foreach (var vertex in adjList[start])
                 {
                     if (!visited[vertex])
                     {
@@ -62,11 +71,11 @@ namespace graph_sandbox
         {
             if (start > ds.Vertices.Count || start < 1) return;
             Stack<int> stack = new Stack<int>();
-            stack.Push(start-1);
+            stack.Push(start - 1);
             var adjList = ds.GetAdjList();
             bool[] visited = new bool[ds.Vertices.Count];
             var g = ds.CreateGraphics();
-            while (stack.Count>0)
+            while (stack.Count > 0)
             {
                 int vertex = stack.Peek();
                 ds.Vertices[vertex].ReDraw(g, activeVertex);
@@ -119,18 +128,18 @@ namespace graph_sandbox
             int colors_used = 1;
             colors_list[vertices[0]] = 0;
 
-            foreach(var vertex in vertices)
+            foreach (var vertex in vertices)
             {
                 if (vertex == vertices[0]) continue;
                 HashSet<int> adjacentColors = new HashSet<int> { };
-                foreach(var adjvertices in adjList[vertex])
+                foreach (var adjvertices in adjList[vertex])
                 {
                     if (colors_list[adjvertices] != -1)
                     {
                         adjacentColors.Add(colors_list[adjvertices]);
                     }
                 }
-                HashSet<int> possibleColors = colors_list.Where(u=>u!=-1).Except(adjacentColors).ToHashSet();
+                HashSet<int> possibleColors = colors_list.Where(u => u != -1).Except(adjacentColors).ToHashSet();
                 if (possibleColors.Count == 0)
                 {
                     colors_used += 1;
@@ -138,14 +147,14 @@ namespace graph_sandbox
                 }
                 else
                 {
-                    if(colors_list[vertex]==-1)
+                    if (colors_list[vertex] == -1)
                     {
                         colors_list[vertex] = possibleColors.Min();
                     }
-                }    
+                }
             }
-            foreach(var vertex in vertices)
-            {  
+            foreach (var vertex in vertices)
+            {
                 ds.Vertices[vertex].ReDraw(g, colors[colors_list[vertex]]);
                 ds.Invalidate();
                 Thread.Sleep(1000);
@@ -190,11 +199,11 @@ namespace graph_sandbox
             var g = ds.CreateGraphics();
             int[] sortedVertices = TopologicalSort(ds);
             var OldGraphEdges = new List<Edge>();
-            for(var i =0; i < ds.Edges.Count; i++)
+            for (var i = 0; i < ds.Edges.Count; i++)
             {
                 OldGraphEdges.Add(ds.Edges[i]);
             }
-            foreach(var edge in ds.Edges)
+            foreach (var edge in ds.Edges)
             {
                 var tmp = edge.start;
                 edge.setStart(ds.Vertices[edge.end]);
@@ -240,36 +249,36 @@ namespace graph_sandbox
             foreach (var c in componentsList)
             {
                 Color colorForCurrentComponent = Color.FromArgb(255, rnd.Next(255), rnd.Next(255), rnd.Next(255));
-                foreach(var el in c)
+                foreach (var el in c)
                 {
                     ds.Vertices[el].FillColor = colorForCurrentComponent;
                 }
                 for (int i = 0; i < ds.Vertices.Count; i++)
                 {
-                    for(int j = 0; j < ds.Vertices.Count; j++)
+                    for (int j = 0; j < ds.Vertices.Count; j++)
                     {
-                        
+
                         if (i != j)
                         {
-                           
-                            for(int k = 0; k < ds.Edges.Count; k++)
+
+                            for (int k = 0; k < ds.Edges.Count; k++)
                             {
-                                if(((ds.Edges[k].start == i && ds.Edges[k].end == j) || 
-                                    (ds.Edges[k].start == j && ds.Edges[k].end == i))&&
-                                     c.Contains(i)&&c.Contains(j))
+                                if (((ds.Edges[k].start == i && ds.Edges[k].end == j) ||
+                                    (ds.Edges[k].start == j && ds.Edges[k].end == i)) &&
+                                     c.Contains(i) && c.Contains(j))
                                 {
-                                    
+
                                     ds.Edges[k].FillColor = colorForCurrentComponent;
                                 }
                             }
                         }
-                       
+
                     }
                 }
                 ds.Invalidate();
             }
             Thread.Sleep(5000);
-            ClearEdges(ds);
+            ClearEdges(ds, false);
             ClearVertices(ds);
             ds.Invalidate();
         }
@@ -316,14 +325,14 @@ namespace graph_sandbox
                         {
                             ds.Edges[k].FillColor = SpanningTreeColor;
                             ds.Edges[k].Draw(gr);
-                            ds.Vertices[ds.Edges[k].start].ReDraw(gr,SpanningTreeColor);
+                            ds.Vertices[ds.Edges[k].start].ReDraw(gr, SpanningTreeColor);
                             ds.Vertices[ds.Edges[k].end].ReDraw(gr, SpanningTreeColor);
                         }
                     }
                 }
-                for(int to = 0; to < n; ++to)
+                for (int to = 0; to < n; ++to)
                 {
-                    if(g[v][to]< min_e[to])
+                    if (g[v][to] < min_e[to])
                     {
                         min_e[to] = g[v][to];
                         sel_e[to] = v;
@@ -331,7 +340,7 @@ namespace graph_sandbox
                 }
             }
             Thread.Sleep(5000);
-            ClearEdges(ds);
+            ClearEdges(ds, false);
             ClearVertices(ds);
             ds.Invalidate();
         }
@@ -349,11 +358,11 @@ namespace graph_sandbox
             var dist = Enumerable.Repeat((float)int.MaxValue, adjList.Count).ToList();
             que.Add(new Edge(ds.Vertices[start], ds.Vertices[start], 0, true));
             dist[start] = 0;
-            for(var i = 0; i < ds.Vertices.Count; ++i)
+            for (var i = 0; i < ds.Vertices.Count; ++i)
                 ds.Vertices[i].label = "INF";
             ds.Vertices[start].label = "0";
-           
-            while(que.Count != 0)
+
+            while (que.Count != 0)
             {
                 var currEdge = que.FindMin(); que.DeleteMin();
                 var startVertex = (ds.Vertices[currEdge.end].FillColor == Color.Green) ? currEdge.start : currEdge.end;
@@ -386,8 +395,205 @@ namespace graph_sandbox
                 }
             }
             Thread.Sleep(5000);
-            ClearEdges(ds);
+            ClearEdges(ds, false);
             ClearVertices(ds);
+        }
+
+
+        private static (int, int) GetSourceAndSink(Dictionary<int, List<Edge>> adjList)
+        {
+            (var source, var sink) = (-1, -1);
+            var inDegree = new int[adjList.Count];
+            var outDegree = new int[adjList.Count];
+
+            for (var start = 0; start < adjList.Count; ++start)
+            {
+                foreach (var edge in adjList[start])
+                {
+                    ++outDegree[start];
+                    ++inDegree[edge.end];
+                }
+                source = (inDegree[start] == 0 && outDegree[start] != 0) ? start : source;
+                sink = (outDegree[start] == 0 && inDegree[start] != 0) ? start : sink;
+            }
+            return (source, sink);
+        }
+
+        private static List<int> WaysFrom(int source, Dictionary<int, List<Edge>> adjList, 
+                                                FulkersonItem[,] fulkersonItems, bool[] visited)
+        {
+            var answer = new List<int>();
+            foreach(var edge in adjList[source])
+            {
+                if (fulkersonItems[source, edge.end].toFlow > 0 && !visited[edge.end])
+                {
+                    answer.Add(edge.end);
+                }
+            }
+            return answer;
+        }
+
+        private static double ProcessFulkerson(int source, int sink, Dictionary<int, List<Edge>> adjL, 
+                                             ref FulkersonItem[,] items, DrawingSurface ds)
+        {
+            var stack = new Stack<int>();
+            var currentVertex = source;
+            var visited = Enumerable.Repeat(false, adjL.Count).ToArray();
+            var minimalFlow = 1e6;
+            var pred = Enumerable.Repeat(-1, adjL.Count).ToArray();
+            stack.Push(source);
+
+            while(currentVertex != sink && stack.Count > 0)
+            {
+                currentVertex = stack.Pop();
+                if (currentVertex == source) Thread.Sleep(1000);
+                ds.Vertices[currentVertex].FillColor = Color.Blue;
+                ds.Invalidate();
+                Thread.Sleep(1000);
+
+                if (currentVertex == sink)
+                {
+                    ds.Vertices[sink].FillColor = Color.Green;
+                    ds.Invalidate();
+                    Thread.Sleep(1000);
+                    break;
+                }
+
+                var waysFrom = WaysFrom(currentVertex, adjL, items, visited);
+                if (waysFrom.Count == 0)
+                {
+                    ds.Vertices[currentVertex].FillColor = Color.White;
+                    ds.Invalidate();
+                    if (currentVertex == source)
+                    {
+                        Thread.Sleep(1000);
+                        break;
+                    }
+                    stack.Push(pred[currentVertex]);
+                    visited[currentVertex] = true;
+                    continue;
+                }
+
+                var maxIndex = waysFrom[0];
+                foreach(var vertex in waysFrom)
+                {
+                    if (!visited[vertex] && 
+                        items[currentVertex, vertex].toFlow > items[currentVertex, maxIndex].toFlow)
+                    {
+                        maxIndex = vertex;
+                    }
+                }
+
+                minimalFlow = Math.Min(minimalFlow, items[currentVertex, maxIndex].toFlow);
+                pred[maxIndex] = currentVertex;
+                visited[maxIndex] = true;
+                stack.Push(maxIndex);
+
+                foreach(var edge in adjL[currentVertex])
+                {
+                    if (edge.end == maxIndex)
+                    {
+                        edge.FillColor = Color.Red;
+                        ds.Invalidate();
+                        Thread.Sleep(1000);
+                        edge.FillColor = Color.Gray;
+                        break;
+                    }
+                }
+            }
+
+            currentVertex = sink;
+
+            while(pred[currentVertex] != -1)
+            {
+                var parent = pred[currentVertex];
+                items[parent, currentVertex].toFlow -= minimalFlow;
+                items[parent, currentVertex].backFlow += minimalFlow;
+                foreach(var edge in adjL[parent])
+                {
+                    if (edge.end == currentVertex)
+                    {
+                        edge.SetLabel($"{items[parent, currentVertex].toFlow}/{items[parent, currentVertex].backFlow}");
+                        edge.FillColor = Color.Red;
+                        ds.Vertices[currentVertex].FillColor = Color.White;
+                        ds.Invalidate();
+                        Thread.Sleep(1000);
+                        edge.FillColor = Color.Gray;
+                        ds.Invalidate();
+                        break;
+                    }
+                }
+                currentVertex = pred[currentVertex];
+                if (pred[currentVertex] == -1)
+                {
+                    ds.Vertices[currentVertex].FillColor = Color.White;
+                    ds.Invalidate();
+                    Thread.Sleep(1000);
+                }
+            }
+            return minimalFlow;
+        }
+
+        public static void FordFulkerson(DrawingSurface ds)
+        {
+            if (ds.IsUndirected())
+            {
+                var err = new ErrorBox("Graph have to be directed!");
+                err.ShowDialog();
+                return;
+            }
+
+            if (ds.ContainsNegativeEdge())
+            {
+                var err = new ErrorBox("Graph can not contain negative edges!");
+                err.ShowDialog();
+                return;
+            }
+
+            var adjList = ds.GetDestAdjList();
+            (var source, var sink) = GetSourceAndSink(adjList);
+            var maximalFlow = .0;
+
+            if (source == -1 || sink == -1)
+            {
+                var err = new ErrorBox("Graph have to contain source and sink!");
+                err.ShowDialog();
+                return;
+            };
+
+            var fulkersonItems = new FulkersonItem[adjList.Count, adjList.Count];
+            var visited = Enumerable.Repeat(false, adjList.Count).ToArray();
+
+            for (var i = 0; i < adjList.Count; ++i)
+                for (var j = 0; j < adjList.Count; ++j)
+                    fulkersonItems[i, j] = new FulkersonItem();
+
+            for(var start = 0; start < adjList.Count; ++start)
+            {
+                foreach(var edge in adjList[start])
+                {
+                    fulkersonItems[start, edge.end].toFlow = edge.w;
+                    edge.SetLabel($"{edge.w}/{0}");
+                }
+            }
+
+            while (WaysFrom(source, adjList, fulkersonItems, visited).Count > 0)
+            {
+                ds.Vertices[source].FillColor = Color.Green;
+                ds.Vertices[sink].FillColor = Color.Red;
+                ds.Invalidate();
+                maximalFlow += ProcessFulkerson(source, sink, adjList, ref fulkersonItems, ds);
+                ClearVertices(ds);
+                ClearEdges(ds, false);
+            }
+            ds.FillGraph(Color.Lime, Color.Lime);
+            Thread.Sleep(500);
+            ds.FillGraph(Color.White, Color.Gray);
+            ds.Invalidate();
+            Thread.Sleep(5000);
+            ClearVertices(ds);
+            ClearEdges(ds, true);
+            ds.FillGraph(Color.White, Color.Gray);
         }
 
         private static void ClearVertices(DrawingSurface ds)
@@ -399,11 +605,13 @@ namespace graph_sandbox
             }
             ds.Invalidate();
         }
-        private static void ClearEdges(DrawingSurface ds)
+        private static void ClearEdges(DrawingSurface ds, bool labelsToo)
         {
             for(var i = 0; i < ds.Edges.Count; i++)
             {
                 ds.Edges[i].FillColor = Color.Gray;
+                if (labelsToo)
+                    ds.Edges[i].SetLabel("");
             }
             ds.Invalidate();
         }
