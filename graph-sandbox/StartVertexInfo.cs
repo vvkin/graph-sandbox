@@ -21,7 +21,7 @@ namespace graph_sandbox
             vertex = 0;
         }
 
-        public int Get_Input(int verticesCount)
+        public int GetInput(int verticesCount)
         {
             verticesNumber = verticesCount;
             ShowDialog();

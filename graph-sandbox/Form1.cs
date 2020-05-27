@@ -157,12 +157,12 @@ namespace graph_sandbox
         private async void button4_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            await Task.Run(() => Algorithms.BFS(drawingSurface1, startVertex.Get_Input(Circle.number)));
+            await Task.Run(() => Algorithms.BFS(drawingSurface1, startVertex.GetInput(Circle.number)));
         }
         private async void button3_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            await Task.Run(() => Algorithms.DFS(drawingSurface1, startVertex.Get_Input(Circle.number)));
+            await Task.Run(() => Algorithms.DFS(drawingSurface1, startVertex.GetInput(Circle.number)));
         }
         private async void button7_Click(object sender, MouseEventArgs e)
         {
@@ -248,7 +248,7 @@ namespace graph_sandbox
         private async void button1_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
-            await Task.Run(() => Algorithms.Dijkstra(drawingSurface1, startVertex.Get_Input(Circle.number) - 1));
+            await Task.Run(() => Algorithms.Dijkstra(drawingSurface1, startVertex.GetInput(Circle.number) - 1));
         }
 
         private async void Ford_Fulkerson_Click(object sender, EventArgs e)
