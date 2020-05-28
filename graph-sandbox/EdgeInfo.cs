@@ -6,7 +6,7 @@ namespace graph_sandbox
 {
     public partial class EdgeInfo : Form
     {
-        private int weight = 0;
+        private float weight = 0;
         private bool isDirected = false;
         private bool dragable;
         Point startPosition;
@@ -20,7 +20,7 @@ namespace graph_sandbox
         {
             CenterToParent();
             isDirected = false;
-            weight = 0;
+            weight = 0.0f;
             edgeWeight.Text = "0";
             edgeType.Text = "Undirected";
         }
@@ -45,32 +45,32 @@ namespace graph_sandbox
 
         private void button1_Click(object sender, EventArgs e)
         {
-            weight = 0;
+            weight = 0.0f;
             ChangeTextBoxValue();
         }
 
         private void increaseWeight_Click(object sender, EventArgs e)
         {
-            weight = Math.Min(int.MaxValue, weight + 1);
+            weight = Math.Min(float.MaxValue, weight + 1);
             ChangeTextBoxValue();
         }
 
         private void decreaseWeight_Click(object sender, EventArgs e)
         {
-            weight = Math.Max(int.MinValue, weight - 1);
+            weight = Math.Max(float.MinValue, weight - 1);
             ChangeTextBoxValue();
         }
 
         private void Normalize(object sender, EventArgs e)
         {
 
-            if (!int.TryParse(edgeWeight.Text, out int _))
+            if (!float.TryParse(edgeWeight.Text, out float _))
             {
                 edgeWeight.Text = weight.ToString();
             }
             else
             {
-                weight = int.Parse(edgeWeight.Text);
+                weight = float.Parse(edgeWeight.Text);
             }
         }
 

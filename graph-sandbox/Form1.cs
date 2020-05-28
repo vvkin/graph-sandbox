@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,7 +15,7 @@ namespace graph_sandbox
         private bool addVertex_clicked = false;
         private bool removeObject_clicked = false;
         private bool addEdge_clicked = false;
-
+        private bool moreAlg_clicked = false;
         private Color activeButtonColor = Color.FromArgb(100, 100, 100);
         private Color passiveButtonColor = Color.FromArgb(51, 75, 180);
         private bool dragable;
@@ -45,6 +46,7 @@ namespace graph_sandbox
 
         private void button5_Click(object sender, EventArgs e)
         {
+            drawingSurface1.ClearActiveVertex();
             if (Hided)
             {
                 functions.Enabled = false;
@@ -70,12 +72,46 @@ namespace graph_sandbox
             functions.Visible = true;
 
         }
-
+        private void Swap(ref Button btn1, ref Button btn2)
+        {
+            var tmp = btn1.Location;
+            btn1.Location = btn2.Location;
+            btn2.Location = tmp;
+            Update();
+        }
         private void hideForm_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
-
+        private void More_Alg_Click(object sender, EventArgs e)
+        {
+            moreAlg_clicked = !moreAlg_clicked;
+            if (moreAlg_clicked)
+            {
+                Swap(ref button1, ref button3);
+                Swap(ref button1, ref Ford_Fulkerson);
+                Swap(ref button1, ref button8);
+                Swap(ref button1, ref Kruskal_Button);
+                Swap(ref button2, ref button4);
+                Swap(ref button2, ref button7);
+                Swap(ref button2, ref button9);
+                Swap(ref button2, ref Khun_Button);
+                
+            }
+            else
+            {
+                Swap(ref button2, ref Khun_Button);
+                Swap(ref button2, ref button9);
+                Swap(ref button2, ref button7);
+                Swap(ref button2, ref button4);
+                Swap(ref button1, ref Kruskal_Button);
+                Swap(ref button1, ref button8);
+                Swap(ref button1, ref Ford_Fulkerson);
+                Swap(ref button1, ref button3);
+                
+            }
+            
+        }
         private void AddOrRemove(object sender, MouseEventArgs e)
         {
             if (removeObject_clicked)
@@ -157,17 +193,37 @@ namespace graph_sandbox
         private async void button4_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
+            functions.Enabled = false;
             await Task.Run(() => Algorithms.BFS(drawingSurface1, startVertex.GetInput(Circle.number)));
+            functions.Enabled = true;
         }
         private async void button3_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
+            functions.Enabled = false;
             await Task.Run(() => Algorithms.DFS(drawingSurface1, startVertex.GetInput(Circle.number)));
+            functions.Enabled = true;
+        }
+        private async void Khun_Button_Click(object sender, MouseEventArgs e)
+        {
+            functions.PerformClick();
+            functions.Enabled = false;
+            await Task.Run(() => Algorithms.KuhnMatching(drawingSurface1));
+            functions.Enabled = true;
+        }
+        private async void Kruskal_ButtonClick(object sender, MouseEventArgs e)
+        {
+            functions.PerformClick();
+            functions.Enabled = false;
+            await Task.Run(() => Algorithms.KruskalSpanningTree(drawingSurface1));
+            functions.Enabled = true;
         }
         private async void button7_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
+            functions.Enabled = false;
             await Task.Run(() => Algorithms.Colouring(drawingSurface1));
+            functions.Enabled = true;
         }
 
         private void saveGraph(object sender, EventArgs e)
@@ -207,7 +263,9 @@ namespace graph_sandbox
         {
             GraphBuilder gb = new GraphBuilder(drawingSurface1.Vertices.Count);
             functions.PerformClick();
+            functions.Enabled = false;
             await Task.Run(() => gb.Build(drawingSurface1, true));
+            functions.Enabled = true;
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -236,25 +294,33 @@ namespace graph_sandbox
         private async void button2_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
+            functions.Enabled = false;
             await Task.Run(() => Algorithms.ConnectedComponents(drawingSurface1));
+            functions.Enabled = true;
 
         }
         private async void button8_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
+            functions.Enabled = false;
             await Task.Run(() => Algorithms.PrimSpanningTree(drawingSurface1));
+            functions.Enabled = true;
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
+            functions.Enabled = false;
             await Task.Run(() => Algorithms.Dijkstra(drawingSurface1, startVertex.GetInput(Circle.number) - 1));
+            functions.Enabled = true;
         }
 
         private async void Ford_Fulkerson_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
+            functions.Enabled = false;
             await Task.Run(() => Algorithms.FordFulkerson(drawingSurface1));
+            functions.Enabled = true;
         }
     }
 }
