@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 
@@ -23,13 +23,13 @@ namespace graph_sandbox
         private static double k = 1.0;
         private static double eta = .99;
         private static double deltaT = .01;
+        private double predEkint;
         private List<Force> x;
         private List<Force> v;
         private Random rnd;
         private readonly int vertexNum;
         private int width;
         private int height;
-        private List<Circle> vertices;
         private bool isReady = false;
 
         public GraphBuilder(int vertexNum)
@@ -37,45 +37,40 @@ namespace graph_sandbox
             this.vertexNum = vertexNum;
             x = new List<Force>();
             v = new List<Force>();
-            vertices = new List<Circle>();
             rnd = new Random();
+            predEkint = 0;
         }
 
         public void Build(DrawingSurface ds, bool visualize)
         {
+            (width, height) = (ds.Width - 2 * Circle.Radious, ds.Height - 2 * Circle.Radious);
+            var adjM = GetNotDirectedAdjMatrix(ds.Edges);
             isReady = false;
             int sleepTime = 25;
-            (width, height) = (ds.Width - 2 * Circle.Radious, ds.Height - 2 * Circle.Radious);
-            var adjM = GetAdjMatrix(ds.Edges);
+
+            ds.TurnMoving(false);
             FillArrays();
             for (var i = 0; i < 10000 && !isReady; ++i)
             {
                 Move(adjM);
-                if (visualize) 
+                sleepTime = (i > 1500) ? 10 : (i > 2500) ? 0 : sleepTime;
+                if (visualize && i > 20)
                     Visualize(ds, sleepTime);
-                if (i > 2000) sleepTime = 10;
             }
-            (double max, double min) = GetMaxMin();
-            for (var i = 0; i < vertexNum; ++i) MoveCircle(i, max, min);
-            /* If there is collision between vertices
-            /* then try to build new graph */
-            //if (PositionsAreNotValid()) Build(ds, visualize);
-            ds.ChangeVertices(vertices);
-            ds.Invalidate();
-
+            Visualize(ds, 0);
             if (visualize)
             {
                 ds.FillGraph(Color.Lime, Color.Lime);
                 Thread.Sleep(1000);
                 ds.FillGraph(Color.White, Color.Gray);
             }
+            ds.TurnMoving(true);
         }
 
         private void Visualize(DrawingSurface ds, int sleepTime)
         {
             (double max, double min) = GetMaxMin();
-            for (var i = 0; i < vertexNum; ++i) MoveCircle(i, max, min);
-            ds.ChangeVertices(vertices);
+            for (var i = 0; i < vertexNum; ++i) MoveCircle(ds, i, max, min);
             ds.Invalidate();
             Thread.Sleep(sleepTime);
         }
@@ -83,28 +78,17 @@ namespace graph_sandbox
         private Force CoulombForce(Force xi, Force xj)
         {
             double dx, dy, ds, ds2, constV;
-            dx = xj.dx - xi.dx;
-            dy = xj.dy - xi.dy;
+            dx = (xj.dx - xi.dx);
+            dy = (xj.dy - xi.dy);
             ds2 = dx * dx + dy * dy;
             ds = Math.Sqrt(ds2);
-            constV = (ds2 * ds == 0.0) ? 0 : beta / (ds2 * ds);
+            // Якщо надто близько, то відштовхуємо
+            if (ds <= 0.3) return HookeForce(xi, xj, 1);
+            constV = beta / (ds2 * ds);
             return new Force(-constV * dx, -constV * dy);
         }
 
-        private bool PositionsAreNotValid()
-        {
-            for(var i = 0; i < vertexNum; ++i)
-            {
-                for(var j = 0; j < vertexNum; ++j)
-                {
-                    if (i != j && vertices[i].GetDistance(vertices[j]) < 60)
-                        return true;
-                }
-            }
-            return false;
-        }
-
-        private static Force HookeForce(Force xi, Force xj, double dij)
+        private Force HookeForce(Force xi, Force xj, double dij)
         {
             double dx, dy, ds, dl, constV;
             dx = xj.dx - xi.dx;
@@ -118,6 +102,7 @@ namespace graph_sandbox
         private void Move(int[,] adjM)
         {
             var ekint = new Force(0.0, 0.0);
+            double currEkint = .0;
             double Fx, Fy;
             Force Fij;
             for (var i = 0; i < vertexNum; ++i)
@@ -127,7 +112,7 @@ namespace graph_sandbox
                 {
                     if (i == j) continue;
                     Fij = (adjM[i, j] == 0) ? CoulombForce(x[i], x[j])
-                                           : HookeForce(x[i], x[j], adjM[i, j]);
+                                            : HookeForce(x[i], x[j], 1);
                     Fx += Fij.dx;
                     Fy += Fij.dy;
                 }
@@ -135,11 +120,14 @@ namespace graph_sandbox
                 v[i].dy = (v[i].dy + alpha * Fy * deltaT) * eta;
                 ekint.dx += alpha * (v[i].dx * v[i].dx);
                 ekint.dy += alpha * (v[i].dy * v[i].dy);
-                if (Math.Sqrt(ekint.dx * ekint.dx + ekint.dy * ekint.dy) < Math.Pow(10, - 8))
+                currEkint = Math.Round(Math.Sqrt(ekint.dx * ekint.dx + ekint.dy * ekint.dy), 12);
+
+                if (currEkint == predEkint || currEkint < Math.Pow(10, -8)) 
                 {
                     isReady = true;
                     return;
                 }
+                predEkint = Math.Round(currEkint, 12);
             }
             for (var i = 0; i < vertexNum; ++i)
             {
@@ -148,7 +136,7 @@ namespace graph_sandbox
             }
         }
 
-        private int[,] GetAdjMatrix(List<Edge> edges)
+        private int[,] GetNotDirectedAdjMatrix(List<Edge> edges)
         {
             int[,] adjM = new int[vertexNum, vertexNum];
             foreach (var edge in edges)
@@ -162,14 +150,14 @@ namespace graph_sandbox
         private (double, double) GetMaxMin()
         {
             (double max, double min) = (-100, 100);
-            foreach(var force in x)
+            foreach (var force in x)
             {
                 max = Math.Max(max, Math.Max(force.dx, force.dy));
                 min = Math.Min(min, Math.Min(force.dx, force.dy));
             }
             return ((max > 1) ? Math.Abs(max) : 1, Math.Abs(min));
         }
-        private void MoveCircle(int i, double max, double min)
+        private void MoveCircle(DrawingSurface ds, int i, double max, double min)
         {
             x[i].dx /= max; x[i].dy /= max;
             double Xvalue = (Math.Abs(width * min / max) + Circle.Radious * 2);
@@ -178,7 +166,7 @@ namespace graph_sandbox
             double Yscaler = (height + Yvalue) / height;
             int newX = (int)((x[i].dx * (width) + Xvalue) / Xscaler);
             int newY = (int)((x[i].dy * (height) + Yvalue) / Yscaler);
-            vertices[i].Center = new Point(newX, newY); 
+            ds.Vertices[i].Center = new Point(newX, newY);
         }
 
         private void FillArrays()
@@ -187,7 +175,6 @@ namespace graph_sandbox
             {
                 x.Add(GetRandomForce());
                 v.Add(new Force());
-                vertices.Add(new Circle(0, 0));
             }
         }
 
@@ -198,150 +185,3 @@ namespace graph_sandbox
         }
     }
 }
-
-/*private readonly List<Edge> edges;
-private readonly int vertexNum;
-private List<Force> forces;
-private List<Circle> vertices;
-private static Random rnd;
-
-public GraphBuilder(List<Edge> edges, int vertexNum)
-{
-    this.edges = new List<Edge>(edges);
-    this.vertexNum = vertexNum;
-    this.forces = Enumerable.Repeat(new Force(), vertexNum).ToList();
-    rnd = new Random();
-}
-
-public void Build(DrawingSurface ds, int iteration = int.MaxValue)
-{
-    this.vertices = new List<Circle> { };
-    (int width, int height) = (ds.Width - 2 * Circle.Radious, ds.Height - 2 * Circle.Radious);
-    for (int i = 0; i < ds.Vertices.Count; i++)
-    {
-        vertices.Add(GetRandomCircle(width, height));
-    }
-    int area = width * height;
-    double t = (width / 10);
-    double k = Math.Sqrt(area / vertexNum);
-    double dt = t / (iteration + 1);
-    for (var i = 0; i < iteration; ++i)
-    {
-        CalcRepusliveForces(k);
-        CalculateAttractiveForces(k);
-        CalculateDistance(t, width, height);
-        t -= dt;
-    }
-    ds.ChangeVertices(vertices);
-    Circle.number -= vertexNum;
-    ds.Invalidate();
-}
-
-private double RepusliveForce(double k, double d)
-{
-    return (k * k / d);
-}
-
-private double AttractiveForce(double k, double d)
-{
-    return (d * d / k);
-}
-
-private void CalcRepusliveForces(double k)
-{
-    double dx, dy, delta, d;
-    for (var v = 0; v < vertexNum; ++v)
-    {
-        for (var u = 0; u < vertexNum; ++u)
-        {
-            if (v == u) continue;
-            dx = vertices[v].Center.X - vertices[u].Center.X;
-            dy = vertices[v].Center.Y - vertices[u].Center.Y;
-            delta = Math.Sqrt(dx * dx + dy * dy);
-            if (delta != 0)
-            {
-                d = RepusliveForce(delta, k) / delta;
-                forces[v].dx += dx * d;
-                forces[v].dy += dy * d;
-            }
-        }
-    }
-}
-
-private void CalculateAttractiveForces(double k)
-{
-    double dx, dy, d, delta, ddx, ddy;
-    foreach (var edge in edges)
-    {
-        (var v, var u) = (edge.start, edge.end);
-        dx = vertices[v].Center.X - vertices[u].Center.X;
-        dy = vertices[v].Center.Y - vertices[u].Center.Y;
-        delta = Math.Sqrt(dx * dx + dy * dy);
-        if (delta != 0)
-        {
-            d = AttractiveForce(delta, k) / delta;
-            (ddx, ddy) = (dx * d, dy * d);
-            forces[v].dx -= ddx;
-            forces[u].dx += ddy;
-            forces[v].dy -= ddy;
-            forces[u].dy += ddy;
-        }
-    }
-}
-
-private int GetNewX(double x, double y, double W)
-{
-    return (int)(((Math.Min(Math.Sqrt(W * W / 4 - y * y),
-           Math.Max(-Math.Sqrt(W * W / 4 - y * y), x)) + W / 2)) % W);
-}
-
-private int GetNewY(double x, double y, double H)
-{
-    return (int)Math.Max(0, (Math.Min(Math.Sqrt(H * H / 4 - x * x),
-             Math.Max(-Math.Sqrt(H * H / 4 - x * x), y)) % H + H / 2));
-}
-
-private bool TryNewCoords(int x, int y)
-{
-    var p = new Point(x, y);
-    foreach(var circle in vertices)
-    {
-        if (circle.GetDistToPoint(p) < 2 * Circle.Radious)
-            return false;
-    }
-    return true;
-}
-
-private void CalculateDistance(double t, int width, int height)
-{
-    double dx, dy, disp, x, y, d;
-    int newX, newY;
-    for (var i = 0; i < vertexNum; ++i)
-    {
-        (dx, dy) = (forces[i].dx, forces[i].dy);
-        disp = Math.Sqrt(dx * dx + dy * dy);
-        if (disp != 0)
-        {
-            d = Math.Min(disp, t) / disp;
-            x = vertices[i].Center.X + dx * d;
-            y = vertices[i].Center.Y + dy * d;
-            x = Math.Min(width, Math.Max(0.0, x)) - width / 2.0;
-            y = Math.Min(height, Math.Max(0.0, y)) - height / 2.0;
-            newX = Math.Max(2*Circle.Radious, GetNewX(x, y, width) % width);
-            newY = Math.Max(2*Circle.Radious, GetNewY(x, y, height) % height);
-            if (TryNewCoords(newX, newY))
-            {
-                vertices[i].Center.X = newX;
-                vertices[i].Center.Y = newY;
-            }
-        }
-    }
-}
-
-private static Circle GetRandomCircle(int width, int height)
-{
-    return new Circle(rnd.Next(2 * Circle.Radious, width), 
-                      rnd.Next(2 * Circle.Radious, height));
-}
-}
-}*/
