@@ -88,29 +88,27 @@ namespace graph_sandbox
             moreAlg_clicked = !moreAlg_clicked;
             if (moreAlg_clicked)
             {
-                Swap(ref button1, ref button3);
-                Swap(ref button1, ref Ford_Fulkerson);
+                Swap(ref button1, ref button4);
                 Swap(ref button1, ref button8);
-                Swap(ref button1, ref Kruskal_Button);
-                Swap(ref button2, ref button4);
-                Swap(ref button2, ref button7);
+                Swap(ref button1, ref Khun_Button);
+                Swap(ref button2, ref Ford_Fulkerson);
                 Swap(ref button2, ref button9);
-                Swap(ref button2, ref Khun_Button);
-                
+                Swap(ref button2, ref Colouring);
+                Swap(ref button3, ref button7);
+                Swap(ref button3, ref Kruskal_Button);
+
             }
             else
             {
-                Swap(ref button2, ref Khun_Button);
+                Swap(ref button3, ref Kruskal_Button);
+                Swap(ref button3, ref button7);
+                Swap(ref button2, ref Colouring);
                 Swap(ref button2, ref button9);
-                Swap(ref button2, ref button7);
-                Swap(ref button2, ref button4);
-                Swap(ref button1, ref Kruskal_Button);
+                Swap(ref button2, ref Ford_Fulkerson);
+                Swap(ref button1, ref Khun_Button);
                 Swap(ref button1, ref button8);
-                Swap(ref button1, ref Ford_Fulkerson);
-                Swap(ref button1, ref button3);
-                
+                Swap(ref button1, ref button4); 
             }
-            
         }
         private void AddOrRemove(object sender, MouseEventArgs e)
         {
@@ -194,6 +192,7 @@ namespace graph_sandbox
         {
             functions.PerformClick();
             functions.Enabled = false;
+            startVertex = new StartVertexInfo();
             await Task.Run(() => Algorithms.BFS(drawingSurface1, startVertex.GetInput(Circle.number)));
             functions.Enabled = true;
         }
@@ -201,6 +200,7 @@ namespace graph_sandbox
         {
             functions.PerformClick();
             functions.Enabled = false;
+            startVertex = new StartVertexInfo();
             await Task.Run(() => Algorithms.DFS(drawingSurface1, startVertex.GetInput(Circle.number)));
             functions.Enabled = true;
         }
@@ -225,7 +225,14 @@ namespace graph_sandbox
             await Task.Run(() => Algorithms.Colouring(drawingSurface1));
             functions.Enabled = true;
         }
-
+        private async void Colouring_Click(object sender, MouseEventArgs e)
+        {
+            functions.PerformClick();
+            functions.Enabled = false;
+            startVertex = new StartVertexInfo("Number of colours");
+            await Task.Run(() => Algorithms.BackTrackingColouring(drawingSurface1, startVertex.GetInput(Circle.number)));
+            functions.Enabled = true;
+        }
         private void saveGraph(object sender, EventArgs e)
         {
 
@@ -311,6 +318,7 @@ namespace graph_sandbox
         {
             functions.PerformClick();
             functions.Enabled = false;
+            startVertex = new StartVertexInfo();
             await Task.Run(() => Algorithms.Dijkstra(drawingSurface1, startVertex.GetInput(Circle.number) - 1));
             functions.Enabled = true;
         }

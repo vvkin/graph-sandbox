@@ -40,7 +40,6 @@ namespace graph_sandbox
             this.closeForm = new System.Windows.Forms.Button();
             this.buttonsPanel = new System.Windows.Forms.Panel();
             this.smallButtonsPanel = new System.Windows.Forms.Panel();
-            this.Kruskal_Button = new System.Windows.Forms.Button();
             this.addVertex = new System.Windows.Forms.Button();
             this.addEdge = new System.Windows.Forms.Button();
             this.functions = new System.Windows.Forms.Button();
@@ -56,6 +55,8 @@ namespace graph_sandbox
             this.button4 = new System.Windows.Forms.Button();
             this.Ford_Fulkerson = new System.Windows.Forms.Button();
             this.More_Alg = new System.Windows.Forms.Button();
+            this.Kruskal_Button = new System.Windows.Forms.Button();
+            this.Khun_Button = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
@@ -71,7 +72,7 @@ namespace graph_sandbox
             this.toolTip6 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip7 = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.Khun_Button = new System.Windows.Forms.Button();
+            this.Colouring = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.smallButtonsPanel.SuspendLayout();
@@ -172,6 +173,7 @@ namespace graph_sandbox
             // 
             this.smallButtonsPanel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.smallButtonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
+            this.smallButtonsPanel.Controls.Add(this.Colouring);
             this.smallButtonsPanel.Controls.Add(this.addVertex);
             this.smallButtonsPanel.Controls.Add(this.addEdge);
             this.smallButtonsPanel.Controls.Add(this.functions);
@@ -182,22 +184,6 @@ namespace graph_sandbox
             this.smallButtonsPanel.Name = "smallButtonsPanel";
             this.smallButtonsPanel.Size = new System.Drawing.Size(50, 424);
             this.smallButtonsPanel.TabIndex = 2;
-            // 
-            // Kruskal_Button
-            // 
-            this.Kruskal_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Kruskal_Button.BackColor = System.Drawing.Color.Navy;
-            this.Kruskal_Button.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-            this.Kruskal_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Kruskal_Button.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Kruskal_Button.ForeColor = System.Drawing.Color.White;
-            this.Kruskal_Button.Location = new System.Drawing.Point(0, 447);
-            this.Kruskal_Button.Name = "Kruskal_Button";
-            this.Kruskal_Button.Size = new System.Drawing.Size(140, 37);
-            this.Kruskal_Button.TabIndex = 9;
-            this.Kruskal_Button.Text = "Kruskal Tree";
-            this.Kruskal_Button.UseVisualStyleBackColor = false;
-            this.Kruskal_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Kruskal_ButtonClick);
             // 
             // addVertex
             // 
@@ -284,6 +270,7 @@ namespace graph_sandbox
             this.functionsPanel.Controls.Add(this.More_Alg);
             this.functionsPanel.Controls.Add(this.Kruskal_Button);
             this.functionsPanel.Controls.Add(this.Khun_Button);
+            this.functionsPanel.Controls.Add(this.Colouring);
             this.functionsPanel.Location = new System.Drawing.Point(3, 1);
             this.functionsPanel.Name = "functionsPanel";
             this.functionsPanel.Size = new System.Drawing.Size(140, 423);
@@ -434,6 +421,38 @@ namespace graph_sandbox
             this.More_Alg.UseVisualStyleBackColor = false;
             this.More_Alg.MouseClick += new System.Windows.Forms.MouseEventHandler(this.More_Alg_Click);
             // 
+            // Kruskal_Button
+            // 
+            this.Kruskal_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Kruskal_Button.BackColor = System.Drawing.Color.Navy;
+            this.Kruskal_Button.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.Kruskal_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Kruskal_Button.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Kruskal_Button.ForeColor = System.Drawing.Color.White;
+            this.Kruskal_Button.Location = new System.Drawing.Point(0, 447);
+            this.Kruskal_Button.Name = "Kruskal_Button";
+            this.Kruskal_Button.Size = new System.Drawing.Size(140, 37);
+            this.Kruskal_Button.TabIndex = 9;
+            this.Kruskal_Button.Text = "Kruskal Tree";
+            this.Kruskal_Button.UseVisualStyleBackColor = false;
+            this.Kruskal_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Kruskal_ButtonClick);
+            // 
+            // Khun_Button
+            // 
+            this.Khun_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Khun_Button.BackColor = System.Drawing.Color.Navy;
+            this.Khun_Button.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.Khun_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Khun_Button.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Khun_Button.ForeColor = System.Drawing.Color.White;
+            this.Khun_Button.Location = new System.Drawing.Point(0, 524);
+            this.Khun_Button.Name = "Khun_Button";
+            this.Khun_Button.Size = new System.Drawing.Size(140, 37);
+            this.Khun_Button.TabIndex = 9;
+            this.Khun_Button.Text = "Khun Matching";
+            this.Khun_Button.UseVisualStyleBackColor = false;
+            this.Khun_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Khun_Button_Click);
+            // 
             // mainPanel
             // 
             this.mainPanel.Controls.Add(this.topPanel);
@@ -527,21 +546,21 @@ namespace graph_sandbox
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // Khun_Button
+            // Colouring
             // 
-            this.Khun_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Khun_Button.BackColor = System.Drawing.Color.Navy;
-            this.Khun_Button.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-            this.Khun_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Khun_Button.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Khun_Button.ForeColor = System.Drawing.Color.White;
-            this.Khun_Button.Location = new System.Drawing.Point(0, 524);
-            this.Khun_Button.Name = "Khun_Button";
-            this.Khun_Button.Size = new System.Drawing.Size(140, 37);
-            this.Khun_Button.TabIndex = 9;
-            this.Khun_Button.Text = "Khun Matching";
-            this.Khun_Button.UseVisualStyleBackColor = false;
-            this.Khun_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Khun_Button_Click);
+            this.Colouring.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Colouring.BackColor = System.Drawing.Color.Navy;
+            this.Colouring.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.Colouring.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Colouring.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Colouring.ForeColor = System.Drawing.Color.White;
+            this.Colouring.Location = new System.Drawing.Point(0, 571);
+            this.Colouring.Name = "Colouring";
+            this.Colouring.Size = new System.Drawing.Size(140, 37);
+            this.Colouring.TabIndex = 2;
+            this.Colouring.Text = "M-Colouring";
+            this.Colouring.UseVisualStyleBackColor = false;
+            this.Colouring.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Colouring_Click);
             // 
             // Form1
             // 
@@ -613,6 +632,7 @@ namespace graph_sandbox
         private Button More_Alg;
         private Button Kruskal_Button;
         private Button Khun_Button;
+        private Button Colouring;
     }
 }
 

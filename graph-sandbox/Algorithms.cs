@@ -116,6 +116,12 @@ namespace graph_sandbox
         }
         public static void Colouring(DrawingSurface ds)
         {
+            if (ds.IsUndirected())
+            {
+                var err = new ErrorBox($"Graph has to be unoriented");
+                err.ShowDialog();
+                return;
+            }
             if (ds.Vertices.Count == 0) 
                 return;
             Random rnd = new Random { };
@@ -143,7 +149,7 @@ namespace graph_sandbox
                 if (possibleColors.Count == 0)
                 {
                     colors_used += 1;
-                    colors_list[vertex] = colors_used;
+                    colors_list[vertex] = colors_used-1;
                 }
                 else
                 {
@@ -193,6 +199,69 @@ namespace graph_sandbox
                 answer[--currentPlace] = start;
             }
             return answer;
+        }
+        public static void BackTrackingColouring(DrawingSurface ds, int color_amount)
+        {
+            var g = ds.CreateGraphics();
+            bool isSafe(List<List<int>> adjmat, int[] color)
+            {
+                for(int i = 0; i < ds.Vertices.Count; i++)
+                {
+                    for(int j = i+1; j < ds.Vertices.Count; j++)
+                    {
+                        if (adjmat[i][j] ==1 && color[j] == color[i])
+                            return false;
+                    }
+                }
+                return true;
+            }
+            bool GraphColouring(List<List<int>> adjmat, int m, int i, int[] color)
+            {
+                if (i == ds.Vertices.Count)
+                {
+                    if (isSafe(adjmat, color))
+                    {
+                        for(int k = 0; k < ds.Vertices.Count; k++)
+                        {
+                            ds.Vertices[k].ReDraw(g, colors[color[k]]);
+                            ds.Invalidate();
+                            Thread.Sleep(1000);
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+                for(int j = 1; j<=m; j++)
+                {
+                    color[i] = j;
+                    if (GraphColouring(adjmat, m, i + 1, color))
+                        return true;
+                    color[i] = 0;
+                }
+                return false;
+            }
+            if (ds.Vertices.Count == 0) return;
+            var adjm = ds.GetBoolAdjMatrix();
+            List<int> c = new List<int> { };
+            if (!ds.IsUndirected())
+            {
+                var err = new ErrorBox($"Graph has to be unoriented");
+                err.ShowDialog();
+                return;
+            }
+            for(int i = 0; i< ds.Vertices.Count; i++)
+            {
+                c.Add(0);
+            }
+            if (!GraphColouring(adjm, color_amount, 0, c.ToArray()))
+            {
+                var err = new ErrorBox($"Graph cannot be coloured into {color_amount} colours");
+                err.ShowDialog();
+                return;
+            }
+            Thread.Sleep(5000);
+            g.Dispose();
+            ClearVertices(ds);
         }
         public static void ConnectedComponents(DrawingSurface ds)
         {
@@ -284,6 +353,12 @@ namespace graph_sandbox
         }
         public static void PrimSpanningTree(DrawingSurface ds)
         {
+            if (!ds.IsFullyConnected() || ds.IsDirected())
+            {
+                ErrorBox err = new ErrorBox("Graph has to be undirected and fully connected");
+                err.ShowDialog();
+                return;
+            }
             int n = ds.Vertices.Count;
             var gr = ds.CreateGraphics();
             Color SpanningTreeColor = Color.Red;
@@ -311,8 +386,8 @@ namespace graph_sandbox
                 }
                 if (min_e[v] == INF)
                 {
-                    ErrorBox er = new ErrorBox("Minimum spanning tree cannot be found");
-                    er.Show();
+                    ErrorBox err = new ErrorBox("Minimum spanning tree cannot be found");
+                    err.Show();
                     return;
                 }
                 used[v] = true;
@@ -592,6 +667,12 @@ namespace graph_sandbox
 
         public static void KruskalSpanningTree(DrawingSurface ds)
         {
+            if (!ds.IsFullyConnected() || ds.IsDirected())
+            {
+                ErrorBox err = new ErrorBox("Graph has to be undirected and fully connected");
+                err.ShowDialog();
+                return;
+            }
             Color SpanningTreeColor = Color.Green;
             var gr = ds.CreateGraphics();
             int m = ds.Edges.Count;

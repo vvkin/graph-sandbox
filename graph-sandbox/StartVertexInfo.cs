@@ -8,9 +8,10 @@ namespace graph_sandbox
         int vertex;
         int verticesNumber;
 
-        public StartVertexInfo()
+        public StartVertexInfo(string text="Start vertex")
         {
             InitializeComponent();
+            this.headerLabel.Text = text;
         }
 
         private void StartVertexInfo_Load(object sender, EventArgs e)

@@ -190,7 +190,16 @@ namespace graph_sandbox
             }
             return false;
         }
-     
+        public bool IsDirected()
+        {
+            foreach (var edge in Edges)
+            {
+                if (!edge.isDirected)
+                    return false;
+            }
+            return true;
+        }
+
         public bool ContainsNegativeEdge()
         {
             foreach(var edge in Edges)
@@ -200,7 +209,7 @@ namespace graph_sandbox
             }
             return false;
         }
-
+        
         public Dictionary<int, List<Edge>> GetDestAdjList()
         {
             var adjL = new Dictionary<int, List<Edge>>();
@@ -277,6 +286,17 @@ namespace graph_sandbox
                 nodePowers.Add(adjList[key].Count);
             }
             return nodePowers;
+        }
+        public bool IsFullyConnected()
+        {
+            foreach (var power in GetNodePowers())
+            {
+                if(power == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         public void TryToRemove(MouseEventArgs e)
         {
