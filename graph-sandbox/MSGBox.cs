@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace graph_sandbox
@@ -14,24 +8,47 @@ namespace graph_sandbox
     {
         private bool mouseDown;
         private Point lastLocation;
-        public MSGBox(string info)
+        public MSGBox(string title = "")
         {
             InitializeComponent();
-            label2.Text = info;
-            TopMost = true;
-            this.CenterToScreen();
+            label1.Text = title;
+            StartPosition = FormStartPosition.Manual;
+            this.TopMost = true;
+            this.Location = new Point(0, 0);
             this.Location = new Point(this.Location.X + 200, this.Location.Y + 100);
         }
 
-        private void MessageBox_Click(object sender, EventArgs e)
+        public void AddText(string text)
         {
-            this.Close();
+            label2.Text += text;
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        public void MoveToCorner(Form1 form)
         {
-            this.Close();
+            this.Top = form.Location.Y;
+            var screenWidth = System.Windows.SystemParameters.PrimaryScreenWidth;
+            var Xmove = (int)((form.Left + this.Width + form.Width + 100) - screenWidth);
+            form.Left -= Math.Max(0, Xmove);
+            this.Left = form.Left + form.Width;
         }
+        
+        public void ChangeText(string text)
+        {
+            label2.Text = text;
+        }
+
+        public void SetTitle(string title)
+        {
+            label1.Text = title;
+        }
+
+        public void ClearAndClose()
+        {
+            label1.Text = "";
+            label2.Text = "";
+            Close();
+        }
+
         private void TopPanel_MouseDown(object sender, MouseEventArgs e)
         {
             mouseDown = true;
@@ -49,11 +66,6 @@ namespace graph_sandbox
         private void TopPanel_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.TopPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TopPanel
@@ -38,56 +38,57 @@
             this.TopPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
             this.TopPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.TopPanel.Location = new System.Drawing.Point(0, 0);
-            this.TopPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.TopPanel.MaximumSize = new System.Drawing.Size(400, 10);
-            this.TopPanel.MinimumSize = new System.Drawing.Size(400, 10);
+            this.TopPanel.MaximumSize = new System.Drawing.Size(300, 8);
+            this.TopPanel.MinimumSize = new System.Drawing.Size(300, 8);
             this.TopPanel.Name = "TopPanel";
-            this.TopPanel.Size = new System.Drawing.Size(400, 10);
+            this.TopPanel.Size = new System.Drawing.Size(300, 8);
             this.TopPanel.TabIndex = 2;
             this.TopPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseDown);
             this.TopPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseMove);
             this.TopPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseUp);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(12, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(146, 17);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Result of an algorithm";
-            this.label1.UseMnemonic = false;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
             // label2
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(18, 42);
+            this.label2.Location = new System.Drawing.Point(10, 59);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(368, 142);
+            this.label2.Size = new System.Drawing.Size(0, 18);
             this.label2.TabIndex = 4;
-            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(25, 11);
+            this.label1.MaximumSize = new System.Drawing.Size(100, 100);
+            this.label1.MinimumSize = new System.Drawing.Size(250, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(250, 22);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "Title";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MSGBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 200);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(300, 466);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.TopPanel);
             this.ForeColor = System.Drawing.Color.Transparent;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MaximumSize = new System.Drawing.Size(400, 200);
-            this.MinimumSize = new System.Drawing.Size(400, 200);
+            this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximumSize = new System.Drawing.Size(300, 466);
+            this.MinimumSize = new System.Drawing.Size(300, 466);
             this.Name = "MSGBox";
             this.Text = "MessageBox";
-            this.Click += new System.EventHandler(this.MessageBox_Click);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,7 +97,7 @@
         #endregion
 
         private System.Windows.Forms.Panel TopPanel;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -116,7 +116,7 @@ namespace graph_sandbox
             curr.Center.Y = System.Math.Min(400, System.Math.Max(20, curr.Center.Y));
         }
 
-        public bool isValid(Circle curr)
+        public bool IsValid(Circle curr)
         {
            SolveOutOfTheBounds(curr);
 
@@ -185,10 +185,10 @@ namespace graph_sandbox
         {
             foreach(var edge in Edges)
             {
-                if (!edge.isDirected)
-                    return true;
+                if (edge.isDirected)
+                    return false;
             }
-            return false;
+            return true;
         }
         public bool IsDirected()
         {
@@ -372,7 +372,7 @@ namespace graph_sandbox
         {
             Circle tempCircle = new Circle(e.X, e.Y);
 
-            if (isValid(tempCircle))
+            if (IsValid(tempCircle))
             {
                 Vertices.Add(tempCircle);
                 tempCircle.Draw(CreateGraphics());
