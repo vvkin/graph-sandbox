@@ -43,7 +43,7 @@ namespace graph_sandbox
 
         public void Build(DrawingSurface ds, bool visualize)
         {
-            (width, height) = (ds.Width - 2 * Circle.Radious, ds.Height - 2 * Circle.Radious);
+            (width, height) = (ds.Width - 2 * Circle.radious, ds.Height - 2 * Circle.radious);
             var adjM = GetNotDirectedAdjMatrix(ds.Edges);
             isReady = false;
             int sleepTime = 25;
@@ -160,13 +160,13 @@ namespace graph_sandbox
         private void MoveCircle(DrawingSurface ds, int i, double max, double min)
         {
             x[i].dx /= max; x[i].dy /= max;
-            double Xvalue = (Math.Abs(width * min / max) + Circle.Radious * 2);
-            double Yvalue = (Math.Abs(height * min / max) + Circle.Radious * 2);
+            double Xvalue = (Math.Abs(width * min / max) + Circle.radious * 2);
+            double Yvalue = (Math.Abs(height * min / max) + Circle.radious * 2);
             double Xscaler = (width + Xvalue) / width;
             double Yscaler = (height + Yvalue) / height;
             int newX = (int)((x[i].dx * (width) + Xvalue) / Xscaler);
             int newY = (int)((x[i].dy * (height) + Yvalue) / Yscaler);
-            ds.Vertices[i].Center = new Point(newX, newY);
+            ds.Vertices[i].center = new Point(newX, newY);
         }
 
         private void FillArrays()

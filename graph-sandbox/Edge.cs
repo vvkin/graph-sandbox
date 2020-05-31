@@ -11,21 +11,21 @@ namespace graph_sandbox
     {
         private Circle startVertex;
         private Circle endVertex;
-        private PointF midPoint;
-        private float weight;
+        private double weight;
         private bool isBended;
-        protected internal Color FillColor = Color.Gray;
+        protected internal Color fillColor = Color.Gray;
+        private PointF midPoint;
         private PointF oldStart;
         private PointF oldEnd;
         private string label;
 
         public bool isDirected;
         public int start => startVertex.uniqueNumber - 1;
+        public int end => endVertex.uniqueNumber - 1;
+        public double w { get => weight; set { } }
         public Circle setStart(Circle start) => startVertex = start;
         public Circle setEnd(Circle end) => endVertex = end;
-        public int end => endVertex.uniqueNumber - 1;
-        public float w { get => weight; set { } }
-        public Edge(Circle startVertex, Circle endVertex, float weight, bool isDirected)
+        public Edge(Circle startVertex, Circle endVertex, double weight, bool isDirected)
         {
             this.startVertex = startVertex;
             this.endVertex = endVertex;
@@ -36,11 +36,12 @@ namespace graph_sandbox
 
         public void Draw(Graphics g)
         {
-            g.SmoothingMode = SmoothingMode.AntiAlias;
             DetectVertexMoving();
+            g.SmoothingMode = SmoothingMode.AntiAlias;
             var points = GetNewCoords();
-            SolidBrush brush = new SolidBrush(FillColor);
-            Pen newPen = new Pen(brush, 2);
+            var brush = new SolidBrush(fillColor);
+            var newPen = new Pen(brush, 2);
+
             if (isDirected)
                 newPen.CustomEndCap = new AdjustableArrowCap(5, 5);
             g.DrawCurve(newPen, points);
@@ -58,11 +59,11 @@ namespace graph_sandbox
 
         private void DetectVertexMoving()
         {
-            if (startVertex.Center != oldStart || endVertex.Center != oldEnd)
+            if (startVertex.center != oldStart || endVertex.center != oldEnd)
             {
                 isBended = false;
-                oldStart = startVertex.Center;
-                oldEnd = endVertex.Center;
+                oldStart = startVertex.center;
+                oldEnd = endVertex.center;
             }
             else
             {
@@ -73,16 +74,16 @@ namespace graph_sandbox
         private (float, float) GetDeltaCoords()
         {
             float distance = startVertex.GetDistance(endVertex);
-            float sinA = (endVertex.Center.Y - startVertex.Center.Y) / distance;
-            float cosA = (endVertex.Center.X - startVertex.Center.X) / distance;
-            return (Circle.Radious * cosA, Circle.Radious * sinA);
+            float sinA = (endVertex.center.Y - startVertex.center.Y) / distance;
+            float cosA = (endVertex.center.X - startVertex.center.X) / distance;
+            return (Circle.radious * cosA, Circle.radious * sinA);
         }
 
         private PointF[] GetNewCoords()
         {
             (float deltaX, float deltaY) = GetDeltaCoords();
-            (float endX, float endY) = (endVertex.Center.X - deltaX, endVertex.Center.Y - deltaY);
-            (float startX, float startY) = ((startVertex.Center.X + deltaX, startVertex.Center.Y + deltaY));
+            (float endX, float endY) = (endVertex.center.X - deltaX, endVertex.center.Y - deltaY);
+            (float startX, float startY) = ((startVertex.center.X + deltaX, startVertex.center.Y + deltaY));
             midPoint = (isBended) ? midPoint : new PointF((startX + endX) / 2, (startY + endY) / 2);
             return new PointF[] { new PointF(startX, startY), midPoint, new PointF(endX, endY) };
         }
@@ -107,8 +108,6 @@ namespace graph_sandbox
                  return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex) ||
                         (endVertex == toCompare.startVertex && startVertex == toCompare.endVertex);
              }
-            /*return (toCompare.startVertex == startVertex && toCompare.endVertex == endVertex) ||
-                   (toCompare.endVertex == startVertex && toCompare.startVertex == endVertex);*/
         }
 
         public bool Contains(Circle vertex)
@@ -121,7 +120,7 @@ namespace graph_sandbox
             using (var path = new GraphicsPath())
             {
                 path.AddCurve(GetNewCoords());
-                    return path.IsOutlineVisible(p, (new Pen(new SolidBrush(FillColor), 8)));
+                    return path.IsOutlineVisible(p, (new Pen(new SolidBrush(fillColor), 8)));
             }
         }
 
@@ -134,7 +133,7 @@ namespace graph_sandbox
         {
             var distance = Math.Max(startVertex.GetDistance(endVertex) / 1.5, 60);
             return (p.X < 770 && p.X > 0 && p.Y < 410 && p.Y > 0) &&
-                   (GetDistance(p, startVertex.Center) < distance && GetDistance(p, endVertex.Center) < distance);
+                   (GetDistance(p, startVertex.center) < distance && GetDistance(p, endVertex.center) < distance);
         }
 
         public void Move(Point d)

@@ -112,7 +112,7 @@ namespace graph_sandbox
             this.hideForm.Size = new System.Drawing.Size(33, 42);
             this.hideForm.TabIndex = 2;
             this.hideForm.UseVisualStyleBackColor = true;
-            this.hideForm.Click += new System.EventHandler(this.hideForm_Click);
+            this.hideForm.Click += new System.EventHandler(this.HideForm_Click);
             // 
             // button6
             // 
@@ -154,7 +154,7 @@ namespace graph_sandbox
             this.closeForm.Size = new System.Drawing.Size(33, 42);
             this.closeForm.TabIndex = 2;
             this.closeForm.UseVisualStyleBackColor = true;
-            this.closeForm.Click += new System.EventHandler(this.closeForm_Click);
+            this.closeForm.Click += new System.EventHandler(this.CloseForm_Click);
             // 
             // buttonsPanel
             // 
@@ -213,7 +213,7 @@ namespace graph_sandbox
             this.addVertex.Size = new System.Drawing.Size(50, 50);
             this.addVertex.TabIndex = 2;
             this.addVertex.UseVisualStyleBackColor = true;
-            this.addVertex.MouseClick += new System.Windows.Forms.MouseEventHandler(this.addVertexButtonChangeState);
+            this.addVertex.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddVertexButtonChangeState);
             // 
             // addEdge
             // 
@@ -227,7 +227,7 @@ namespace graph_sandbox
             this.addEdge.Size = new System.Drawing.Size(50, 50);
             this.addEdge.TabIndex = 3;
             this.addEdge.UseVisualStyleBackColor = true;
-            this.addEdge.MouseClick += new System.Windows.Forms.MouseEventHandler(this.addEdgeButtonChangeState);
+            this.addEdge.MouseClick += new System.Windows.Forms.MouseEventHandler(this.AddEdgeButtonChangeState);
             // 
             // functions
             // 
@@ -241,7 +241,7 @@ namespace graph_sandbox
             this.functions.Size = new System.Drawing.Size(50, 50);
             this.functions.TabIndex = 3;
             this.functions.UseVisualStyleBackColor = true;
-            this.functions.Click += new System.EventHandler(this.button5_Click);
+            this.functions.Click += new System.EventHandler(this.Button5_Click);
             // 
             // download
             // 
@@ -255,7 +255,7 @@ namespace graph_sandbox
             this.download.Size = new System.Drawing.Size(50, 50);
             this.download.TabIndex = 3;
             this.download.UseVisualStyleBackColor = true;
-            this.download.Click += new System.EventHandler(this.saveGraph);
+            this.download.Click += new System.EventHandler(this.SaveGraph);
             // 
             // remove
             // 
@@ -322,7 +322,7 @@ namespace graph_sandbox
             this.button9.TabIndex = 10;
             this.button9.Text = "Force Algorithm";
             this.button9.UseVisualStyleBackColor = false;
-            this.button9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button9_Click);
+            this.button9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Button9_Click);
             // 
             // button2
             // 
@@ -370,7 +370,7 @@ namespace graph_sandbox
             this.button3.TabIndex = 5;
             this.button3.Text = "DFS";
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button3_Click);
+            this.button3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Button3_Click);
             // 
             // button7
             // 
@@ -386,7 +386,7 @@ namespace graph_sandbox
             this.button7.TabIndex = 8;
             this.button7.Text = "Colouring";
             this.button7.UseVisualStyleBackColor = false;
-            this.button7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button7_Click);
+            this.button7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Button7_Click);
             // 
             // button4
             // 
@@ -402,7 +402,7 @@ namespace graph_sandbox
             this.button4.TabIndex = 6;
             this.button4.Text = "BFS";
             this.button4.UseVisualStyleBackColor = false;
-            this.button4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button4_Click);
+            this.button4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Button4_Click);
             // 
             // Ford_Fulkerson
             // 
@@ -531,7 +531,7 @@ namespace graph_sandbox
             this.button11.Size = new System.Drawing.Size(50, 50);
             this.button11.TabIndex = 2;
             this.button11.UseVisualStyleBackColor = false;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.button11.Click += new System.EventHandler(this.Button11_Click);
             // 
             // button10
             // 

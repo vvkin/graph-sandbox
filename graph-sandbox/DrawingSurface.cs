@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace graph_sandbox
@@ -10,12 +9,12 @@ namespace graph_sandbox
         public List<Circle> Vertices;
         public List<Edge> Edges;
 
-        private Circle selectedShape;
+        private Circle selectedCircle;
         private Edge selectedEdge;
         private bool moving;
         private bool canBeMoved;
         private Point previousPoint = Point.Empty;
-        public Circle edgeStartPoint = null;
+        private Circle edgeStartPoint = null;
         private EdgeInfo edgeForm;
 
         public DrawingSurface() 
@@ -32,7 +31,7 @@ namespace graph_sandbox
             foreach (var cell in Vertices)
                 if (cell.HitTest(e.Location))
                 {
-                    selectedShape = cell;
+                    selectedCircle = cell;
                     break;
                 }
             foreach(var edge in Edges)
@@ -43,7 +42,7 @@ namespace graph_sandbox
                     break;
                 }
             }
-            if (selectedShape != null || selectedEdge != null) 
+            if (selectedCircle != null || selectedEdge != null) 
             {
                 moving = true; 
                 previousPoint = e.Location; 
@@ -55,34 +54,34 @@ namespace graph_sandbox
         {
             if (moving && canBeMoved)
             {
-                if (selectedShape != null)
+                var d = new Point(e.X - previousPoint.X, e.Y - previousPoint.Y);
+                if (selectedCircle != null)
                 {
-                    var d = new Point(e.X - previousPoint.X, e.Y - previousPoint.Y);
-                    selectedShape.Move(d);
-                    SolveOneOnAnother(selectedShape, Circle.Radious * 2);
+                    selectedCircle.Move(d);
+                    SolveOneOnAnother(selectedCircle, Circle.radious * 2);
                     previousPoint = e.Location;
-                    Invalidate();
                 }
                 else
                 {
-                    var d = new Point(e.X - previousPoint.X, e.Y - previousPoint.Y);
                     selectedEdge.Move(d);
                     previousPoint = e.Location;
-                    Invalidate();
                 }
+                Invalidate();
             }
             base.OnMouseMove(e);
         }
+
         protected override void OnMouseUp(MouseEventArgs e)
         {
             if (moving) 
             { 
-                selectedShape = null;
+                selectedCircle = null;
                 selectedEdge = null;
                 moving = false; 
             }
             base.OnMouseUp(e);
         }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -101,19 +100,10 @@ namespace graph_sandbox
             canBeMoved = newValue;
         }
 
-        private void SolveCirclesProblems()
-        {
-            foreach(var circle in Vertices)
-            {
-                SolveOneOnAnother(circle, Circle.Radious);
-                SolveOutOfTheBounds(circle);
-            }
-        }
-
         private void SolveOutOfTheBounds(Circle curr)
         {
-            curr.Center.X = System.Math.Min(765, System.Math.Max(20, curr.Center.X));
-            curr.Center.Y = System.Math.Min(400, System.Math.Max(20, curr.Center.Y));
+            curr.center.X = System.Math.Min(765, System.Math.Max(20, curr.center.X));
+            curr.center.Y = System.Math.Min(400, System.Math.Max(20, curr.center.Y));
         }
 
         public bool IsValid(Circle curr)
@@ -122,7 +112,7 @@ namespace graph_sandbox
 
            foreach (var shape in Vertices)
            {
-                if (curr.GetDistance(shape) < 60)
+                if (curr.GetDistance(shape) < Circle.radious * 2)
                     return false;
            }
             return true;
@@ -131,17 +121,16 @@ namespace graph_sandbox
         private void SolveOneOnAnother(Circle curr, int Distance)
         {
             SolveOutOfTheBounds(curr);
-
-            for (int i = 0; i < Vertices.Count; ++i)
+            for (var i = 0; i < Vertices.Count; ++i)
             {
                 if (i != curr.uniqueNumber - 1)
                 {
                     while(curr.GetDistance(Vertices[i]) < Distance)
                     {
-                        if (curr.Center.X < Vertices[i].Center.X) --curr.Center.X;
-                        if (curr.Center.Y < Vertices[i].Center.Y) --curr.Center.Y;
-                        if (curr.Center.X > Vertices[i].Center.X) ++curr.Center.X;
-                        if (curr.Center.Y > Vertices[i].Center.Y) ++curr.Center.Y;
+                        if (curr.center.X < Vertices[i].center.X) --curr.center.X;
+                        if (curr.center.Y < Vertices[i].center.Y) --curr.center.Y;
+                        if (curr.center.X > Vertices[i].center.X) ++curr.center.X;
+                        if (curr.center.Y > Vertices[i].center.Y) ++curr.center.Y;
                     }
                 }
             }
@@ -151,7 +140,7 @@ namespace graph_sandbox
         {
             for(var i = 0; i < Vertices.Count; ++i)
             {
-                Vertices[i].Center = newVertices[i].Center;
+                Vertices[i].center = newVertices[i].center;
             }
             Circle.number = Vertices.Count;
         }
@@ -190,6 +179,7 @@ namespace graph_sandbox
             }
             return true;
         }
+
         public bool IsDirected()
         {
             foreach (var edge in Edges)
@@ -209,7 +199,7 @@ namespace graph_sandbox
             }
             return false;
         }
-        
+
         public Dictionary<int, List<Edge>> GetDestAdjList()
         {
             var adjL = new Dictionary<int, List<Edge>>();
@@ -224,58 +214,42 @@ namespace graph_sandbox
             return adjL;
         }
 
-
-        public List<List<float>> GetAdjMatrix()
+        public double[,] GetAdjMatrix()
         {
-            List<List<float>> adjmat = new List<List<float>> { };
-            for(int i = 0; i < Vertices.Count; i++)
-            {
-                var help = new List<float> { };
-                for(int j = 0; j < Vertices.Count; j++)
-                {
-                    help.Add(int.MaxValue);
-                }
-                adjmat.Add(help);
-            }
+            var adjMatrix = new double[Vertices.Count, Vertices.Count];
+
             foreach(var edge in Edges)
             {
                 if (edge.isDirected) 
                 {
-                    adjmat[edge.start][edge.end] = edge.w;
+                    adjMatrix[edge.start, edge.end] = edge.w;
                 }
                 else
                 {
-                    adjmat[edge.start][edge.end] = edge.w;
-                    adjmat[edge.end][edge.start] = edge.w;
+                    adjMatrix[edge.start, edge.end] = edge.w;
+                    adjMatrix[edge.end, edge.start] = edge.w;
                 }
             }
-            return adjmat;
+            return adjMatrix;
         }
-        public List<List<int>> GetBoolAdjMatrix()
+        public int[,] GetBoolAdjMatrix()
         {
-            List<List<int>> adjmat = new List<List<int>> { };
-            for (int i = 0; i < Vertices.Count; i++)
-            {
-                var help = new List<int> { };
-                for (int j = 0; j < Vertices.Count; j++)
-                {
-                    help.Add(0);
-                }
-                adjmat.Add(help);
-            }
+            var adjMatrix = new int[Vertices.Count, Vertices.Count];
+            for (var i = 0; i < Vertices.Count; i++)
+
             foreach (var edge in Edges)
             {
                 if (edge.isDirected)
                 {
-                    adjmat[edge.start][edge.end] = 1;
+                    adjMatrix[edge.start, edge.end] = 1;
                 }
                 else
                 {
-                    adjmat[edge.start][edge.end] = 1;
-                    adjmat[edge.end][edge.start] = 1;
+                    adjMatrix[edge.start, edge.end] = 1;
+                    adjMatrix[edge.end, edge.start] = 1;
                 }
             }
-            return adjmat;
+            return adjMatrix;
         }
         public List<int> GetNodePowers()
         {
@@ -287,9 +261,11 @@ namespace graph_sandbox
             }
             return nodePowers;
         }
+
         public bool IsFullyConnected()
         {
-            foreach (var power in GetNodePowers())
+            List<int> powers = GetNodePowers();
+            foreach (var power in powers)
             {
                 if(power == 0)
                 {
@@ -298,21 +274,22 @@ namespace graph_sandbox
             }
             return true;
         }
+
         public void TryToRemove(MouseEventArgs e)
         {
-            for (int i = 0; i < Vertices.Count; ++i)
+            for (var i = 0; i < Vertices.Count; ++i)
             {
                 if (Vertices[i].HitTest(e.Location))
                 {
                     RebulidEdges(Vertices[i]);
                     Vertices.RemoveAt(i);
-                    Rebuilt();
+                    Rebuild();
                     Invalidate();
                     return;
                 }
             }
           
-            for(int i = 0; i < Edges.Count; ++i)
+            for(var i = 0; i < Edges.Count; ++i)
             {
                 if (Edges[i].HitTest(e.Location))
                 {
@@ -323,9 +300,9 @@ namespace graph_sandbox
             }
         }
 
-        private void Rebuilt()
+        private void Rebuild()
         {
-            for (int i = 0; i < Vertices.Count; ++i)
+            for (var i = 0; i < Vertices.Count; ++i)
             {
                 Vertices[i].uniqueNumber = i + 1;
             }
@@ -338,7 +315,7 @@ namespace graph_sandbox
             while(isInList)
             {
                 isInList = false;
-                for(int i = 0; i < Edges.Count; ++i)
+                for(var i = 0; i < Edges.Count; ++i)
                 {
                     if(Edges[i].Contains(deletedVertex))
                     {
@@ -353,7 +330,7 @@ namespace graph_sandbox
         public void ClearActiveVertex()
         {
             if (edgeStartPoint != null)
-                edgeStartPoint.FillColor = Color.White;
+                edgeStartPoint.fillColor = Color.White;
             edgeStartPoint = null;
             Invalidate();
         }
@@ -361,16 +338,16 @@ namespace graph_sandbox
         public void FillGraph(Color vColor, Color eColor)
         {
             foreach (var vertex in Vertices)
-                vertex.FillColor = vColor;
+                vertex.fillColor = vColor;
             foreach (var edge in Edges)
-                edge.FillColor = eColor;
+                edge.fillColor = eColor;
             Invalidate();
         }
 
 
         public void TryToAddVertex(MouseEventArgs e)
         {
-            Circle tempCircle = new Circle(e.X, e.Y);
+            var tempCircle = new Circle(e.X, e.Y);
 
             if (IsValid(tempCircle))
             {
@@ -398,11 +375,11 @@ namespace graph_sandbox
 
         private void CreateEdge(Circle vertex)
         {
-            Edge toAdd = edgeForm.GetEdge(edgeStartPoint, vertex);
+            var toAdd = edgeForm.GetEdge(edgeStartPoint, vertex);
             TryToAddEdge(toAdd);
             toAdd.Draw(CreateGraphics());
-            edgeStartPoint.FillColor = Color.White;
-            edgeStartPoint = null; 
+            edgeStartPoint.fillColor = Color.White;
+            edgeStartPoint = null;
         }
 
         public void TryToAddEdge(MouseEventArgs e)
@@ -414,7 +391,7 @@ namespace graph_sandbox
                     if (edgeStartPoint == null)
                     {
                         edgeStartPoint = vertex;
-                        vertex.FillColor = Color.FromArgb(100, 100, 100);
+                        vertex.fillColor = Color.FromArgb(100, 100, 100);
                     }
                     else if (edgeStartPoint != vertex)
                     {

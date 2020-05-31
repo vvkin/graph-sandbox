@@ -123,7 +123,7 @@ namespace graph_sandbox
             {
                 new SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Demand();
                 CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;   // WS_EX_COMPOSITED
+                cp.ExStyle |= 0x02000000;
                 return cp;
             }
         }

@@ -180,21 +180,21 @@ namespace graph_sandbox
         }
         public static void BackTrackingColouring(DrawingSurface ds, int colorAmount)
         {
-            bool isSafe(List<List<int>> adjmat, int[] color)
+            bool isSafe(int[,] adjmat, int[] color)
             {
                 for (var i = 0; i < ds.Vertices.Count; ++i)
                 {
                     for (var j = i + 1; j < ds.Vertices.Count; ++j)
                     {
-                        if (adjmat[i][j] == 1 && color[j] == color[i])
+                        if (adjmat[i, j] == 1 && color[j] == color[i])
                             return false;
                     }
                 }
                 return true;
             }
-            bool GraphColouring(List<List<int>> adjmat, int m, int i, int[] color)
+            bool GraphColouring(int[,] adjmat, int bound, int index, int[] color)
             {
-                if (i == ds.Vertices.Count)
+                if (index == ds.Vertices.Count)
                 {
                     if (isSafe(adjmat, color))
                     {
@@ -206,17 +206,17 @@ namespace graph_sandbox
                     }
                     return false;
                 }
-                for (var j = 1; j <= m; ++j)
+                for (var j = 1; j <= bound; ++j)
                 {
-                    color[i] = j;
-                    if (GraphColouring(adjmat, m, i + 1, color))
+                    color[index] = j;
+                    if (GraphColouring(adjmat, bound, index + 1, color))
                         return true;
-                    color[i] = 0;
+                    color[index] = 0;
                 }
                 return false;
             }
 
-            var adjm = ds.GetBoolAdjMatrix();
+            var adjMatrix = ds.GetBoolAdjMatrix();
             var colorsList = new List<int> { };
             if (!ds.IsUndirected())
             {
@@ -228,7 +228,7 @@ namespace graph_sandbox
             {
                 colorsList.Add(0);
             }
-            if (!GraphColouring(adjm, colorAmount, 0, colorsList.ToArray()))
+            if (!GraphColouring(adjMatrix, colorAmount, 0, colorsList.ToArray()))
             {
                 var err = new ErrorBox($"Graph cannot be coloured into {colorAmount} colours");
                 err.ShowDialog();
@@ -292,7 +292,7 @@ namespace graph_sandbox
                 var colorForCurrentComponent = Color.FromArgb(255, rnd.Next(255), rnd.Next(255), rnd.Next(255));
                 foreach (var el in comp)
                 {
-                    ds.Vertices[el].FillColor = colorForCurrentComponent;
+                    ds.Vertices[el].fillColor = colorForCurrentComponent;
                 }
                 for (var i = 0; i < ds.Vertices.Count; ++i)
                 {
@@ -307,7 +307,7 @@ namespace graph_sandbox
                                      comp.Contains(i) && comp.Contains(j))
                                 {
 
-                                    ds.Edges[k].FillColor = colorForCurrentComponent;
+                                    ds.Edges[k].fillColor = colorForCurrentComponent;
                                 }
                             }
                         }
@@ -363,11 +363,11 @@ namespace graph_sandbox
                         if (((ds.Edges[k].start == vertex && ds.Edges[k].end == selectedEdge[vertex]) ||
                             (ds.Edges[k].start == selectedEdge[vertex] && ds.Edges[k].end == vertex)))
                         {
-                            ds.Edges[k].FillColor = spanningTreeColor;
+                            ds.Edges[k].fillColor = spanningTreeColor;
                             ds.Invalidate();
                             Thread.Sleep(300);
-                            ds.Vertices[ds.Edges[k].start].FillColor = spanningTreeColor;
-                            ds.Vertices[ds.Edges[k].end].FillColor = spanningTreeColor;
+                            ds.Vertices[ds.Edges[k].start].fillColor = spanningTreeColor;
+                            ds.Vertices[ds.Edges[k].end].fillColor = spanningTreeColor;
                             ds.Invalidate();
                             Thread.Sleep(2000);
                         }
@@ -375,9 +375,9 @@ namespace graph_sandbox
                 }
                 for (var toVertex = 0; toVertex < vertexNum; ++toVertex)
                 {
-                    if (adjMatrix[vertex][toVertex] < minEdge[toVertex])
+                    if (adjMatrix[vertex, toVertex] < minEdge[toVertex])
                     {
-                        minEdge[toVertex] = adjMatrix[vertex][toVertex];
+                        minEdge[toVertex] = adjMatrix[vertex, toVertex];
                         selectedEdge[toVertex] = vertex;
                     }
                 }
@@ -449,7 +449,7 @@ namespace graph_sandbox
             while (que.Count != 0)
             {
                 var currEdge = que.FindMin(); que.DeleteMin();
-                var startVertex = (ds.Vertices[currEdge.end].FillColor == visitedColor) ? currEdge.start : currEdge.end;
+                var startVertex = (ds.Vertices[currEdge.end].fillColor == visitedColor) ? currEdge.start : currEdge.end;
                 ReDrawCircle(ds, startVertex, visitedColor);
 
                 foreach (var edge in adjList[startVertex])
@@ -457,7 +457,7 @@ namespace graph_sandbox
                     var currVertex = (edge.end != startVertex) ? edge.end : edge.start;
                     ReDrawEdge(ds, edge, currentEdgeColor, 300);
 
-                    if (ds.Vertices[currVertex].FillColor != visitedColor)
+                    if (ds.Vertices[currVertex].fillColor != visitedColor)
                     {
                         ReDrawCircle(ds, currVertex, processedColor, 0);
                     }
@@ -583,7 +583,7 @@ namespace graph_sandbox
                     if (edge.end == maxIndex)
                     {
                         ReDrawEdge(ds, edge, Color.Red);
-                        edge.FillColor = Color.Gray;
+                        edge.fillColor = Color.Gray;
                         break;
                     }
                 }
@@ -604,7 +604,7 @@ namespace graph_sandbox
                     if (edge.end == currentVertex)
                     {
                         edge.SetLabel($"{items[parent, currentVertex].toFlow}/{items[parent, currentVertex].backFlow}");
-                        edge.FillColor = Color.Red;
+                        edge.fillColor = Color.Red;
                         ReDrawCircle(ds, currentVertex, Color.White);
                         ReDrawEdge(ds, edge, Color.Gray, 0);
                         break;
@@ -668,8 +668,8 @@ namespace graph_sandbox
 
             while (minimalFlow != -1)
             {
-                ds.Vertices[source].FillColor = Color.Green;
-                ds.Vertices[sink].FillColor = Color.Red;
+                ds.Vertices[source].fillColor = Color.Green;
+                ds.Vertices[sink].fillColor = Color.Red;
                 ds.Invalidate();
                 minimalFlow = ProcessFulkerson(source, sink, adjList, ref fulkersonItems, ds);
                 if (minimalFlow != -1)
@@ -709,7 +709,7 @@ namespace graph_sandbox
             var cost = .0;
             var result = new List<Tuple<int, int>> { };
             var treeId = new List<int> { };
-            ds.Edges.OrderBy(x => adjMatrix[x.start][x.end]);
+            ds.Edges.OrderBy(x => adjMatrix[x.start, x.end]);
             
             for (var i = 0; i < ds.Vertices.Count; ++i)
             {
@@ -718,7 +718,7 @@ namespace graph_sandbox
             for (var i = 0; i < edgesNum; ++i)
             {
                 (var start, var end) = (ds.Edges[i].start, ds.Edges[i].end); 
-                var weight = adjMatrix[start][end];
+                var weight = adjMatrix[start, end];
 
                 if (treeId[start] != treeId[end])
                 {
@@ -728,9 +728,9 @@ namespace graph_sandbox
                         if (((ds.Edges[k].start == start && ds.Edges[k].end == end) ||
                             (ds.Edges[k].start == end && ds.Edges[k].end == start)))
                         {
-                            ds.Edges[k].FillColor = spanningTreeColor;
-                            ds.Vertices[ds.Edges[k].start].FillColor = spanningTreeColor;
-                            ds.Vertices[ds.Edges[k].end].FillColor = spanningTreeColor;
+                            ds.Edges[k].fillColor = spanningTreeColor;
+                            ds.Vertices[ds.Edges[k].start].fillColor = spanningTreeColor;
+                            ds.Vertices[ds.Edges[k].end].fillColor = spanningTreeColor;
                             ds.Invalidate();
                             Thread.Sleep(2000);
                         }
@@ -789,9 +789,9 @@ namespace graph_sandbox
                         if (((ds.Edges[k].start == i && ds.Edges[k].end == matching[i]) ||
                             (ds.Edges[k].start == matching[i] && ds.Edges[k].end == i)))
                         {
-                            ds.Edges[k].FillColor = maxMatchingColor;
-                            ds.Vertices[ds.Edges[k].start].FillColor = maxMatchingColor;
-                            ds.Vertices[ds.Edges[k].end].FillColor = maxMatchingColor;
+                            ds.Edges[k].fillColor = maxMatchingColor;
+                            ds.Vertices[ds.Edges[k].start].fillColor = maxMatchingColor;
+                            ds.Vertices[ds.Edges[k].end].fillColor = maxMatchingColor;
                             ds.Invalidate();
                             Thread.Sleep(2000);
                         }
@@ -807,7 +807,7 @@ namespace graph_sandbox
             for (var i = 0; i < ds.Vertices.Count; ++i)
             {
                 ds.Vertices[i].label = "";
-                ds.Vertices[i].FillColor = Color.White;
+                ds.Vertices[i].fillColor = Color.White;
             }
             ds.Invalidate();
         }
@@ -816,7 +816,7 @@ namespace graph_sandbox
         {
             for (var i = 0; i < ds.Edges.Count; i++)
             {
-                ds.Edges[i].FillColor = Color.Gray;
+                ds.Edges[i].fillColor = Color.Gray;
                 if (labelsToo)
                     ds.Edges[i].SetLabel("");
             }
@@ -825,14 +825,14 @@ namespace graph_sandbox
 
         private static void ReDrawCircle(DrawingSurface ds, int i, Color color, int delay = 1000)
         {
-            ds.Vertices[i].FillColor = color;
+            ds.Vertices[i].fillColor = color;
             ds.Invalidate();
             Thread.Sleep(delay);
         }
 
         private static void ReDrawEdge(DrawingSurface ds, Edge edge, Color color, int delay = 1000)
         {
-            edge.FillColor = color;
+            edge.fillColor = color;
             ds.Invalidate();
             Thread.Sleep(delay);
         }

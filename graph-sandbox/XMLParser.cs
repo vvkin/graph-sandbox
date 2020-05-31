@@ -36,6 +36,7 @@ namespace graph_sandbox
             xml.Load(filename);
             XmlElement xroot = xml.DocumentElement;
             ds.Edges.Clear();
+            Circle.number = 0;
             ds.Vertices.Clear();
             foreach (XmlElement xnode in xroot)
             {

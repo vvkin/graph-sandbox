@@ -88,11 +88,11 @@
             this.mainTextBox.Location = new System.Drawing.Point(9, 47);
             this.mainTextBox.Margin = new System.Windows.Forms.Padding(0);
             this.mainTextBox.MaximumSize = new System.Drawing.Size(100, 200);
-            this.mainTextBox.MinimumSize = new System.Drawing.Size(282, 375);
+            this.mainTextBox.MinimumSize = new System.Drawing.Size(282, 370);
             this.mainTextBox.Multiline = true;
             this.mainTextBox.Name = "mainTextBox";
             this.mainTextBox.ReadOnly = true;
-            this.mainTextBox.Size = new System.Drawing.Size(282, 375);
+            this.mainTextBox.Size = new System.Drawing.Size(282, 370);
             this.mainTextBox.TabIndex = 7;
             // 
             // MSGBox

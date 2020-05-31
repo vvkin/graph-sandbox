@@ -77,7 +77,7 @@
             this.edgeType.TabIndex = 1;
             this.edgeType.Text = "Undirected";
             this.edgeType.UseVisualStyleBackColor = false;
-            this.edgeType.Click += new System.EventHandler(this.directed_Click);
+            this.edgeType.Click += new System.EventHandler(this.Directed_Click);
             // 
             // returnInfo
             // 
@@ -91,7 +91,7 @@
             this.returnInfo.TabIndex = 2;
             this.returnInfo.Text = "Continue";
             this.returnInfo.UseVisualStyleBackColor = false;
-            this.returnInfo.Click += new System.EventHandler(this.returnInfo_Click);
+            this.returnInfo.Click += new System.EventHandler(this.ReturnInfo_Click);
             // 
             // edgeWeight
             // 

@@ -8,25 +8,24 @@ namespace graph_sandbox
 {
     public partial class Form1 : Form
     {
-        int MaxWidth = 230;
-        int MinWidth = 50;
-        bool Hided = true;
-        bool HidedFilePanel = true;
-        private bool addVertex_clicked = false;
-        private bool removeObject_clicked = false;
-        private bool addEdge_clicked = false;
-        private bool moreAlg_clicked = false;
+        int maxWidth = 230;
+        int minWidth = 50;
+        bool hidedSlidePanel = true;
+        bool hidedFilePanel = true;
+        private bool addVertexClicked = false;
+        private bool removeObjectClicked = false;
+        private bool addEdgeClicked = false;
+        private bool moreAlgСlicked = false;
         private Color activeButtonColor = Color.FromArgb(100, 100, 100);
         private Color passiveButtonColor = Color.FromArgb(51, 75, 180);
         private bool dragable;
         private Point startPosition;
-
-        StartVertexInfo startVertex;
+        StartVertexInfo startVertexForm;
 
         public Form1()
         {
             InitializeComponent();
-            startVertex = new StartVertexInfo();
+            startVertexForm = new StartVertexInfo();
             toolTip1.SetToolTip(addVertex, "Add vertex");
             toolTip2.SetToolTip(addEdge, "Add edge");
             toolTip3.SetToolTip(remove, "Remove");
@@ -36,41 +35,38 @@ namespace graph_sandbox
             toolTip7.SetToolTip(button11, "Upload graph");
             this.Hide();
         }
-
-        private void closeForm_Click(object sender, EventArgs e)
+        private void CloseForm_Click(object sender, EventArgs e)
         {
             Close();
             Application.ExitThread();
             Application.Exit();
         }
-
-        private void button5_Click(object sender, EventArgs e)
+        private void Button5_Click(object sender, EventArgs e)
         {
             drawingSurface1.ClearActiveVertex();
-            if (Hided)
+            if (hidedSlidePanel)
             {
                 functions.Enabled = false;
-                while (buttonsPanel.Width != MaxWidth)
+                while (buttonsPanel.Width != maxWidth)
                 {
                     buttonsPanel.Width += 30;
                     Update();
                 }
                 functionsPanel.Visible = true;
                 functions.Enabled = true;
-                Hided = false;
+                hidedSlidePanel = false;
             }
             else
             {
                 functions.Visible = false;
-                while (buttonsPanel.Width != MinWidth)
+                while (buttonsPanel.Width != minWidth)
                 {
                     buttonsPanel.Width -= 30;
                     Update();
                 }
-                Hided = true;
+                hidedSlidePanel = true;
             }
             functions.Visible = true;
-
         }
         private void Swap(ref Button btn1, ref Button btn2)
         {
@@ -79,14 +75,14 @@ namespace graph_sandbox
             btn2.Location = tmp;
             Update();
         }
-        private void hideForm_Click(object sender, EventArgs e)
+        private void HideForm_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
         private void More_Alg_Click(object sender, EventArgs e)
         {
-            moreAlg_clicked = !moreAlg_clicked;
-            if (moreAlg_clicked)
+            moreAlgСlicked = !moreAlgСlicked;
+            if (moreAlgСlicked)
             {
                 Swap(ref button1, ref button4);
                 Swap(ref button1, ref button8);
@@ -112,60 +108,58 @@ namespace graph_sandbox
         }
         private void AddOrRemove(object sender, MouseEventArgs e)
         {
-            if (removeObject_clicked)
+            if (removeObjectClicked)
             {
                 drawingSurface1.TryToRemove(e);
             }
-            else if (addVertex_clicked)
+            else if (addVertexClicked)
             {
                 drawingSurface1.TryToAddVertex(e);
             }
-            else if (addEdge_clicked)
+            else if (addEdgeClicked)
             {
                 drawingSurface1.TryToAddEdge(e);
             }
         }
-
-        private void addVertexButtonChangeState(object sender, MouseEventArgs e)
+        private void AddVertexButtonChangeState(object sender, MouseEventArgs e)
         {
             drawingSurface1.ClearActiveVertex();
-            addVertex_clicked = !addVertex_clicked;
-            removeObject_clicked = false;
-            addEdge_clicked = false;
+            addVertexClicked = !addVertexClicked;
+            removeObjectClicked = false;
+            addEdgeClicked = false;
             ChangeButtonsColor();
             ChangeCanBeMoved();
         }
-
         private void RemoveButtonChangeState(object sender, MouseEventArgs e)
         {
             drawingSurface1.ClearActiveVertex();
-            removeObject_clicked = !removeObject_clicked;
-            addVertex_clicked = false;
-            addEdge_clicked = false;
+            removeObjectClicked = !removeObjectClicked;
+            addVertexClicked = false;
+            addEdgeClicked = false;
             ChangeButtonsColor();
             ChangeCanBeMoved();
         }
 
-        private void addEdgeButtonChangeState(object sender, MouseEventArgs e)
+        private void AddEdgeButtonChangeState(object sender, MouseEventArgs e)
         {
-            addEdge_clicked = !addEdge_clicked;
-            drawingSurface1.edgeStartPoint = null;
-            addVertex_clicked = false;
-            removeObject_clicked = false;
+            addEdgeClicked = !addEdgeClicked;
+            addVertexClicked = false;
+            removeObjectClicked = false;
+            drawingSurface1.ClearActiveVertex();
             ChangeButtonsColor();
             ChangeCanBeMoved();
         }
 
         private void ChangeCanBeMoved()
         {
-            drawingSurface1.TurnMoving(!(addVertex_clicked || removeObject_clicked || addEdge_clicked));
+            drawingSurface1.TurnMoving(!(addVertexClicked || removeObjectClicked || addEdgeClicked));
         }
 
         private void ChangeButtonsColor()
         {
-            remove.BackColor = (removeObject_clicked) ? activeButtonColor : passiveButtonColor;
-            addVertex.BackColor = (addVertex_clicked) ? activeButtonColor : passiveButtonColor;
-            addEdge.BackColor = (addEdge_clicked) ? activeButtonColor : passiveButtonColor;
+            remove.BackColor = (removeObjectClicked) ? activeButtonColor : passiveButtonColor;
+            addVertex.BackColor = (addVertexClicked) ? activeButtonColor : passiveButtonColor;
+            addEdge.BackColor = (addEdgeClicked) ? activeButtonColor : passiveButtonColor;
         }
 
         // Drag window when drag topPanel
@@ -188,59 +182,78 @@ namespace graph_sandbox
             dragable = false;
         }
 
-        private async void button4_Click(object sender, MouseEventArgs e)
+        private void BlockUnblockButtons(bool state)
         {
-            functions.PerformClick();
-            functions.Enabled = false;
-            startVertex = new StartVertexInfo();
-            await Task.Run(() => Algorithms.BFS(drawingSurface1, startVertex.GetInput(Circle.number)));
-            functions.Enabled = true;
+            addVertexClicked = false;
+            removeObjectClicked = false;
+            addEdgeClicked = false;
+
+            addVertex.Enabled = state;
+            remove.Enabled = state;
+            addEdge.Enabled = state;
+            functions.Enabled = state;
+            download.Enabled = state;
+
+            if (!state)
+            {
+                ChangeButtonsColor();
+                ChangeCanBeMoved();
+            }
         }
-        private async void button3_Click(object sender, MouseEventArgs e)
+
+
+        private async void Button4_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
-            startVertex = new StartVertexInfo();
-            await Task.Run(() => Algorithms.DFS(drawingSurface1, startVertex.GetInput(Circle.number)));
-            functions.Enabled = true;
+            BlockUnblockButtons(false);
+            startVertexForm = new StartVertexInfo();
+            await Task.Run(() => Algorithms.BFS(drawingSurface1, startVertexForm.GetInput(Circle.number)));
+            BlockUnblockButtons(true);
+        }
+        private async void Button3_Click(object sender, MouseEventArgs e)
+        {
+            functions.PerformClick();
+            BlockUnblockButtons(false);
+            startVertexForm = new StartVertexInfo();
+            await Task.Run(() => Algorithms.DFS(drawingSurface1, startVertexForm.GetInput(Circle.number)));
+            BlockUnblockButtons(true);
         }
         private async void Khun_Button_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
+            BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.KuhnMatching(drawingSurface1));
-            functions.Enabled = true;
+            BlockUnblockButtons(true);
         }
         private async void Kruskal_ButtonClick(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
+            BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.KruskalSpanningTree(drawingSurface1));
-            functions.Enabled = true;
+            BlockUnblockButtons(true);
         }
-        private async void button7_Click(object sender, MouseEventArgs e)
+        private async void Button7_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
+            BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.Colouring(drawingSurface1));
-            functions.Enabled = true;
+            BlockUnblockButtons(true);
         }
         private async void Colouring_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
-            startVertex = new StartVertexInfo("Number of colours");
-            await Task.Run(() => Algorithms.BackTrackingColouring(drawingSurface1, startVertex.GetInput(Circle.number)));
-            functions.Enabled = true;
+            BlockUnblockButtons(false);
+            startVertexForm = new StartVertexInfo("Number of colours");
+            await Task.Run(() => Algorithms.BackTrackingColouring(drawingSurface1, startVertexForm.GetInput(Circle.number)));
+            BlockUnblockButtons(true);
         }
-        private void saveGraph(object sender, EventArgs e)
+        private void SaveGraph(object sender, EventArgs e)
         {
-
-            if (!Hided)
+            if (!hidedSlidePanel)
             {
                 return;
             }
-            if (HidedFilePanel)
+            if (hidedFilePanel)
             {
                 panel1.Enabled = true;
                 while (panel1.Width != 100)
@@ -251,7 +264,7 @@ namespace graph_sandbox
                 panel1.Visible = true;
                 button10.Enabled = true;
                 button11.Enabled = true;
-                HidedFilePanel = false;
+                hidedFilePanel = false;
             }
             else
             {
@@ -261,20 +274,18 @@ namespace graph_sandbox
                     panel1.Width -= 20;
                     Update();
                 }
-                HidedFilePanel = true;
+                hidedFilePanel = true;
             }
-
+            drawingSurface1.ClearActiveVertex();
         }
-
-        private async void button9_Click(object sender, MouseEventArgs e)
+        private async void Button9_Click(object sender, MouseEventArgs e)
         {
             GraphBuilder gb = new GraphBuilder(drawingSurface1.Vertices.Count);
             functions.PerformClick();
-            functions.Enabled = false;
+            BlockUnblockButtons(false);
             await Task.Run(() => gb.Build(drawingSurface1, true));
-            functions.Enabled = true;
+            BlockUnblockButtons(true);
         }
-
         private void button10_Click(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -283,10 +294,9 @@ namespace graph_sandbox
                 xmlparser.Save(drawingSurface1);
             }
             panel1.Width = 0;
-            HidedFilePanel = true;
+            hidedFilePanel = true;
         }
-
-        private async void button11_Click(object sender, EventArgs e)
+        private async void Button11_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -296,39 +306,39 @@ namespace graph_sandbox
                 await Task.Run(() => gb.Build(drawingSurface1, false));
             }
             panel1.Width = 0;
-            HidedFilePanel = true;
+            hidedFilePanel = true;
         }
         private async void button2_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
+            BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.ConnectedComponents(drawingSurface1));
-            functions.Enabled = true;
+            BlockUnblockButtons(true);
 
         }
         private async void button8_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
+            BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.PrimSpanningTree(drawingSurface1));
-            functions.Enabled = true;
+            BlockUnblockButtons(true);
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
-            startVertex = new StartVertexInfo();
-            await Task.Run(() => Algorithms.Dijkstra(drawingSurface1, startVertex.GetInput(Circle.number) - 1));
-            functions.Enabled = true;
+            BlockUnblockButtons(false);
+            startVertexForm = new StartVertexInfo();
+            await Task.Run(() => Algorithms.Dijkstra(drawingSurface1, startVertexForm.GetInput(Circle.number) - 1));
+            BlockUnblockButtons(true);
         }
 
         private async void Ford_Fulkerson_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
-            functions.Enabled = false;
+            BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.FordFulkerson(drawingSurface1));
-            functions.Enabled = true;
+            BlockUnblockButtons(true);
         }
     }
 }
