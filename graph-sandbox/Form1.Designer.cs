@@ -40,6 +40,7 @@ namespace graph_sandbox
             this.closeForm = new System.Windows.Forms.Button();
             this.buttonsPanel = new System.Windows.Forms.Panel();
             this.smallButtonsPanel = new System.Windows.Forms.Panel();
+            this.Colouring = new System.Windows.Forms.Button();
             this.addVertex = new System.Windows.Forms.Button();
             this.addEdge = new System.Windows.Forms.Button();
             this.functions = new System.Windows.Forms.Button();
@@ -72,7 +73,6 @@ namespace graph_sandbox
             this.toolTip6 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip7 = new System.Windows.Forms.ToolTip(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.Colouring = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.smallButtonsPanel.SuspendLayout();
@@ -138,7 +138,7 @@ namespace graph_sandbox
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(63, 5);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(202, 31);
+            this.label1.Size = new System.Drawing.Size(162, 25);
             this.label1.TabIndex = 3;
             this.label1.Text = "Graph Sandbox";
             // 
@@ -173,7 +173,6 @@ namespace graph_sandbox
             // 
             this.smallButtonsPanel.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.smallButtonsPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(75)))), ((int)(((byte)(180)))));
-            this.smallButtonsPanel.Controls.Add(this.Colouring);
             this.smallButtonsPanel.Controls.Add(this.addVertex);
             this.smallButtonsPanel.Controls.Add(this.addEdge);
             this.smallButtonsPanel.Controls.Add(this.functions);
@@ -184,6 +183,22 @@ namespace graph_sandbox
             this.smallButtonsPanel.Name = "smallButtonsPanel";
             this.smallButtonsPanel.Size = new System.Drawing.Size(50, 424);
             this.smallButtonsPanel.TabIndex = 2;
+            // 
+            // Colouring
+            // 
+            this.Colouring.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Colouring.BackColor = System.Drawing.Color.Navy;
+            this.Colouring.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.Colouring.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Colouring.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Colouring.ForeColor = System.Drawing.Color.White;
+            this.Colouring.Location = new System.Drawing.Point(0, 571);
+            this.Colouring.Name = "Colouring";
+            this.Colouring.Size = new System.Drawing.Size(140, 37);
+            this.Colouring.TabIndex = 2;
+            this.Colouring.Text = "M-Colouring";
+            this.Colouring.UseVisualStyleBackColor = false;
+            this.Colouring.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Colouring_Click);
             // 
             // addVertex
             // 
@@ -545,22 +560,6 @@ namespace graph_sandbox
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // Colouring
-            // 
-            this.Colouring.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Colouring.BackColor = System.Drawing.Color.Navy;
-            this.Colouring.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-            this.Colouring.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Colouring.Font = new System.Drawing.Font("Comic Sans MS", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Colouring.ForeColor = System.Drawing.Color.White;
-            this.Colouring.Location = new System.Drawing.Point(0, 571);
-            this.Colouring.Name = "Colouring";
-            this.Colouring.Size = new System.Drawing.Size(140, 37);
-            this.Colouring.TabIndex = 2;
-            this.Colouring.Text = "M-Colouring";
-            this.Colouring.UseVisualStyleBackColor = false;
-            this.Colouring.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Colouring_Click);
             // 
             // Form1
             // 

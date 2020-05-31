@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace graph_sandbox
 {
@@ -389,6 +388,41 @@ namespace graph_sandbox
             ds.Invalidate();
         }
 
+        private static List<int> GetWay(int source, int target, int[] parent)
+        {
+            var way = new List<int>();
+            var currentVertex = target;
+            do
+            {
+                way.Add(currentVertex);
+                currentVertex = parent[currentVertex];
+            } while (currentVertex != -1);
+            if (way[way.Count - 1] != source) // There is no way
+                way.Add(source);
+            way.Reverse();
+            return way;
+        }
+
+        private static void PrintWay(List<int> way, double cost)
+        {
+            var realCost = (cost != int.MaxValue) ? $"{ Math.Round(cost, 3)}": "\u221E";
+            msg.AddText($"d({way[0]+1}, {way[way.Count - 1]+1}) = {realCost}:\n");
+            if (cost == int.MaxValue)
+            {
+                msg.AddText("Ø\n");
+                return;
+            }
+            for (var i = 0; i < way.Count; ++i)
+            {
+                Thread.Sleep(500);
+                msg.AddText($"{way[i]+1} ");
+                if (i != way.Count - 1)
+                    msg.AddText("→ ");
+                else
+                    msg.AddText("\n");
+            }
+        }
+
         public static void Dijkstra(DrawingSurface ds, int start)
         {
             if (ds.ContainsNegativeEdge())
@@ -401,6 +435,7 @@ namespace graph_sandbox
             Dictionary<int, List<Edge>> adjList = ds.GetDestAdjList();
             var que = new C5.IntervalHeap<Edge>(new EdgeCompare());
             double[] dist = Enumerable.Repeat((double)int.MaxValue, adjList.Count).ToArray();
+            int[] parent = Enumerable.Repeat(-1, adjList.Count).ToArray();
             var visitedColor = Color.Green;
             var processedColor = Color.Yellow;
             var currentEdgeColor = Color.Red;
@@ -430,7 +465,8 @@ namespace graph_sandbox
                     if (dist[currVertex] > dist[startVertex] + edge.w)
                     {
                         dist[currVertex] = dist[startVertex] + edge.w;
-                        ds.Vertices[currVertex].label = $"{dist[currEdge.end]}+{edge.w}";
+                        parent[currVertex] = startVertex;
+                        ds.Vertices[currVertex].label = $"{Math.Round(dist[currEdge.end], 3)}+{Math.Round(edge.w, 3)}";
                         ds.Invalidate();
                         Thread.Sleep(1000);
                         que.Add(edge);
@@ -439,7 +475,19 @@ namespace graph_sandbox
                     ReDrawEdge(ds, edge, Color.Gray, 0);
                 }
             }
-            Thread.Sleep(5000);
+            msg.SetTitle("Dijkstra algorithm result:");
+            msg.MoveToCorner(ds.FindForm() as Form1);
+            msg.StartMenu();
+            for(var target = 0; target < adjList.Count; ++target)
+            {
+                if (start != target)
+                {
+                    var currWay = GetWay(start, target, parent);
+                    PrintWay(currWay, dist[target]);
+                    Thread.Sleep(1000);
+                }
+            }
+            msg.WaitOne();
             ClearEdges(ds);
             ClearVertices(ds);
         }
@@ -599,13 +647,11 @@ namespace graph_sandbox
 
             var fulkersonItems = new FulkersonItem[adjList.Count, adjList.Count];
             var minimalFlow = .0;
-            var worker = new BackgroundWorker();
             var flows = new List<double>();
 
             msg.MoveToCorner(ds.FindForm() as Form1);
             msg.SetTitle("Ford-Fulkerson algorithm result:\n");
-            worker.RunWorkerAsync(Task.Run(() => msg.ShowDialog()));
-
+            msg.StartMenu();
 
             for (var i = 0; i < adjList.Count; ++i)
                 for (var j = 0; j < adjList.Count; ++j)
@@ -634,8 +680,9 @@ namespace graph_sandbox
                 ClearEdges(ds, false);
             }
             AlgorithmDone(ds);
+            msg.AddText($"Total maximal flow:\n");
+            msg.AddText("f(G) = ");
 
-            msg.AddText($"Total maximal flow: \n f(G) = ");
             for (var i = 0; i < flows.Count; ++i)
             {
                 msg.AddText($"{flows[i]} ");
@@ -643,8 +690,7 @@ namespace graph_sandbox
                 Thread.Sleep(700);
             }
             msg.AddText($"= {flows.Sum()}");
-            Thread.Sleep(5000);
-            msg.ClearAndClose();
+            msg.WaitOne();
             ClearVertices(ds);
             ClearEdges(ds, true);
         }

@@ -46,11 +46,10 @@ namespace graph_sandbox
             g.DrawCurve(newPen, points);
             if (weight != 0)
             {
-                Font font = new Font("Arial", 16, FontStyle.Bold);
+                Font font = new Font("MV Boli", 14, FontStyle.Bold);
                 brush.Color = Color.White;
                 var text = (label == "") ? Convert.ToString(weight) : label;
-                g.DrawString(text,font,
-                    brush, midPoint);
+                g.DrawString(text, font, brush, midPoint);
                 font.Dispose();
             }
             newPen.Dispose();
@@ -87,7 +86,7 @@ namespace graph_sandbox
             midPoint = (isBended) ? midPoint : new PointF((startX + endX) / 2, (startY + endY) / 2);
             return new PointF[] { new PointF(startX, startY), midPoint, new PointF(endX, endY) };
         }
-        public static PointF getPointOnCircle(PointF p1, PointF p2, Int32 radius)
+        public static PointF GetPointOnCircle(PointF p1, PointF p2, Int32 radius)
         {
             PointF Pointref = PointF.Subtract(p2, new SizeF(p1));
             double degrees = Math.Atan2(Pointref.Y, Pointref.X);
@@ -99,15 +98,17 @@ namespace graph_sandbox
 
         public bool IsEquals(Edge toCompare)
         {
-            if (toCompare.isDirected && this.isDirected)
-            {
-                return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex);
-            }
-            else
-            {
-                return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex) ||
-                       (endVertex == toCompare.startVertex && startVertex == toCompare.endVertex);
-            }
+             if (toCompare.isDirected && this.isDirected)
+             {
+                 return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex);
+             }
+             else
+             {
+                 return (startVertex == toCompare.startVertex && endVertex == toCompare.endVertex) ||
+                        (endVertex == toCompare.startVertex && startVertex == toCompare.endVertex);
+             }
+            /*return (toCompare.startVertex == startVertex && toCompare.endVertex == endVertex) ||
+                   (toCompare.endVertex == startVertex && toCompare.startVertex == endVertex);*/
         }
 
         public bool Contains(Circle vertex)
