@@ -25,7 +25,7 @@ namespace graph_sandbox
             edgeType.Text = "Undirected";
         }
 
-        private void closeButton_Click(object sender, EventArgs e)
+        private void CloseButton_Click(object sender, EventArgs e)
         {
             Close();
         }
@@ -43,19 +43,19 @@ namespace graph_sandbox
             MoveCursorToEnd();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void NoWeigth_Click(object sender, EventArgs e)
         {
             weight = 0.0f;
             ChangeTextBoxValue();
         }
 
-        private void increaseWeight_Click(object sender, EventArgs e)
+        private void IncreaseWeight_Click(object sender, EventArgs e)
         {
             weight = Math.Min(double.MaxValue, weight + 1);
             ChangeTextBoxValue();
         }
 
-        private void decreaseWeight_Click(object sender, EventArgs e)
+        private void DecreaseWeight_Click(object sender, EventArgs e)
         {
             weight = Math.Max(double.MinValue, weight - 1);
             ChangeTextBoxValue();
@@ -63,7 +63,6 @@ namespace graph_sandbox
 
         private void Normalize(object sender, EventArgs e)
         {
-
             if (!double.TryParse(edgeWeight.Text, out double _))
             {
                 edgeWeight.Text = weight.ToString();
@@ -85,6 +84,7 @@ namespace graph_sandbox
         {
             Close();
         }
+
         public Edge GetEdge(Circle start, Circle end)
         {
             ShowDialog();
@@ -111,7 +111,7 @@ namespace graph_sandbox
             }
         }
 
-        private void edgeWeight_KeyPress(object sender, KeyPressEventArgs e)
+        private void EdgeWeight_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {

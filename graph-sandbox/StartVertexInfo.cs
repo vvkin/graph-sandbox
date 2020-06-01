@@ -17,21 +17,23 @@ namespace graph_sandbox
         private void StartVertexInfo_Load(object sender, EventArgs e)
         {
             CenterToParent();
-            inputBox.Text = "0";
+            inputBox.Text = "1";
             inputBox.SelectionLength = 0;
             vertex = 0;
+            inputBox.Focus();
         }
 
         public int GetInput(int verticesCount)
         {
             verticesNumber = verticesCount;
+            inputBox.Focus();
             ShowDialog();
-            return vertex;
+            return Math.Max(1, vertex);
         }
 
         private void TryToParse(object sender, EventArgs e)
         {
-            vertex = (inputBox.Text == "") ? 0 : (!int.TryParse(inputBox.Text, out int _)) ? vertex : 
+            vertex = (inputBox.Text == "") ? 1 : (!int.TryParse(inputBox.Text, out int _)) ? vertex : 
                       int.Parse(inputBox.Text);
             inputBox.Text = vertex.ToString();
         }
@@ -49,31 +51,23 @@ namespace graph_sandbox
             MoveCursorToEnd();
         }
 
-        private void increaseVertex_Click(object sender, EventArgs e)
+        private void IncreaseVertex_Click(object sender, EventArgs e)
         {
             vertex = Math.Min(verticesNumber, vertex + 1);
             ChangeTextBoxValue();
         }
 
-        private void decreaseVertex_Click(object sender, EventArgs e)
+        private void DecreaseVertex_Click(object sender, EventArgs e)
         {
-            vertex = Math.Max(0, vertex - 1);
+            vertex = Math.Max(1, vertex - 1);
             ChangeTextBoxValue();
         }
 
-        private void inputBox_KeyPress(object sender, KeyPressEventArgs e)
+        private void InputBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
-                if (vertex > verticesNumber || vertex < 0)
-                {
-                    var b = MessageBox.Show("Incorrect vertex!", "Type correct vertex!",
-                       MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
-                    if (b == DialogResult.Cancel)
-                        Close();
-                }
-                else
-                    Close();
+                 Close();
             }
         }
     }

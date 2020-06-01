@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Collections;
 using System.Collections.Generic;
 
 
@@ -25,6 +24,7 @@ namespace graph_sandbox
         public double w { get => weight; set { } }
         public Circle setStart(Circle start) => startVertex = start;
         public Circle setEnd(Circle end) => endVertex = end;
+
         public Edge(Circle startVertex, Circle endVertex, double weight, bool isDirected)
         {
             this.startVertex = startVertex;
@@ -87,15 +87,6 @@ namespace graph_sandbox
             midPoint = (isBended) ? midPoint : new PointF((startX + endX) / 2, (startY + endY) / 2);
             return new PointF[] { new PointF(startX, startY), midPoint, new PointF(endX, endY) };
         }
-        public static PointF GetPointOnCircle(PointF p1, PointF p2, Int32 radius)
-        {
-            PointF Pointref = PointF.Subtract(p2, new SizeF(p1));
-            double degrees = Math.Atan2(Pointref.Y, Pointref.X);
-            double cosx1 = Math.Cos(degrees);
-            double siny1 = Math.Sin(degrees);
-
-            return new PointF((int)(cosx1 * (float)(radius) + (float)p1.X), (int)(siny1 * (float)(radius) + (float)p1.Y));
-        }
 
         public bool IsEquals(Edge toCompare)
         {
@@ -141,6 +132,7 @@ namespace graph_sandbox
             var tempPoint = new PointF(midPoint.X + d.X, midPoint.Y + d.Y);
             midPoint = (IsValid(tempPoint)) ? tempPoint : midPoint;
         }
+
         public void SetLabel(string label)
         {
             this.label = label;

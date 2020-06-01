@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,7 +40,7 @@ namespace graph_sandbox
             Application.ExitThread();
             Application.Exit();
         }
-        private void Button5_Click(object sender, EventArgs e)
+        private void Functions_Click(object sender, EventArgs e)
         {
             drawingSurface1.ClearActiveVertex();
             if (hidedSlidePanel)
@@ -201,8 +200,7 @@ namespace graph_sandbox
             }
         }
 
-
-        private async void Button4_Click(object sender, MouseEventArgs e)
+        private async void BFS_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);
@@ -210,7 +208,7 @@ namespace graph_sandbox
             await Task.Run(() => Algorithms.BFS(drawingSurface1, startVertexForm.GetInput(Circle.number)));
             BlockUnblockButtons(true);
         }
-        private async void Button3_Click(object sender, MouseEventArgs e)
+        private async void DFS_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);
@@ -218,28 +216,28 @@ namespace graph_sandbox
             await Task.Run(() => Algorithms.DFS(drawingSurface1, startVertexForm.GetInput(Circle.number)));
             BlockUnblockButtons(true);
         }
-        private async void Khun_Button_Click(object sender, MouseEventArgs e)
+        private async void Khun_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.KuhnMatching(drawingSurface1));
             BlockUnblockButtons(true);
         }
-        private async void Kruskal_ButtonClick(object sender, MouseEventArgs e)
+        private async void Kruskal_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.KruskalSpanningTree(drawingSurface1));
             BlockUnblockButtons(true);
         }
-        private async void Button7_Click(object sender, MouseEventArgs e)
+        private async void Colouring_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);
             await Task.Run(() => Algorithms.Colouring(drawingSurface1));
             BlockUnblockButtons(true);
         }
-        private async void Colouring_Click(object sender, MouseEventArgs e)
+        private async void MColouring_Click(object sender, MouseEventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);
@@ -247,7 +245,7 @@ namespace graph_sandbox
             await Task.Run(() => Algorithms.BackTrackingColouring(drawingSurface1, startVertexForm.GetInput(Circle.number)));
             BlockUnblockButtons(true);
         }
-        private void SaveGraph(object sender, EventArgs e)
+        private void FileDialog_Click(object sender, EventArgs e)
         {
             if (!hidedSlidePanel)
             {
@@ -278,7 +276,7 @@ namespace graph_sandbox
             }
             drawingSurface1.ClearActiveVertex();
         }
-        private async void Button9_Click(object sender, MouseEventArgs e)
+        private async void ForceAlg_Click(object sender, MouseEventArgs e)
         {
             GraphBuilder gb = new GraphBuilder(drawingSurface1.Vertices.Count);
             functions.PerformClick();
@@ -286,7 +284,7 @@ namespace graph_sandbox
             await Task.Run(() => gb.Build(drawingSurface1, true));
             BlockUnblockButtons(true);
         }
-        private void button10_Click(object sender, EventArgs e)
+        private void SaveGraph_Click(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -296,7 +294,7 @@ namespace graph_sandbox
             panel1.Width = 0;
             hidedFilePanel = true;
         }
-        private async void Button11_Click(object sender, EventArgs e)
+        private async void UploadGraph_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -308,7 +306,7 @@ namespace graph_sandbox
             panel1.Width = 0;
             hidedFilePanel = true;
         }
-        private async void button2_Click(object sender, EventArgs e)
+        private async void Connected_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);
@@ -316,7 +314,7 @@ namespace graph_sandbox
             BlockUnblockButtons(true);
 
         }
-        private async void button8_Click(object sender, EventArgs e)
+        private async void Prim_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);
@@ -324,7 +322,7 @@ namespace graph_sandbox
             BlockUnblockButtons(true);
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private async void Dijkstra_Click(object sender, EventArgs e)
         {
             functions.PerformClick();
             BlockUnblockButtons(false);

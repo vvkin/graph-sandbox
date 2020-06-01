@@ -57,9 +57,9 @@
             this.topPanel.Name = "topPanel";
             this.topPanel.Size = new System.Drawing.Size(840, 43);
             this.topPanel.TabIndex = 2;
-            this.topPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.topPanel_MouseDown);
-            this.topPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.topPanel_MouseMove);
-            this.topPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.topPanel_MouseUp);
+            this.topPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseDown);
+            this.topPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseMove);
+            this.topPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseUp);
             // 
             // hideForm
             // 
@@ -73,7 +73,7 @@
             this.hideForm.Size = new System.Drawing.Size(33, 43);
             this.hideForm.TabIndex = 2;
             this.hideForm.UseVisualStyleBackColor = true;
-            this.hideForm.Click += new System.EventHandler(this.hideForm_Click);
+            this.hideForm.Click += new System.EventHandler(this.HideForm_Click);
             // 
             // button6
             // 
@@ -115,7 +115,7 @@
             this.closeForm.Size = new System.Drawing.Size(33, 43);
             this.closeForm.TabIndex = 2;
             this.closeForm.UseVisualStyleBackColor = true;
-            this.closeForm.Click += new System.EventHandler(this.closeForm_Click);
+            this.closeForm.Click += new System.EventHandler(this.CloseForm_Click);
             // 
             // button1
             // 
@@ -131,7 +131,7 @@
             this.button1.TabIndex = 3;
             this.button1.TabStop = false;
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.ShowForm_Click);
             // 
             // button2
             // 
@@ -146,7 +146,7 @@
             this.button2.Size = new System.Drawing.Size(313, 310);
             this.button2.TabIndex = 4;
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.uploadGraph);
+            this.button2.Click += new System.EventHandler(this.UploadGraph_Click);
             // 
             // StartingForm
             // 

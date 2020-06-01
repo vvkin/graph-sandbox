@@ -106,7 +106,7 @@
             this.edgeWeight.Text = "0";
             this.edgeWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.edgeWeight.TextChanged += new System.EventHandler(this.Normalize);
-            this.edgeWeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.edgeWeight_KeyPress);
+            this.edgeWeight.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.EdgeWeight_KeyPress);
             // 
             // button1
             // 
@@ -121,7 +121,7 @@
             this.button1.TabIndex = 4;
             this.button1.Text = "Has no weight";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.NoWeigth_Click);
             // 
             // decreaseWeight
             // 
@@ -136,7 +136,7 @@
             this.decreaseWeight.Size = new System.Drawing.Size(50, 40);
             this.decreaseWeight.TabIndex = 5;
             this.decreaseWeight.UseVisualStyleBackColor = false;
-            this.decreaseWeight.Click += new System.EventHandler(this.decreaseWeight_Click);
+            this.decreaseWeight.Click += new System.EventHandler(this.DecreaseWeight_Click);
             // 
             // increaseWeight
             // 
@@ -151,7 +151,7 @@
             this.increaseWeight.Size = new System.Drawing.Size(50, 40);
             this.increaseWeight.TabIndex = 6;
             this.increaseWeight.UseVisualStyleBackColor = false;
-            this.increaseWeight.Click += new System.EventHandler(this.increaseWeight_Click);
+            this.increaseWeight.Click += new System.EventHandler(this.IncreaseWeight_Click);
             // 
             // EdgeInfo
             // 

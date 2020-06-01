@@ -83,6 +83,7 @@ namespace graph_sandbox
 
         public void StartMenu()
         {
+            mainTextBox.Text = "";
             bw = new BackgroundWorker
             {
                 WorkerSupportsCancellation = true
@@ -91,7 +92,6 @@ namespace graph_sandbox
             bw.RunWorkerAsync();
         }
 
-        
         private void TopPanel_MouseDown(object sender, MouseEventArgs e)
         {
             mouseDown = true;

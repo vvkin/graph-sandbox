@@ -198,7 +198,7 @@ namespace graph_sandbox
             this.Colouring.TabIndex = 2;
             this.Colouring.Text = "M-Colouring";
             this.Colouring.UseVisualStyleBackColor = false;
-            this.Colouring.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Colouring_Click);
+            this.Colouring.MouseClick += new System.Windows.Forms.MouseEventHandler(this.MColouring_Click);
             // 
             // addVertex
             // 
@@ -241,7 +241,7 @@ namespace graph_sandbox
             this.functions.Size = new System.Drawing.Size(50, 50);
             this.functions.TabIndex = 3;
             this.functions.UseVisualStyleBackColor = true;
-            this.functions.Click += new System.EventHandler(this.Button5_Click);
+            this.functions.Click += new System.EventHandler(this.Functions_Click);
             // 
             // download
             // 
@@ -255,7 +255,7 @@ namespace graph_sandbox
             this.download.Size = new System.Drawing.Size(50, 50);
             this.download.TabIndex = 3;
             this.download.UseVisualStyleBackColor = true;
-            this.download.Click += new System.EventHandler(this.SaveGraph);
+            this.download.Click += new System.EventHandler(this.FileDialog_Click);
             // 
             // remove
             // 
@@ -306,7 +306,7 @@ namespace graph_sandbox
             this.button1.TabIndex = 2;
             this.button1.Text = "Dijkstra";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button1_Click);
+            this.button1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Dijkstra_Click);
             // 
             // button9
             // 
@@ -322,7 +322,7 @@ namespace graph_sandbox
             this.button9.TabIndex = 10;
             this.button9.Text = "Force Algorithm";
             this.button9.UseVisualStyleBackColor = false;
-            this.button9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Button9_Click);
+            this.button9.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ForceAlg_Click);
             // 
             // button2
             // 
@@ -338,7 +338,7 @@ namespace graph_sandbox
             this.button2.TabIndex = 4;
             this.button2.Text = "Connected Components";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button2_Click);
+            this.button2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Connected_Click);
             // 
             // button8
             // 
@@ -354,7 +354,7 @@ namespace graph_sandbox
             this.button8.TabIndex = 9;
             this.button8.Text = "Prim Tree";
             this.button8.UseVisualStyleBackColor = false;
-            this.button8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.button8_Click);
+            this.button8.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Prim_Click);
             // 
             // button3
             // 
@@ -370,7 +370,7 @@ namespace graph_sandbox
             this.button3.TabIndex = 5;
             this.button3.Text = "DFS";
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Button3_Click);
+            this.button3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DFS_Click);
             // 
             // button7
             // 
@@ -386,7 +386,7 @@ namespace graph_sandbox
             this.button7.TabIndex = 8;
             this.button7.Text = "Colouring";
             this.button7.UseVisualStyleBackColor = false;
-            this.button7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Button7_Click);
+            this.button7.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Colouring_Click);
             // 
             // button4
             // 
@@ -402,7 +402,7 @@ namespace graph_sandbox
             this.button4.TabIndex = 6;
             this.button4.Text = "BFS";
             this.button4.UseVisualStyleBackColor = false;
-            this.button4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Button4_Click);
+            this.button4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.BFS_Click);
             // 
             // Ford_Fulkerson
             // 
@@ -450,7 +450,7 @@ namespace graph_sandbox
             this.Kruskal_Button.TabIndex = 9;
             this.Kruskal_Button.Text = "Kruskal Tree";
             this.Kruskal_Button.UseVisualStyleBackColor = false;
-            this.Kruskal_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Kruskal_ButtonClick);
+            this.Kruskal_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Kruskal_Click);
             // 
             // Khun_Button
             // 
@@ -466,7 +466,7 @@ namespace graph_sandbox
             this.Khun_Button.TabIndex = 9;
             this.Khun_Button.Text = "Khun Matching";
             this.Khun_Button.UseVisualStyleBackColor = false;
-            this.Khun_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Khun_Button_Click);
+            this.Khun_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Khun_Click);
             // 
             // mainPanel
             // 
@@ -531,7 +531,7 @@ namespace graph_sandbox
             this.button11.Size = new System.Drawing.Size(50, 50);
             this.button11.TabIndex = 2;
             this.button11.UseVisualStyleBackColor = false;
-            this.button11.Click += new System.EventHandler(this.Button11_Click);
+            this.button11.Click += new System.EventHandler(this.UploadGraph_Click);
             // 
             // button10
             // 
@@ -548,7 +548,7 @@ namespace graph_sandbox
             this.button10.Size = new System.Drawing.Size(50, 50);
             this.button10.TabIndex = 1;
             this.button10.UseVisualStyleBackColor = false;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.button10.Click += new System.EventHandler(this.SaveGraph_Click);
             // 
             // saveFileDialog1
             // 

@@ -67,13 +67,14 @@
             this.inputBox.Margin = new System.Windows.Forms.Padding(0);
             this.inputBox.Multiline = true;
             this.inputBox.Name = "inputBox";
+            this.inputBox.ReadOnly = true;
             this.inputBox.Size = new System.Drawing.Size(144, 47);
             this.inputBox.TabIndex = 1;
             this.inputBox.TabStop = false;
             this.inputBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.inputBox.WordWrap = false;
             this.inputBox.TextChanged += new System.EventHandler(this.TryToParse);
-            this.inputBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.inputBox_KeyPress);
+            this.inputBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.InputBox_KeyPress);
             // 
             // increaseVertex
             // 
@@ -88,7 +89,7 @@
             this.increaseVertex.Size = new System.Drawing.Size(55, 47);
             this.increaseVertex.TabIndex = 7;
             this.increaseVertex.UseVisualStyleBackColor = false;
-            this.increaseVertex.Click += new System.EventHandler(this.increaseVertex_Click);
+            this.increaseVertex.Click += new System.EventHandler(this.IncreaseVertex_Click);
             // 
             // decreaseVertex
             // 
@@ -103,7 +104,7 @@
             this.decreaseVertex.Size = new System.Drawing.Size(55, 47);
             this.decreaseVertex.TabIndex = 8;
             this.decreaseVertex.UseVisualStyleBackColor = false;
-            this.decreaseVertex.Click += new System.EventHandler(this.decreaseVertex_Click);
+            this.decreaseVertex.Click += new System.EventHandler(this.DecreaseVertex_Click);
             // 
             // StartVertexInfo
             // 

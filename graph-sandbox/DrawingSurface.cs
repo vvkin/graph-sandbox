@@ -58,7 +58,7 @@ namespace graph_sandbox
                 if (selectedCircle != null)
                 {
                     selectedCircle.Move(d);
-                    SolveOneOnAnother(selectedCircle, Circle.radious * 2);
+                    SolveOneOnAnother(selectedCircle);
                     previousPoint = e.Location;
                 }
                 else
@@ -95,9 +95,9 @@ namespace graph_sandbox
             e.Dispose();
         }
 
-        public void TurnMoving(bool newValue)
+        public void TurnMoving(bool state)
         {
-            canBeMoved = newValue;
+            canBeMoved = state;
         }
 
         private void SolveOutOfTheBounds(Circle curr)
@@ -118,14 +118,14 @@ namespace graph_sandbox
             return true;
         }
 
-        private void SolveOneOnAnother(Circle curr, int Distance)
+        private void SolveOneOnAnother(Circle curr)
         {
             SolveOutOfTheBounds(curr);
             for (var i = 0; i < Vertices.Count; ++i)
             {
                 if (i != curr.uniqueNumber - 1)
                 {
-                    while(curr.GetDistance(Vertices[i]) < Distance)
+                    while(curr.GetDistance(Vertices[i]) < Circle.radious * 2)
                     {
                         if (curr.center.X < Vertices[i].center.X) --curr.center.X;
                         if (curr.center.Y < Vertices[i].center.Y) --curr.center.Y;
@@ -214,7 +214,7 @@ namespace graph_sandbox
             return adjL;
         }
 
-        public double[,] GetAdjMatrix()
+        public double[,] GetDistMatrix()
         {
             var adjMatrix = new double[Vertices.Count, Vertices.Count];
 
@@ -232,7 +232,7 @@ namespace graph_sandbox
             }
             return adjMatrix;
         }
-        public int[,] GetBoolAdjMatrix()
+        public int[,] GetAdjMatrix()
         {
             var adjMatrix = new int[Vertices.Count, Vertices.Count];
             for (var i = 0; i < Vertices.Count; i++)
@@ -360,7 +360,7 @@ namespace graph_sandbox
             }
         }
 
-        private void TryToAddEdge(Edge currEdge)
+        private void AddOrChangeEdge(Edge currEdge)
         {
             for (var i = 0; i < Edges.Count; ++i)
             {
@@ -376,7 +376,7 @@ namespace graph_sandbox
         private void CreateEdge(Circle vertex)
         {
             var toAdd = edgeForm.GetEdge(edgeStartPoint, vertex);
-            TryToAddEdge(toAdd);
+            AddOrChangeEdge(toAdd);
             toAdd.Draw(CreateGraphics());
             edgeStartPoint.fillColor = Color.White;
             edgeStartPoint = null;

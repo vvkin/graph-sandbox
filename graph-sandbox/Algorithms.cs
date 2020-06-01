@@ -216,7 +216,7 @@ namespace graph_sandbox
                 return false;
             }
 
-            var adjMatrix = ds.GetBoolAdjMatrix();
+            var adjMatrix = ds.GetAdjMatrix();
             var colorsList = new List<int> { };
             if (!ds.IsUndirected())
             {
@@ -333,7 +333,7 @@ namespace graph_sandbox
             const int INF = int.MaxValue;
             var vertexNum = ds.Vertices.Count;
             var spanningTreeColor = Color.Red;
-            var adjMatrix = ds.GetAdjMatrix();
+            var adjMatrix = ds.GetDistMatrix();
             var used = new bool[vertexNum];
             double[] minEdge = Enumerable.Repeat((double)INF, vertexNum).ToArray();
             int[] selectedEdge = Enumerable.Repeat(-1, vertexNum).ToArray();
@@ -505,11 +505,11 @@ namespace graph_sandbox
                     ++outDegree[start];
                     ++inDegree[edge.end];
                 }
-                source = (inDegree[start] == 0 && outDegree[start] != 0) ? start : source;
-                sink = (outDegree[start] == 0 && inDegree[start] != 0) ? start : sink;
-                if (source != -1 && sink != -1) return (source, sink);
+                source = (inDegree[start] == 0) ? start : source;
+                sink = (outDegree[start] == 0) ? start : sink;
+                if (source != -1 && sink != -1 && source != sink) return (source, sink);
             }
-            return (source, sink);
+            return (source != sink) ? (source, sink) : (-1, -1);
         }
 
         private static List<int> WaysFrom(int source, Dictionary<int, List<Edge>> adjList,
@@ -705,7 +705,7 @@ namespace graph_sandbox
             }
             var spanningTreeColor = Color.Green;
             var edgesNum = ds.Edges.Count;
-            var adjMatrix = ds.GetAdjMatrix();
+            var adjMatrix = ds.GetDistMatrix();
             var cost = .0;
             var result = new List<Tuple<int, int>> { };
             var treeId = new List<int> { };

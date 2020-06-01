@@ -102,7 +102,6 @@ namespace graph_sandbox
         private void Move(int[,] adjM)
         {
             var ekint = new Force(0.0, 0.0);
-            double currEkint = .0;
             double Fx, Fy;
             Force Fij;
             for (var i = 0; i < vertexNum; ++i)
@@ -120,7 +119,7 @@ namespace graph_sandbox
                 v[i].dy = (v[i].dy + alpha * Fy * deltaT) * eta;
                 ekint.dx += alpha * (v[i].dx * v[i].dx);
                 ekint.dy += alpha * (v[i].dy * v[i].dy);
-                currEkint = Math.Round(Math.Sqrt(ekint.dx * ekint.dx + ekint.dy * ekint.dy), 12);
+                double currEkint = Math.Round(Math.Sqrt(ekint.dx * ekint.dx + ekint.dy * ekint.dy), 12);
 
                 if (currEkint == predEkint || currEkint < Math.Pow(10, -8)) 
                 {

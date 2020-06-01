@@ -17,25 +17,25 @@ namespace graph_sandbox
             toolTip2.SetToolTip(button2, "Upload a graph");
         }
 
-        private void closeForm_Click(object sender, EventArgs e)
+        private void CloseForm_Click(object sender, EventArgs e)
         {
             Close();
             Application.ExitThread();
             Application.Exit();
         }
 
-        private void hideForm_Click(object sender, EventArgs e)
+        private void HideForm_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
         }
 
-        private void topPanel_MouseDown(object sender, MouseEventArgs e)
+        private void TopPanel_MouseDown(object sender, MouseEventArgs e)
         {
             mouseDown = true;
             lastLocation = e.Location;
         }
 
-        private void topPanel_MouseMove(object sender, MouseEventArgs e)
+        private void TopPanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (mouseDown)
             {
@@ -43,19 +43,19 @@ namespace graph_sandbox
             }
         }
 
-        private void topPanel_MouseUp(object sender, MouseEventArgs e)
+        private void TopPanel_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ShowForm_Click(object sender, EventArgs e)
         {
             this.Hide();
             Form1 form1 = new Form1();
             form1.Show();
         }
 
-        private async void uploadGraph(object sender, EventArgs e)
+        private async void UploadGraph_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
