@@ -8,25 +8,24 @@ using System.Threading.Tasks;
 
 namespace graph_sandbox
 {
-    struct FulkersonItem
-    {
-        public double toFlow;
-        public double backFlow;
-
-        public FulkersonItem(float toFlow = 0, float backFlow = 0)
-        {
-            this.toFlow = toFlow;
-            this.backFlow = backFlow;
-        }
-
-    }
     static class Algorithms
     {
         private static readonly Color activeVertex = Color.Red;
         private static readonly Color processedVertex = Color.YellowGreen;
         private static readonly Color passiveVertex = Color.White;
         private static readonly MSGBox msg = new MSGBox();
+        struct FulkersonItem
+        {
+            public double toFlow;
+            public double backFlow;
 
+            public FulkersonItem(float toFlow = 0, float backFlow = 0)
+            {
+                this.toFlow = toFlow;
+                this.backFlow = backFlow;
+            }
+
+        }
         private static Color[] colors = new Color[] {
             Color.Red, Color.Yellow, Color.Blue, Color.Green, Color.Gray, Color.Chocolate,
             Color.Lime, Color.Cyan, Color.Magenta, Color.Maroon, Color.Olive, Color.Purple,
@@ -441,10 +440,11 @@ namespace graph_sandbox
             var currentEdgeColor = Color.Red;
 
             que.Add(new Edge(ds.Vertices[start], ds.Vertices[start], 0, true));
-            dist[start] = 0; ds.Vertices[start].label = "0";
+            dist[start] = 0;
 
-            for (var i = 1; i < ds.Vertices.Count; ++i)
+            for (var i = 0; i < ds.Vertices.Count; ++i)
                 ds.Vertices[i].label = "INF";
+            ds.Vertices[start].label = "0";
 
             while (que.Count != 0)
             {
