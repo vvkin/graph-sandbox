@@ -464,7 +464,7 @@ namespace graph_sandbox
             this.Khun_Button.Name = "Khun_Button";
             this.Khun_Button.Size = new System.Drawing.Size(140, 37);
             this.Khun_Button.TabIndex = 9;
-            this.Khun_Button.Text = "Khun Matching";
+            this.Khun_Button.Text = "Kuhn Matching";
             this.Khun_Button.UseVisualStyleBackColor = false;
             this.Khun_Button.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Khun_Click);
             // 

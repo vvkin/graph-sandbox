@@ -364,7 +364,6 @@ namespace graph_sandbox
                         {
                             ds.Edges[k].fillColor = spanningTreeColor;
                             ds.Invalidate();
-                            Thread.Sleep(300);
                             ds.Vertices[ds.Edges[k].start].fillColor = spanningTreeColor;
                             ds.Vertices[ds.Edges[k].end].fillColor = spanningTreeColor;
                             ds.Invalidate();
