@@ -1,7 +1,7 @@
 # Graph Sandbox
 
 ## What is it
-Graph sandbox is a desktop application written with C# & WinForms. It provides functionality to build graphs of any form via a handy GUI. It's easy to process step-by-step classic graph theory algorithms on it. Furthermore, graphs can be downloaded/uploaded using XML files to save the results of work. If you have searched for application to learn graph theory by example, it's for you!
+Graph Sandbox is a desktop application written with C# & WinForms. It provides functionality to build graphs of any form via a handy GUI. It's easy to process step-by-step classic graph theory algorithms on it. Furthermore, graphs can be downloaded/uploaded using XML files to save the results of work. If you have searched for application to learn graph theory by example, it's for you!
 
 ## Features
 * Constructor. Using only a mouse it's easy to create sets of vertices and edges. Also, the application allows to move vertices, bend edges, set edges weight and make it both directed and undirected.
@@ -51,3 +51,13 @@ Application uses GraphML format to deal with it.
   </graph>
 </graphml>
 ```
+
+## Examples of work
+### Main functionality
+![Main functionality](./images/demo.gif)
+### Graph example
+![Graph example](./images/graph.png)
+### Dijkstra algorithm
+![Dijkstra algorithm](./images/dijkstra.gif)
+### Ford-Fulkerson algorithm
+![Ford-Fulkerson algorithm](./images/ford-fulkerson.gif)
